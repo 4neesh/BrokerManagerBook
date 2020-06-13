@@ -33,3 +33,4 @@ for the 2nd part, as we are only concerned with certain values, it would be easi
 so i made this separate.
 
 
+note that when an order is deleted, the hashMap will also remove the reference

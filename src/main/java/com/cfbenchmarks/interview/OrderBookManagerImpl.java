@@ -71,6 +71,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
             long orderPrice = bidLookup.get(orderId);
             bidBook.removeOrder(orderId, orderPrice);
+            bidLookup.remove(orderId);
 
             return true;
         }
@@ -78,6 +79,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
             long orderPrice = askLookup.get(orderId);
             askBook.removeOrder(orderId, orderPrice);
+            askLookup.remove(orderId);
 
             return true;
         }
