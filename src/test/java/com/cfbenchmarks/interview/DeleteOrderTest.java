@@ -5,6 +5,8 @@ import com.cfbenchmarks.orderBook.BidBook;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Comparator;
+
 import static org.junit.Assert.*;
 
 public class DeleteOrderTest {
@@ -41,6 +43,27 @@ public class DeleteOrderTest {
 
     }
 
+    @Test
+    public void bidMustExistInBookToDelete(){
+
+        Order buy4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
+
+        assertFalse(orderBookManager.bidLookup.containsKey(buy4.getOrderId()));
+
+        assertFalse(orderBookManager.deleteOrder(buy4.getOrderId()));
+
+    }
+
+    @Test
+    public void askMustExistInBookToDelete(){
+
+        Order sell4 = new Order("order7", "VOD.L", Side.SELL, 200, 10);
+
+        assertFalse(orderBookManager.bidLookup.containsKey(sell4.getOrderId()));
+
+        assertFalse(orderBookManager.deleteOrder(sell4.getOrderId()));
+
+    }
 
     @Test
     public void deleteFromHeadInBid(){

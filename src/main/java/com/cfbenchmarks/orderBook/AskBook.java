@@ -7,11 +7,6 @@ import java.util.TreeMap;
 
 public class AskBook extends TreeMap<Long, OrderLinkedList> {
 
-    @Override
-    public Comparator<? super Long> comparator() {
-        return super.comparator();
-    }
-
 
 
     public void addOrder(Long key, OrderNode order){

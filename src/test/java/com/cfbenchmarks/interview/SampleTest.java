@@ -6,8 +6,9 @@ import static org.junit.Assert.*;
 import com.cfbenchmarks.orderBook.AskBook;
 import com.cfbenchmarks.orderBook.BidBook;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Comparator;
 
 public class SampleTest {
 
@@ -27,59 +28,48 @@ public class SampleTest {
 
 
   @Test
-  public void bidOrderIsAddedToLookup(){
+  public void bidOrderIsAdded(){
 
     Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
+    assertFalse(orderBookManager.bidLookup.containsKey(buy.getOrderId()));
+    assertFalse(orderBookManager.bidBook.containsKey(buy.getPrice()));
 
     orderBookManager.addOrder(buy);
 
     assertTrue(orderBookManager.bidLookup.containsKey(buy.getOrderId()));
-
-  }
-
-  @Test
-  public void askOrderIsAddedToLookup(){
-
-    Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
-
-    orderBookManager.addOrder(sell);
-
-    assertTrue(orderBookManager.askLookup.containsKey(sell.getOrderId()));
-
-  }
-
-  @Test
-  public void bidOrderIsAddedToBook(){
-
-    Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
-
-    orderBookManager.addOrder(buy);
-
     assertTrue(orderBookManager.bidBook.containsKey(buy.getPrice()));
 
   }
 
   @Test
-  public void askOrderIsAddedToBook(){
+  public void askOrderIsAdded(){
 
     Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
 
+    assertFalse(orderBookManager.askLookup.containsKey(sell.getOrderId()));
+    assertFalse(orderBookManager.askBook.containsKey(sell.getPrice()));
+
     orderBookManager.addOrder(sell);
 
+    assertTrue(orderBookManager.askLookup.containsKey(sell.getOrderId()));
     assertTrue(orderBookManager.askBook.containsKey(sell.getPrice()));
 
   }
+
+
 
   @Test
   public void multipleBidAtSameLevelLogged(){
 
     Order buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     Order buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
+    assertTrue(buy1.getPrice() == buy2.getPrice());
+    assertTrue(orderBookManager.bidBook.get(buy1.getPrice()) == null);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
 
-
+    assertEquals(orderBookManager.bidBook.get(buy1.getPrice()).head.order.getOrderId() , buy1.getOrderId());
     assertEquals(orderBookManager.bidBook.get(buy1.getPrice()).head.next.order.getOrderId() , buy2.getOrderId());
   }
 
@@ -88,11 +78,13 @@ public class SampleTest {
 
     Order sell1 = new Order("order1", "VOD.L", Side.SELL, 200, 10);
     Order sell2 = new Order("order2", "VOD.L", Side.SELL, 200, 10);
+    assertTrue(sell1.getPrice() == sell2.getPrice());
+    assertTrue(orderBookManager.askBook.get(sell1.getPrice()) == null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell2);
 
-
+    assertEquals(orderBookManager.askBook.get(sell1.getPrice()).head.order.getOrderId() , sell1.getOrderId());
     assertEquals(orderBookManager.askBook.get(sell1.getPrice()).head.next.order.getOrderId() , sell2.getOrderId());
   }
 

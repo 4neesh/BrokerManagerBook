@@ -1,19 +1,13 @@
 package com.cfbenchmarks.orderBook;
 
-import com.cfbenchmarks.interview.Order;
-
 import java.util.Comparator;
 import java.util.TreeMap;
 
 public class BidBook extends TreeMap<Long, OrderLinkedList> {
 
-
-    @Override
-    public Comparator<? super Long> comparator() {
-        return super.comparator();
+    public BidBook() {
+        super(Comparator.reverseOrder());
     }
-
-
 
     public void addOrder(Long key, OrderNode order){
 
@@ -25,11 +19,6 @@ public class BidBook extends TreeMap<Long, OrderLinkedList> {
         }
 
 
-    }
-
-    @Override
-    public OrderLinkedList remove(Object key) {
-        return super.remove(key);
     }
 
 
@@ -51,17 +40,6 @@ public class BidBook extends TreeMap<Long, OrderLinkedList> {
 
     }
 
-//    public void removeOrder(String orderId, Long price) {
-//
-//        if(super.get(orderId).head.next == null){
-//            remove(orderId);
-//        }
-//        else{
-//            super.get(orderId).removeNode(orderId);
-//        }
-//
-//
-//    }
 
 
 }

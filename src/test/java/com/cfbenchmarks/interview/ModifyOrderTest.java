@@ -5,6 +5,8 @@ import com.cfbenchmarks.orderBook.BidBook;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Comparator;
+
 import static org.junit.Assert.*;
 
 public class ModifyOrderTest {
@@ -55,7 +57,7 @@ public class ModifyOrderTest {
     @Test
     public void askMustExistInBookToModify(){
 
-        Order sell4 = new Order("order8", "VOD.L", Side.BUY, 200, 10);
+        Order sell4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
 
         assertFalse(orderBookManager.bidLookup.containsKey(sell4.getOrderId()));
 
