@@ -25,3 +25,11 @@ Decided to go on a hash table, the hash values will be directed by the price of 
 I decided to add the interface orderinterface to make it easier to implement
 
 OrderBookManagerImpl uses dependency injection for the ask and bid book instances.
+
+
+once i had the linkedlist pattern firgured out for the orderlinkedlist, it was easy to implement the add, remove, and modify features
+
+for the 2nd part, as we are only concerned with certain values, it would be easier to store these in a separate data structure where they are updated as orders are added and removed.
+so i made this separate.
+
+

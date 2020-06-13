@@ -42,17 +42,13 @@ public class AskBook extends TreeMap<Long, OrderLinkedList> {
 
     }
 
+    public void modifyOrder(String orderId, long newQuantity, long price) {
 
-//    public void removeOrder(String orderId, Long price) {
-//
-//        if(super.get(orderId).head.next == null){
-//            remove(orderId);
-//        }
-//        else{
-//            super.get(orderId).removeNode(orderId);
-//        }
-//
-//
-//    }
+        super.get(price).modifyOrder(orderId, newQuantity);
+
+
+    }
+
+
 
 }

@@ -43,8 +43,26 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
     public boolean modifyOrder(String orderId, long newQuantity) {
 
+        if(bidLookup.containsKey(orderId)){
 
-        return false;
+            long orderPrice = bidLookup.get(orderId);
+            bidBook.modifyOrder(orderId, newQuantity, orderPrice);
+
+            return true;
+        }
+        else if(askLookup.containsKey(orderId)){
+
+            long orderPrice = askLookup.get(orderId);
+            askBook.modifyOrder(orderId, newQuantity, orderPrice);
+
+
+            return true;
+
+        }
+        else{
+
+            return false;
+        }
     }
 
     public boolean deleteOrder(String orderId) {

@@ -30,6 +30,40 @@ public class OrderLinkedList {
 
 
 
+    public void modifyOrder(String orderId, long quantity){
+
+        OrderNode current = this.head;
+
+        while(current.order.getOrderId() != orderId){
+
+            current = current.next;
+
+        }
+
+        if(quantity > current.order.getQuantity()){
+
+            current.order.setQuantity(quantity);
+
+            if(current != this.last){
+
+                OrderNode newOrder = current;
+                this.removeNode(current.order.getOrderId());
+
+                this.append(newOrder);
+
+            }
+
+        }
+        else{
+
+            current.order.setQuantity(quantity);
+
+        }
+
+
+    }
+
+
     public void removeNode(String orderId) {
 
         if(this.head.order.getOrderId() == orderId){

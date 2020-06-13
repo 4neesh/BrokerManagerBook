@@ -44,6 +44,13 @@ public class BidBook extends TreeMap<Long, OrderLinkedList> {
 
     }
 
+    public void modifyOrder(String orderId, long newQuantity, long price){
+
+        super.get(price).modifyOrder(orderId, newQuantity);
+
+
+    }
+
 //    public void removeOrder(String orderId, Long price) {
 //
 //        if(super.get(orderId).head.next == null){
