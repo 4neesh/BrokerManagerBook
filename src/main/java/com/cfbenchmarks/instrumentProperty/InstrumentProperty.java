@@ -40,7 +40,7 @@ public class InstrumentProperty {
       this.bestPrice = orderPrice;
     } else if (order.getSide().equals(Side.BUY) && this.bestPrice.get() < orderPrice.get()) {
       this.bestPrice = orderPrice;
-    } else if (order.getSide().equals(Side.SELL) &&  this.bestPrice.get() > orderPrice.get()) {
+    } else if (order.getSide().equals(Side.SELL) && this.bestPrice.get() > orderPrice.get()) {
       this.bestPrice = orderPrice;
     }
   }
@@ -48,6 +48,8 @@ public class InstrumentProperty {
   public Optional<Long> getBestPrice() {
     return bestPrice;
   }
+
+  public void setNextBestPrice() {}
 
   public HashMap<String, LevelProperty> getLevelPropertiesHashMap() {
     return levelPropertiesHashMap;

@@ -2,40 +2,53 @@ package com.cfbenchmarks.orderBookManager;
 
 import com.cfbenchmarks.instrumentProperty.InstrumentProperty;
 import com.cfbenchmarks.instrumentProperty.LevelProperty;
-import com.cfbenchmarks.levelOrders.OrderLinkedList;
 import com.cfbenchmarks.levelOrders.OrderNode;
 import com.cfbenchmarks.orderBook.*;
 import java.util.*;
 
 public class OrderBookManagerImpl implements OrderBookManager {
 
-  HashMap<String, Long> askLookup = new HashMap<>();
+  HashMap<String, Long> askLookup= new HashMap<>();
   HashMap<String, Long> bidLookup = new HashMap<>();
 
-  HashMap<String, InstrumentProperty> instrumentPropertyMap;
+  HashMap<String, String> askInstrumentLookup = new HashMap<>();
+  HashMap<String, String> bidInstrumentLookup = new HashMap<>();
 
-  AskBook askBook;
-  BidBook bidBook;
-
-  public OrderBookManagerImpl(
-      AskBook askBook, BidBook bidBook, HashMap<String, InstrumentProperty> instrumentPropertyMap) {
-
-    this.askBook = askBook;
-    this.bidBook = bidBook;
-    this.instrumentPropertyMap = instrumentPropertyMap;
-  }
+  HashMap<String, InstrumentProperty> instrumentPropertyMap = new HashMap<>();
+  HashMap<String, AskBook> askBookHashMap = new HashMap<>();
+  HashMap<String, BidBook> bidBookHashMap = new HashMap<>();
 
   public void addOrder(Order order) {
 
     String propertyKey = order.getInstrument() + order.getSide().toString();
-
-    addOrderToBookAndLookup(order);
-
     addOrderToInstrumentPropertyMap(order, propertyKey);
 
+    if (bidBookHashMap.containsKey(order.getInstrument()) && order.getSide().equals(Side.BUY)) {
+
+      addOrderToBookAndLookup(bidBookHashMap.get(order.getInstrument()), order);
+      bidInstrumentLookup.put(order.getOrderId(), order.getInstrument());
+    } else if (askBookHashMap.containsKey(order.getInstrument()) && order.getSide().equals(Side.SELL)) {
+
+      addOrderToBookAndLookup(askBookHashMap.get(order.getInstrument()), order);
+      askInstrumentLookup.put(order.getOrderId(), order.getInstrument());
+
+    } else {
+
+      if (order.getSide().equals(Side.BUY)) {
+        bidBookHashMap.put(order.getInstrument(), new BidBook());
+        addOrderToBookAndLookup(bidBookHashMap.get(order.getInstrument()), order);
+        bidInstrumentLookup.put(order.getOrderId(), order.getInstrument());
+
+      } else {
+        askBookHashMap.put(order.getInstrument(), new AskBook());
+        addOrderToBookAndLookup(askBookHashMap.get(order.getInstrument()), order);
+        askInstrumentLookup.put(order.getOrderId(), order.getInstrument());
+      }
+    }
   }
 
   private void addOrderToInstrumentPropertyMap(Order order, String propertyKey) {
+
     if (instrumentPropertyMap.containsKey(propertyKey)) {
 
       instrumentPropertyMap.get(propertyKey).updateProperties(order);
@@ -46,19 +59,19 @@ public class OrderBookManagerImpl implements OrderBookManager {
       HashMap<String, LevelProperty> levelPropertiesHashMap = new HashMap<>();
 
       instrumentPropertyMap.put(
-              propertyKey, new InstrumentProperty(bestPrice, levelPropertiesHashMap));
+          propertyKey, new InstrumentProperty(bestPrice, levelPropertiesHashMap));
     }
   }
 
-  private void addOrderToBookAndLookup(Order order) {
+  private void addOrderToBookAndLookup(OrderBook orderBook, Order order) {
     if (order.getSide().equals(Side.BUY)) {
 
       bidLookup.put(order.getOrderId(), order.getPrice());
-      bidBook.addOrder(order.getPrice(), new OrderNode(order));
+      orderBook.addOrder(order.getPrice(), new OrderNode(order));
 
     } else {
       askLookup.put(order.getOrderId(), order.getPrice());
-      askBook.addOrder(order.getPrice(), new OrderNode(order));
+      orderBook.addOrder(order.getPrice(), new OrderNode(order));
     }
   }
 
@@ -67,13 +80,17 @@ public class OrderBookManagerImpl implements OrderBookManager {
     if (bidLookup.containsKey(orderId)) {
 
       long orderPrice = bidLookup.get(orderId);
-      bidBook.modifyOrder(orderId, newQuantity, orderPrice);
+      bidBookHashMap
+          .get(bidInstrumentLookup.get(orderId))
+          .modifyOrder(orderId, newQuantity, orderPrice);
 
       return true;
     } else if (askLookup.containsKey(orderId)) {
 
       long orderPrice = askLookup.get(orderId);
-      askBook.modifyOrder(orderId, newQuantity, orderPrice);
+      askBookHashMap
+          .get(askInstrumentLookup.get(orderId))
+          .modifyOrder(orderId, newQuantity, orderPrice);
 
       return true;
 
@@ -88,14 +105,14 @@ public class OrderBookManagerImpl implements OrderBookManager {
     if (bidLookup.containsKey(orderId)) {
 
       long orderPrice = bidLookup.get(orderId);
-      bidBook.removeOrder(orderId, orderPrice);
+      bidBookHashMap.get(bidInstrumentLookup.get(orderId)).removeOrder(orderId, orderPrice);
       bidLookup.remove(orderId);
 
       return true;
     } else if (askLookup.containsKey(orderId)) {
 
       long orderPrice = askLookup.get(orderId);
-      askBook.removeOrder(orderId, orderPrice);
+      askBookHashMap.get(askInstrumentLookup.get(orderId)).removeOrder(orderId, orderPrice);
       askLookup.remove(orderId);
 
       return true;
@@ -160,8 +177,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     BidBook bidBook = new BidBook();
     HashMap<String, InstrumentProperty> instrumentPropertyHashMap = new HashMap<>();
 
-    OrderBookManagerImpl orderBookManager =
-        new OrderBookManagerImpl(askBook, bidBook, instrumentPropertyHashMap);
+    OrderBookManagerImpl orderBookManagerVodl = new OrderBookManagerImpl();
     Order buy1 = new Order("order1", "VOD.L", Side.BUY, 2100, 10);
     Order buy2 = new Order("order2", "VOD.L", Side.BUY, 100, 10);
     Order buy3 = new Order("order3", "VOD.L", Side.BUY, 40, 10);
@@ -169,24 +185,11 @@ public class OrderBookManagerImpl implements OrderBookManager {
     Order sell2 = new Order("order5", "VOD.L", Side.SELL, 100, 10);
     Order sell3 = new Order("order6", "VOD.L", Side.SELL, 40, 10);
 
-    orderBookManager.addOrder(buy1);
-    orderBookManager.addOrder(buy2);
-    orderBookManager.addOrder(buy3);
-    orderBookManager.addOrder(sell1);
-    orderBookManager.addOrder(sell2);
-    orderBookManager.addOrder(sell3);
-
-    List<OrderLinkedList> askListOfLevels = new ArrayList<>(orderBookManager.askBook.values());
-    List<OrderLinkedList> bidListOfLevels = new ArrayList<>(orderBookManager.bidBook.values());
-
-    System.out.println("ask levels:");
-    for (OrderLinkedList level : askListOfLevels) {
-      System.out.println(level.head.order.getPrice());
-    }
-
-    System.out.println("\nbid levels:");
-    for (OrderLinkedList level : bidListOfLevels) {
-      System.out.println(level.head.order.getPrice());
-    }
+    orderBookManagerVodl.addOrder(buy1);
+    orderBookManagerVodl.addOrder(buy2);
+    orderBookManagerVodl.addOrder(buy3);
+    orderBookManagerVodl.addOrder(sell1);
+    orderBookManagerVodl.addOrder(sell2);
+    orderBookManagerVodl.addOrder(sell3);
   }
 }

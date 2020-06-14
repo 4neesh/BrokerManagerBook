@@ -5,11 +5,16 @@ The bid side is the set of orders from buyers and the ask side is the set of ord
 
 Each side consists of price levels, where orders from each side of the book with the same price are grouped together.
 
-The levels within the book side are sorted by price in such way that the top level for the bid side contains orders with the highest price, and the top level for the ask side contains orders with the lowest price.
+The levels within the book side are sorted by price in such way that the top level for the bid side contains orders with
+ the highest price, and the top level for the ask side contains orders with the lowest price.
 
 Inside each level, orders are sorted in the order as they arrive. Possible operations on the order book:
-- Add new order. New order specifies instrument, side (either buy or sell), requested quantity and price. Additionally, each order is identified by a unique order id.
-- Modify existing order. Only modification of an order's quantity is allowed. You need to specify the unique order id of an existing order and the new quantity. If the quantity is decreased, the order maintains its position in the queue of orders for the relevant price level. If the quantity is increased, the order is put at the end of the queue of orders for the relevant price level.
+- Add new order. New order specifies instrument, side (either buy or sell), requested quantity and price. Additionally,
+    each order is identified by a unique order id.
+- Modify existing order. Only modification of an order's quantity is allowed. You need to specify the unique order id of
+    an existing order and the new quantity. If the quantity is decreased, the order maintains its position in the queue
+        of orders for the relevant price level. If the quantity is increased, the order is put at the end of the queue
+        of orders for the relevant price level.
 - Delete existing order. You need to specify the unique order id of an existing order. The order is removed from the order book completely.
 
 Additionally, at any time, an order book should provide the following information:

@@ -30,7 +30,7 @@ public class ModifyOrderTest {
     bidBook = new BidBook();
     instrumentPropertyHashMap = new HashMap<>();
 
-    orderBookManager = new OrderBookManagerImpl(askBook, bidBook, instrumentPropertyHashMap);
+    orderBookManager = new OrderBookManagerImpl();
     buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
     buy3 = new Order("order3", "VOD.L", Side.BUY, 200, 10);
@@ -71,14 +71,34 @@ public class ModifyOrderTest {
 
     long newQuantity = 7;
     assertTrue(
-        orderBookManager.bidBook.get(buy2.getPrice()).head.next.order.getQuantity() > newQuantity);
-    assertTrue(orderBookManager.bidBook.get(buy2.getPrice()).last.order == buy3);
+        orderBookManager
+                .bidBookHashMap
+                .get(buy2.getInstrument())
+                .get(buy2.getPrice())
+                .head
+                .next
+                .order
+                .getQuantity()
+            > newQuantity);
+    assertTrue(
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order
+            == buy3);
 
     orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.bidBook.get(buy2.getPrice()).last.order, buy3);
     assertEquals(
-        orderBookManager.bidBook.get(buy2.getPrice()).head.next.order.getQuantity(), newQuantity);
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order,
+        buy3);
+    assertEquals(
+        orderBookManager
+            .bidBookHashMap
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .head
+            .next
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -86,14 +106,32 @@ public class ModifyOrderTest {
 
     long newQuantity = 7;
     assertTrue(
-        orderBookManager.bidBook.get(buy2.getPrice()).last.order.getQuantity() > newQuantity);
-    assertTrue(orderBookManager.bidBook.get(buy2.getPrice()).last.order == buy3);
+        orderBookManager
+                .bidBookHashMap
+                .get(buy2.getInstrument())
+                .get(buy2.getPrice())
+                .last
+                .order
+                .getQuantity()
+            > newQuantity);
+    assertTrue(
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order
+            == buy3);
 
     orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.bidBook.get(buy2.getPrice()).last.order, buy3);
     assertEquals(
-        orderBookManager.bidBook.get(buy2.getPrice()).last.order.getQuantity(), newQuantity);
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order,
+        buy3);
+    assertEquals(
+        orderBookManager
+            .bidBookHashMap
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .last
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -101,14 +139,33 @@ public class ModifyOrderTest {
 
     long newQuantity = 13;
     assertTrue(
-        orderBookManager.bidBook.get(buy2.getPrice()).head.next.order.getQuantity() < newQuantity);
-    assertTrue(orderBookManager.bidBook.get(buy2.getPrice()).last.order != buy2);
+        orderBookManager
+                .bidBookHashMap
+                .get(buy2.getInstrument())
+                .get(buy2.getPrice())
+                .head
+                .next
+                .order
+                .getQuantity()
+            < newQuantity);
+    assertTrue(
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order
+            != buy2);
 
     orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.bidBook.get(buy2.getPrice()).last.order, buy2);
     assertEquals(
-        orderBookManager.bidBook.get(buy2.getPrice()).last.order.getQuantity(), newQuantity);
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order,
+        buy2);
+    assertEquals(
+        orderBookManager
+            .bidBookHashMap
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .last
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -117,14 +174,38 @@ public class ModifyOrderTest {
     long newQuantity = 13;
     // need to assert that there are 3 items in the level
     assertTrue(
-        orderBookManager.bidBook.get(buy2.getPrice()).last.order.getQuantity() < newQuantity);
-    assertTrue(orderBookManager.bidBook.get(buy2.getPrice()).last.order == buy3);
+        orderBookManager
+                .bidBookHashMap
+                .get(buy2.getInstrument())
+                .get(buy2.getPrice())
+                .last
+                .order
+                .getQuantity()
+            < newQuantity);
+    assertTrue(
+        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order
+            == buy3);
 
     orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.bidBook.get(buy2.getPrice()).head.next.order, buy2);
     assertEquals(
-        orderBookManager.bidBook.get(buy2.getPrice()).last.order.getQuantity(), newQuantity);
+        orderBookManager
+            .bidBookHashMap
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .head
+            .next
+            .order,
+        buy2);
+    assertEquals(
+        orderBookManager
+            .bidBookHashMap
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .last
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -132,14 +213,34 @@ public class ModifyOrderTest {
 
     long newQuantity = 7;
     assertTrue(
-        orderBookManager.askBook.get(sell2.getPrice()).head.next.order.getQuantity() > newQuantity);
-    assertTrue(orderBookManager.askBook.get(sell2.getPrice()).last.order == sell3);
+        orderBookManager
+                .askBookHashMap
+                .get(sell2.getInstrument())
+                .get(sell2.getPrice())
+                .head
+                .next
+                .order
+                .getQuantity()
+            > newQuantity);
+    assertTrue(
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order
+            == sell3);
 
     orderBookManager.modifyOrder(sell2.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.askBook.get(sell2.getPrice()).last.order, sell3);
     assertEquals(
-        orderBookManager.askBook.get(sell2.getPrice()).head.next.order.getQuantity(), newQuantity);
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order,
+        sell3);
+    assertEquals(
+        orderBookManager
+            .askBookHashMap
+            .get(sell2.getInstrument())
+            .get(sell2.getPrice())
+            .head
+            .next
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -147,14 +248,32 @@ public class ModifyOrderTest {
 
     long newQuantity = 7;
     assertTrue(
-        orderBookManager.askBook.get(sell2.getPrice()).last.order.getQuantity() > newQuantity);
-    assertTrue(orderBookManager.askBook.get(sell2.getPrice()).last.order == sell3);
+        orderBookManager
+                .askBookHashMap
+                .get(sell2.getInstrument())
+                .get(sell2.getPrice())
+                .last
+                .order
+                .getQuantity()
+            > newQuantity);
+    assertTrue(
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order
+            == sell3);
 
     orderBookManager.modifyOrder(sell3.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.askBook.get(sell2.getPrice()).last.order, sell3);
     assertEquals(
-        orderBookManager.askBook.get(sell2.getPrice()).last.order.getQuantity(), newQuantity);
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order,
+        sell3);
+    assertEquals(
+        orderBookManager
+            .askBookHashMap
+            .get(sell2.getInstrument())
+            .get(sell2.getPrice())
+            .last
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -162,14 +281,33 @@ public class ModifyOrderTest {
 
     long newQuantity = 13;
     assertTrue(
-        orderBookManager.askBook.get(sell2.getPrice()).head.next.order.getQuantity() < newQuantity);
-    assertTrue(orderBookManager.askBook.get(sell2.getPrice()).last.order != sell2);
+        orderBookManager
+                .askBookHashMap
+                .get(sell2.getInstrument())
+                .get(sell2.getPrice())
+                .head
+                .next
+                .order
+                .getQuantity()
+            < newQuantity);
+    assertTrue(
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order
+            != sell2);
 
     orderBookManager.modifyOrder(sell2.getOrderId(), newQuantity);
 
-    assertEquals(orderBookManager.askBook.get(sell2.getPrice()).last.order, sell2);
     assertEquals(
-        orderBookManager.askBook.get(sell2.getPrice()).last.order.getQuantity(), newQuantity);
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order,
+        sell2);
+    assertEquals(
+        orderBookManager
+            .askBookHashMap
+            .get(sell2.getInstrument())
+            .get(sell2.getPrice())
+            .last
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 
   @Test
@@ -178,12 +316,28 @@ public class ModifyOrderTest {
     long newQuantity = 13;
     // need to assert that there are 3 items in the level
     assertTrue(
-        orderBookManager.askBook.get(sell2.getPrice()).last.order.getQuantity() < newQuantity);
-    assertTrue(orderBookManager.askBook.get(sell2.getPrice()).last.order == sell3);
+        orderBookManager
+                .askBookHashMap
+                .get(sell2.getInstrument())
+                .get(sell2.getPrice())
+                .last
+                .order
+                .getQuantity()
+            < newQuantity);
+    assertTrue(
+        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).last.order
+            == sell3);
 
     orderBookManager.modifyOrder(sell3.getOrderId(), newQuantity);
 
     assertEquals(
-        orderBookManager.askBook.get(sell2.getPrice()).last.order.getQuantity(), newQuantity);
+        orderBookManager
+            .askBookHashMap
+            .get(sell2.getInstrument())
+            .get(sell2.getPrice())
+            .last
+            .order
+            .getQuantity(),
+        newQuantity);
   }
 }
