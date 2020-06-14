@@ -2,69 +2,61 @@ package com.cfbenchmarks.orderBook;
 
 import com.cfbenchmarks.interview.Order;
 import com.cfbenchmarks.interview.Side;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 public class InstrumentProperty {
 
-  public InstrumentProperty(
-      Optional<Long> bestPrice,
-      long numberOfOrders,
-      long quantity,
-      long volume,
-      List<Order> ordersAtLevel) {
-    this.bestPrice = bestPrice;
-    this.numberOfOrders = numberOfOrders;
-    this.quantity = quantity;
-    this.volume = volume;
-    this.ordersAtLevel = ordersAtLevel;
-  }
+    private Optional<Long> bestPrice;
+    private HashMap<String, LevelProperties> levelPropertiesHashMap;
 
-  private Optional<Long> bestPrice;
 
-  private long numberOfOrders;
+    public InstrumentProperty(
+        Optional<Long> bestPrice, HashMap<String, LevelProperties> levelPropertiesHashMap) {
 
-  private long quantity;
+        this.bestPrice = bestPrice;
+        this.levelPropertiesHashMap = levelPropertiesHashMap;
 
-  private long volume;
-
-  private List<Order> ordersAtLevel;
-
-  public void updateProperties(Order order) {
-
-    Optional<Long> orderPrice = Optional.of(order.getPrice());
-
-    this.numberOfOrders += 1;
-    this.ordersAtLevel.add(order);
-    this.quantity += order.getQuantity();
-    this.volume += (order.getQuantity() + order.getPrice());
-
-    if (this.getBestPrice().equals(Optional.empty())) {
-      this.bestPrice = orderPrice;
-    } else if (order.getSide() == Side.BUY && this.bestPrice.get() < orderPrice.get()) {
-      this.bestPrice = orderPrice;
-    } else if (this.bestPrice.get() > orderPrice.get()) {
-      this.bestPrice = orderPrice;
     }
-  }
 
-  public Optional<Long> getBestPrice() {
-    return bestPrice;
-  }
 
-  public long getNumberOfOrders() {
-    return numberOfOrders;
-  }
+    public void updateProperties(Order order) {
 
-  public long getQuantity() {
-    return quantity;
-  }
+        Optional<Long> orderPrice = Optional.of(order.getPrice());
+        String levelPropertiesKey = order.getInstrument() + order.getSide().toString() + order.getPrice();
 
-  public long getVolume() {
-    return volume;
-  }
+        if(levelPropertiesHashMap.containsKey(levelPropertiesKey)){
+            levelPropertiesHashMap.get(levelPropertiesKey).updateLevelProperties(order);
+        }
+        else{
+            List<Order> orderList = new ArrayList<>();
+            orderList.add(order);
+            levelPropertiesHashMap.put(levelPropertiesKey,
+                    new LevelProperties(
+                            1,
+                            order.getQuantity(),
+                            (order.getQuantity() * order.getPrice()),
+                            orderList
+                    ));
+        }
 
-  public List<Order> getOrdersAtLevel() {
-    return ordersAtLevel;
-  }
+        if (this.getBestPrice().equals(Optional.empty())) {
+            this.bestPrice = orderPrice;
+        } else if (order.getSide() == Side.BUY && this.bestPrice.get() < orderPrice.get()) {
+            this.bestPrice = orderPrice;
+        } else if (this.bestPrice.get() > orderPrice.get()) {
+            this.bestPrice = orderPrice;
+        }
+    }
+
+    public Optional<Long> getBestPrice() {
+        return bestPrice;
+    }
+
+    public HashMap<String, LevelProperties> getLevelPropertiesHashMap() {
+        return levelPropertiesHashMap;
+    }
 }
