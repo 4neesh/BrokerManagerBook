@@ -1,9 +1,11 @@
 package com.cfbenchmarks.orderBook;
 
+import com.cfbenchmarks.levelOrders.OrderLinkedList;
+import com.cfbenchmarks.levelOrders.OrderNode;
 import java.util.Comparator;
 import java.util.TreeMap;
 
-public class BidBook extends TreeMap<Long, OrderLinkedList> {
+public class BidBook extends TreeMap<Long, OrderLinkedList> implements OrderBook {
 
   public BidBook() {
     super(Comparator.reverseOrder());

@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.cfbenchmarks.interview.AddOrderTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.601 s <<< FAILURE! - in com.cfbenchmarks.interview.AddOrderTest
+multipleBidAtSameLevelLogged(com.cfbenchmarks.interview.AddOrderTest)  Time elapsed: 0.159 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.AddOrderTest.multipleBidAtSameLevelLogged(AddOrderTest.java:69)
+
+askOrderIsAdded(com.cfbenchmarks.interview.AddOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.AskBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.AddOrderTest.askOrderIsAdded(AddOrderTest.java:55)
+
+bidOrderIsAdded(com.cfbenchmarks.interview.AddOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.AddOrderTest.bidOrderIsAdded(AddOrderTest.java:40)
+
+multipleAskAtSameLevelLogged(com.cfbenchmarks.interview.AddOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.AskBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.AddOrderTest.multipleAskAtSameLevelLogged(AddOrderTest.java:87)
+

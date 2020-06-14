@@ -1,4 +1,44 @@
 -------------------------------------------------------------------------------
 Test set: com.cfbenchmarks.interview.ModifyOrderTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in com.cfbenchmarks.interview.ModifyOrderTest
+Tests run: 10, Failures: 0, Errors: 10, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in com.cfbenchmarks.interview.ModifyOrderTest
+modifyAskAtEndToHigher(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyBidBeforeEndToHigher(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyBidBeforeEndToLower(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyBidAtEndToHigher(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyAskBeforeEndToLower(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyAskAtEndToLower(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyBidAtEndToLower(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+modifyAskBeforeEndToHigher(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+bidMustExistInBookToModify(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+
+askMustExistInBookToModify(com.cfbenchmarks.interview.ModifyOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.ModifyOrderTest.setUp(ModifyOrderTest.java:41)
+

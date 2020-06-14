@@ -1,4 +1,36 @@
 -------------------------------------------------------------------------------
 Test set: com.cfbenchmarks.interview.DeleteOrderTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s - in com.cfbenchmarks.interview.DeleteOrderTest
+Tests run: 8, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in com.cfbenchmarks.interview.DeleteOrderTest
+deleteFromEndInAsk(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+deleteFromEndInBid(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+deleteFromBodyInAsk(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+deleteFromBodyInBid(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+bidMustExistInBookToDelete(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+askMustExistInBookToDelete(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+deleteFromHeadInAsk(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+
+deleteFromHeadInBid(com.cfbenchmarks.interview.DeleteOrderTest)  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.interview.DeleteOrderTest" time="0.001" tests="8" errors="8" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.interview.AddOrderTest" time="0.601" tests="4" errors="4" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,44 +62,24 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="deleteFromEndInAsk" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
+  <testcase name="multipleBidAtSameLevelLogged" classname="com.cfbenchmarks.interview.AddOrderTest" time="0.159">
     <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+	at com.cfbenchmarks.interview.AddOrderTest.multipleBidAtSameLevelLogged(AddOrderTest.java:69)
 </error>
   </testcase>
-  <testcase name="deleteFromEndInBid" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
-    <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+  <testcase name="askOrderIsAdded" classname="com.cfbenchmarks.interview.AddOrderTest" time="0">
+    <error message="com.cfbenchmarks.orderBook.AskBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.AskBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.AddOrderTest.askOrderIsAdded(AddOrderTest.java:55)
 </error>
   </testcase>
-  <testcase name="deleteFromBodyInAsk" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
+  <testcase name="bidOrderIsAdded" classname="com.cfbenchmarks.interview.AddOrderTest" time="0">
     <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+	at com.cfbenchmarks.interview.AddOrderTest.bidOrderIsAdded(AddOrderTest.java:40)
 </error>
   </testcase>
-  <testcase name="deleteFromBodyInBid" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
-    <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
-</error>
-  </testcase>
-  <testcase name="bidMustExistInBookToDelete" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
-    <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
-</error>
-  </testcase>
-  <testcase name="askMustExistInBookToDelete" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
-    <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
-</error>
-  </testcase>
-  <testcase name="deleteFromHeadInAsk" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0">
-    <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
-</error>
-  </testcase>
-  <testcase name="deleteFromHeadInBid" classname="com.cfbenchmarks.interview.DeleteOrderTest" time="0.001">
-    <error message="com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.BidBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
-	at com.cfbenchmarks.interview.DeleteOrderTest.setUp(DeleteOrderTest.java:40)
+  <testcase name="multipleAskAtSameLevelLogged" classname="com.cfbenchmarks.interview.AddOrderTest" time="0">
+    <error message="com.cfbenchmarks.orderBook.AskBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V" type="java.lang.NoSuchMethodError">java.lang.NoSuchMethodError: com.cfbenchmarks.orderBook.AskBook.addOrder(Ljava/lang/Long;Lcom/cfbenchmarks/orderBook/OrderNode;)V
+	at com.cfbenchmarks.interview.AddOrderTest.multipleAskAtSameLevelLogged(AddOrderTest.java:87)
 </error>
   </testcase>
 </testsuite>

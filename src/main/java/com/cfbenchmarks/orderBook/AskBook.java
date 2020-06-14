@@ -1,8 +1,10 @@
 package com.cfbenchmarks.orderBook;
 
+import com.cfbenchmarks.levelOrders.OrderLinkedList;
+import com.cfbenchmarks.levelOrders.OrderNode;
 import java.util.TreeMap;
 
-public class AskBook extends TreeMap<Long, OrderLinkedList> {
+public class AskBook extends TreeMap<Long, OrderLinkedList> implements OrderBook {
 
   public void addOrder(Long key, OrderNode order) {
 
