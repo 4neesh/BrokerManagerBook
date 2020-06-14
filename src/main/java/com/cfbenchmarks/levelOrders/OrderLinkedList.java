@@ -9,7 +9,7 @@ public class OrderLinkedList {
 
   public OrderLinkedList(Order order) {
     this.head = new OrderNode(order);
-    this.last = this.head;
+    this.last = new OrderNode(order);
   }
 
   public void append(OrderNode order) {

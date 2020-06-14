@@ -8,7 +8,7 @@ import java.util.*;
 
 public class OrderBookManagerImpl implements OrderBookManager {
 
-  HashMap<String, Long> askLookup= new HashMap<>();
+  HashMap<String, Long> askLookup = new HashMap<>();
   HashMap<String, Long> bidLookup = new HashMap<>();
 
   HashMap<String, String> askInstrumentLookup = new HashMap<>();
@@ -27,7 +27,8 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
       addOrderToBookAndLookup(bidBookHashMap.get(order.getInstrument()), order);
       bidInstrumentLookup.put(order.getOrderId(), order.getInstrument());
-    } else if (askBookHashMap.containsKey(order.getInstrument()) && order.getSide().equals(Side.SELL)) {
+    } else if (askBookHashMap.containsKey(order.getInstrument())
+        && order.getSide().equals(Side.SELL)) {
 
       addOrderToBookAndLookup(askBookHashMap.get(order.getInstrument()), order);
       askInstrumentLookup.put(order.getOrderId(), order.getInstrument());
@@ -108,12 +109,40 @@ public class OrderBookManagerImpl implements OrderBookManager {
       bidBookHashMap.get(bidInstrumentLookup.get(orderId)).removeOrder(orderId, orderPrice);
       bidLookup.remove(orderId);
 
+      String propertiesKey = bidInstrumentLookup.get(orderId) + Side.BUY.toString();
+      if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == orderPrice
+          && bidBookHashMap.get(bidInstrumentLookup.get(orderId)).get(orderPrice) == null) {
+        Optional<Long> newBestPrice;
+        if (bidBookHashMap.get(bidInstrumentLookup.get(orderId)).isEmpty()) {
+          newBestPrice = Optional.empty();
+        } else {
+          newBestPrice =
+              Optional.of(bidBookHashMap.get(bidInstrumentLookup.get(orderId)).firstKey());
+        }
+
+        instrumentPropertyMap.get(propertiesKey).setNextBestPrice(newBestPrice);
+      }
       return true;
     } else if (askLookup.containsKey(orderId)) {
 
       long orderPrice = askLookup.get(orderId);
       askBookHashMap.get(askInstrumentLookup.get(orderId)).removeOrder(orderId, orderPrice);
       askLookup.remove(orderId);
+
+      String propertiesKey = askInstrumentLookup.get(orderId) + Side.SELL.toString();
+      if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == orderPrice
+          && askBookHashMap.get(askInstrumentLookup.get(orderId)).get(orderPrice) == null) {
+        Optional<Long> newBestPrice;
+
+        if (askBookHashMap.get(askInstrumentLookup.get(orderId)).isEmpty()) {
+          newBestPrice = Optional.empty();
+        } else {
+          newBestPrice =
+              Optional.of(askBookHashMap.get(askInstrumentLookup.get(orderId)).firstKey());
+        }
+
+        instrumentPropertyMap.get(propertiesKey).setNextBestPrice(newBestPrice);
+      }
 
       return true;
     } else {

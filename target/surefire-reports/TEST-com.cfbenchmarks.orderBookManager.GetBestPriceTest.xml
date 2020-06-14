@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.AddOrderTest" time="1.002" tests="4" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0.001" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,8 +62,18 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="multipleBidAtSameLevelLogged" classname="com.cfbenchmarks.orderBookManager.AddOrderTest" time="0.744"/>
-  <testcase name="askOrderIsAdded" classname="com.cfbenchmarks.orderBookManager.AddOrderTest" time="0.121"/>
-  <testcase name="bidOrderIsAdded" classname="com.cfbenchmarks.orderBookManager.AddOrderTest" time="0.001"/>
-  <testcase name="multipleAskAtSameLevelLogged" classname="com.cfbenchmarks.orderBookManager.AddOrderTest" time="0.002"/>
+  <testcase name="bestBidPriceIsHighest" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskPriceIsLowestAfterEqualAdd" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskPriceIsLowest" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskPriceIsLowestAfterHigherAdd" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestBidPriceIsHighestAfterLowerAdd" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestBidIsOptionalEmptyWhenOnlyOrderIsDeleted" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0.001"/>
+  <testcase name="bestBidPriceIsHighestAfterHigherAdd" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestBidPriceStillHighestAfterDeleteNonHighest" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskIsOptionalEmptyWhenOnlyOrderIsDeleted" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskPriceIsMovedToNextAfterDeleteHighest" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskPriceIsLowestAfterLowerAdd" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestBidPriceIsHighestAfterEqualAdd" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestAskPriceStillHighestAfterDeleteNonHighest" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
+  <testcase name="bestBidPriceIsMovedToNextAfterDeleteHighest" classname="com.cfbenchmarks.orderBookManager.GetBestPriceTest" time="0"/>
 </testsuite>

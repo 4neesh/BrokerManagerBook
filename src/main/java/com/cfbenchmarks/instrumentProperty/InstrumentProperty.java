@@ -49,7 +49,10 @@ public class InstrumentProperty {
     return bestPrice;
   }
 
-  public void setNextBestPrice() {}
+  public void setNextBestPrice(Optional<Long> newBestPrice) {
+
+    this.bestPrice = newBestPrice;
+  }
 
   public HashMap<String, LevelProperty> getLevelPropertiesHashMap() {
     return levelPropertiesHashMap;

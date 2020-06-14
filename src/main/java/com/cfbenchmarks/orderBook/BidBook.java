@@ -24,7 +24,6 @@ public class BidBook extends TreeMap<Long, OrderLinkedList> implements OrderBook
 
     if (super.get(orderPrice).head.next == null) {
       remove(orderPrice);
-
     } else {
       super.get(orderPrice).removeNode(orderId);
     }

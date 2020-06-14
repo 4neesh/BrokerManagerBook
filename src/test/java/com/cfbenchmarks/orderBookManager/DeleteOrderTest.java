@@ -21,7 +21,6 @@ public class DeleteOrderTest {
   @Before
   public void setUp() {
 
-
     orderBookManager = new OrderBookManagerImpl();
     buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
@@ -47,20 +46,18 @@ public class DeleteOrderTest {
   @Test
   public void bidMustExistInBookToDelete() {
 
-    Order buy4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
+    Order buy4 = new Order("order9", "VOD.L", Side.BUY, 200, 10);
 
     assertFalse(orderBookManager.bidLookup.containsKey(buy4.getOrderId()));
 
     assertEquals(
-        buy4.getOrderId() + " does not exist in bid book.",
-        orderBookManager.deleteOrder(buy4.getOrderId()),
-        false);
+        "buy4 does not exist in bidBook.", orderBookManager.deleteOrder(buy4.getOrderId()), false);
   }
 
   @Test
   public void askMustExistInBookToDelete() {
 
-    Order sell4 = new Order("order7", "VOD.L", Side.SELL, 200, 10);
+    Order sell4 = new Order("order10", "VOD.L", Side.SELL, 200, 10);
 
     assertFalse(orderBookManager.bidLookup.containsKey(sell4.getOrderId()));
 
@@ -200,7 +197,8 @@ public class DeleteOrderTest {
   public void deleteFromEndInBid() {
 
     assertEquals(
-        orderBookManager.bidBookHashMap.get(buy1.getInstrument()).get(buy1.getPrice()).last.order,buy3);
+        orderBookManager.bidBookHashMap.get(buy1.getInstrument()).get(buy1.getPrice()).last.order,
+        buy3);
     assertTrue(
         orderBookManager
                 .bidBookHashMap
@@ -224,7 +222,13 @@ public class DeleteOrderTest {
   public void deleteFromEndInAsk() {
 
     assertTrue(
-        orderBookManager.askBookHashMap.get(sell1.getInstrument()).get(sell1.getPrice()).last.order.equals(sell3));
+        orderBookManager
+            .askBookHashMap
+            .get(sell1.getInstrument())
+            .get(sell1.getPrice())
+            .last
+            .order
+            .equals(sell3));
     assertTrue(
         orderBookManager
                 .askBookHashMap
@@ -247,22 +251,69 @@ public class DeleteOrderTest {
   @Test
   public void removeFromBookForSingleBid() {
 
-    assertEquals("Head and Last Node are not equal for single order in book",
-        orderBookManager.bidBookHashMap.get(buyOther.getInstrument()).get(buyOther.getPrice()).last.order
-            ,orderBookManager
-                .bidBookHashMap
-                .get(buyOther.getInstrument())
-                .get(buyOther.getPrice())
-                .head.order);
-    assertEquals("Head is not buyOther",orderBookManager.bidBookHashMap.get(buyOther.getInstrument()).get(buyOther.getPrice()).head, buyOther );
+    assertEquals(
+        "Head and Last Node are not equal for single order in bid book",
+        orderBookManager
+            .bidBookHashMap
+            .get(buyOther.getInstrument())
+            .get(buyOther.getPrice())
+            .last
+            .order,
+        orderBookManager
+            .bidBookHashMap
+            .get(buyOther.getInstrument())
+            .get(buyOther.getPrice())
+            .head
+            .order);
+    assertEquals(
+        "Head is not buyOther in bidBook",
+        orderBookManager
+            .bidBookHashMap
+            .get(buyOther.getInstrument())
+            .get(buyOther.getPrice())
+            .head
+            .order,
+        buyOther);
 
     orderBookManager.deleteOrder(buyOther.getOrderId());
 
-    assertEquals("Removing single entry from level does not remove the level from bidBook",
+    assertEquals(
+        "Removing single entry from level does not remove the level from bidBook",
         orderBookManager.bidBookHashMap.get(buyOther.getInstrument()).get(buyOther.getPrice()),
         null);
   }
 
   @Test
-  public void removeFromBookForSingleAsk() {}
+  public void removeFromBookForSingleAsk() {
+    assertEquals(
+        "Head and Last Node are not equal for single order in ask book",
+        orderBookManager
+            .askBookHashMap
+            .get(sellOther.getInstrument())
+            .get(sellOther.getPrice())
+            .last
+            .order,
+        orderBookManager
+            .askBookHashMap
+            .get(sellOther.getInstrument())
+            .get(sellOther.getPrice())
+            .head
+            .order);
+    assertEquals(
+        "Head is not buyOther in askBook",
+        orderBookManager
+            .askBookHashMap
+            .get(sellOther.getInstrument())
+            .get(sellOther.getPrice())
+            .head
+            .order,
+        sellOther);
+
+    orderBookManager.deleteOrder(sellOther.getOrderId());
+
+    assertEquals(
+        "Removing single entry from level does not remove the level from askBook",
+        orderBookManager.askBookHashMap.get(sellOther.getInstrument()).get(sellOther.getPrice()),
+        null);
+  }
 }

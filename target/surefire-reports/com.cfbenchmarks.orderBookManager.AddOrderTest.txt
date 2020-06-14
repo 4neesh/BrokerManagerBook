@@ -1,20 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.cfbenchmarks.orderBookManager.AddOrderTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 4, Skipped: 0, Time elapsed: 0.091 s <<< FAILURE! - in com.cfbenchmarks.orderBookManager.AddOrderTest
-multipleBidAtSameLevelLogged(com.cfbenchmarks.orderBookManager.AddOrderTest)  Time elapsed: 0.071 s  <<< ERROR!
-java.lang.NullPointerException
-	at com.cfbenchmarks.orderBookManager.AddOrderTest.multipleBidAtSameLevelLogged(AddOrderTest.java:78)
-
-askOrderIsAdded(com.cfbenchmarks.orderBookManager.AddOrderTest)  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.NullPointerException
-	at com.cfbenchmarks.orderBookManager.AddOrderTest.askOrderIsAdded(AddOrderTest.java:60)
-
-bidOrderIsAdded(com.cfbenchmarks.orderBookManager.AddOrderTest)  Time elapsed: 0 s  <<< ERROR!
-java.lang.NullPointerException
-	at com.cfbenchmarks.orderBookManager.AddOrderTest.bidOrderIsAdded(AddOrderTest.java:34)
-
-multipleAskAtSameLevelLogged(com.cfbenchmarks.orderBookManager.AddOrderTest)  Time elapsed: 0 s  <<< ERROR!
-java.lang.NullPointerException
-	at com.cfbenchmarks.orderBookManager.AddOrderTest.multipleAskAtSameLevelLogged(AddOrderTest.java:111)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.002 s - in com.cfbenchmarks.orderBookManager.AddOrderTest

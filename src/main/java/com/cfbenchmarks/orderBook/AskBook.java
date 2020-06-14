@@ -18,7 +18,7 @@ public class AskBook extends TreeMap<Long, OrderLinkedList> implements OrderBook
   public void removeOrder(String orderId, long orderPrice) {
 
     if (super.get(orderPrice).head.next == null) {
-      remove(orderId);
+      remove(orderPrice);
     } else {
       super.get(orderPrice).removeNode(orderId);
     }
