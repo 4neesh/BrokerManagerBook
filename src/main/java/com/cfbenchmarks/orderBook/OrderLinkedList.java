@@ -4,98 +4,79 @@ import com.cfbenchmarks.interview.Order;
 
 public class OrderLinkedList {
 
-    public OrderNode head;
-    public OrderNode last;
+  public OrderNode head;
+  public OrderNode last;
 
-    public OrderLinkedList(Order order) {
-        this.head = new OrderNode(order);
-        this.last = this.head;
+  public OrderLinkedList(Order order) {
+    this.head = new OrderNode(order);
+    this.last = this.head;
+  }
+
+  public void append(OrderNode order) {
+
+    OrderNode current = this.head;
+
+    while (current.next != null) {
+      current = current.next;
     }
 
-    public void append(OrderNode order) {
+    order.previous = current;
 
-        OrderNode current = this.head;
+    current.next = order;
+    this.last = order;
+  }
 
-        while(current.next != null){
-            current = current.next;
-        }
+  public void modifyOrder(String orderId, long quantity) {
 
-        order.previous = current;
+    OrderNode current = this.head;
 
+    while (current.order.getOrderId() != orderId) {
 
-        current.next = order;
-        this.last = order;
-
+      current = current.next;
     }
 
+    if (quantity > current.order.getQuantity()) {
 
+      current.order.setQuantity(quantity);
 
-    public void modifyOrder(String orderId, long quantity){
+      if (current != this.last) {
 
-        OrderNode current = this.head;
+        OrderNode newOrder = current;
+        this.removeNode(current.order.getOrderId());
 
-        while(current.order.getOrderId() != orderId){
+        this.append(newOrder);
+      }
 
-            current = current.next;
+    } else {
 
-        }
-
-        if(quantity > current.order.getQuantity()){
-
-            current.order.setQuantity(quantity);
-
-            if(current != this.last){
-
-                OrderNode newOrder = current;
-                this.removeNode(current.order.getOrderId());
-
-                this.append(newOrder);
-
-            }
-
-        }
-        else{
-
-            current.order.setQuantity(quantity);
-
-        }
-
-
+      current.order.setQuantity(quantity);
     }
+  }
 
+  public void removeNode(String orderId) {
 
-    public void removeNode(String orderId) {
+    if (this.head.order.getOrderId() == orderId) {
 
-        if(this.head.order.getOrderId() == orderId){
+      this.head = this.head.next;
+      this.head.previous = null;
 
-            this.head = this.head.next;
-            this.head.previous = null;
+    } else if (this.last.order.getOrderId() == orderId) {
 
+      this.last = this.last.previous;
+      this.last.next = null;
+
+    } else {
+      OrderNode previous = this.head;
+      OrderNode current = this.head.next;
+      while (current.next != null) {
+        if (current.order.getOrderId().equals(orderId)) {
+          break;
         }
-        else if(this.last.order.getOrderId() == orderId){
-
-            this.last = this.last.previous;
-            this.last.next = null;
-
-        }
-        else {
-            OrderNode previous = this.head;
-            OrderNode current = this.head.next;
-            while (current.next != null) {
-                if (current.order.getOrderId().equals(orderId)) {
-                    break;
-                }
-                current = current.next;
-                previous = previous.next;
-            }
-            previous.next = current.next;
-            current.next.previous = previous;
-
-
-        }
-
-
+        current = current.next;
+        previous = previous.next;
+      }
+      previous.next = current.next;
+      current.next.previous = previous;
     }
-
-
+  }
 }
