@@ -52,7 +52,7 @@ public class DeleteOrderTest {
 
     assertFalse(orderBookManager.bidLookup.containsKey(buy4.getOrderId()));
 
-    assertFalse(orderBookManager.deleteOrder(buy4.getOrderId()));
+    assertEquals(buy4.getOrderId() + " does not exist in bid book.", orderBookManager.deleteOrder(buy4.getOrderId()), false);
   }
 
   @Test
@@ -62,7 +62,7 @@ public class DeleteOrderTest {
 
     assertFalse(orderBookManager.bidLookup.containsKey(sell4.getOrderId()));
 
-    assertFalse(orderBookManager.deleteOrder(sell4.getOrderId()));
+    assertEquals(sell4.getOrderId() + " does not exist in ask book", orderBookManager.deleteOrder(sell4.getOrderId()), false);
   }
 
   @Test

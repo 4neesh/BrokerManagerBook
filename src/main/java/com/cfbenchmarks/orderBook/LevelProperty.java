@@ -4,10 +4,10 @@ import com.cfbenchmarks.interview.Order;
 
 import java.util.List;
 
-public class LevelProperties {
+public class LevelProperty {
 
 
-    public LevelProperties(long numberOfOrders, long quantity, long volume, List<Order> ordersAtLevel) {
+    public LevelProperty(long numberOfOrders, long quantity, long volume, List<Order> ordersAtLevel) {
         this.numberOfOrders = numberOfOrders;
         this.quantity = quantity;
         this.volume = volume;

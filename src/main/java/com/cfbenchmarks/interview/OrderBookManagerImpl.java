@@ -15,23 +15,23 @@ public class OrderBookManagerImpl implements OrderBookManager {
     BidBook bidBook;
 
     public OrderBookManagerImpl(
-            AskBook askBook, BidBook bidBook, HashMap<String, InstrumentProperty> instrumentPropertyMap) {
+            AskBook askBook,
+            BidBook bidBook,
+            HashMap<String, InstrumentProperty> instrumentPropertyMap) {
 
-        this.askBook = askBook;
-        this.bidBook = bidBook;
-        this.instrumentPropertyMap = instrumentPropertyMap;
-    }
+                this.askBook = askBook;
+                this.bidBook = bidBook;
+                this.instrumentPropertyMap = instrumentPropertyMap;
+}
 
     public void addOrder(Order order) {
 
         String propertyKey;
-        if (order.getSide() == Side.BUY) {
+        if (order.getSide().equals(Side.BUY)) {
+
             bidLookup.put(order.getOrderId(), order.getPrice());
             bidBook.addOrder(order.getPrice(), new OrderNode(order));
-
             propertyKey = order.getInstrument() + Side.BUY.toString();
-
-
 
         } else {
             askLookup.put(order.getOrderId(), order.getPrice());
@@ -47,7 +47,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
             List<Order> newOrderList = new ArrayList<>();
             newOrderList.add(order);
             Optional<Long> bestPrice = Optional.of(order.getPrice());
-            HashMap<String, LevelProperties> levelPropertiesHashMap = new HashMap<>();
+            HashMap<String, LevelProperty> levelPropertiesHashMap = new HashMap<>();
 
             instrumentPropertyMap.put(
                     propertyKey,

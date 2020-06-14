@@ -11,11 +11,11 @@ import java.util.Optional;
 public class InstrumentProperty {
 
     private Optional<Long> bestPrice;
-    private HashMap<String, LevelProperties> levelPropertiesHashMap;
+    private HashMap<String, LevelProperty> levelPropertiesHashMap;
 
 
     public InstrumentProperty(
-        Optional<Long> bestPrice, HashMap<String, LevelProperties> levelPropertiesHashMap) {
+        Optional<Long> bestPrice, HashMap<String, LevelProperty> levelPropertiesHashMap) {
 
         this.bestPrice = bestPrice;
         this.levelPropertiesHashMap = levelPropertiesHashMap;
@@ -35,7 +35,7 @@ public class InstrumentProperty {
             List<Order> orderList = new ArrayList<>();
             orderList.add(order);
             levelPropertiesHashMap.put(levelPropertiesKey,
-                    new LevelProperties(
+                    new LevelProperty(
                             1,
                             order.getQuantity(),
                             (order.getQuantity() * order.getPrice()),
@@ -56,7 +56,7 @@ public class InstrumentProperty {
         return bestPrice;
     }
 
-    public HashMap<String, LevelProperties> getLevelPropertiesHashMap() {
+    public HashMap<String, LevelProperty> getLevelPropertiesHashMap() {
         return levelPropertiesHashMap;
     }
 }
