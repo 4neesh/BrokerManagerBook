@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0.001" tests="10" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,14 +62,12 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="modifyAskAtEndToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="modifyBidBeforeEndToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="modifyBidBeforeEndToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="modifyBidAtEndToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="modifyAskBeforeEndToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="modifyAskAtEndToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="modifyBidAtEndToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0.001"/>
-  <testcase name="modifyAskBeforeEndToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="bidMustExistInBookToModify" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="askMustExistInBookToModify" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
+  <testcase name="bidBookNumberReflectsLevel" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="askBookNumberReducesToOne" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="askBookNumberReflectsLevel" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="askBookReturnsOneAfterAdding" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="bidBookReturnsTwoAfterAddingMultiple" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="askBookReturnsTwoAfterAddingMultiple" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="bidBookNumberReducesToOne" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
+  <testcase name="bidBookReturnsOneAfterAdding" classname="com.cfbenchmarks.orderBookManager.GetOrderNumAtLevelTest" time="0"/>
 </testsuite>

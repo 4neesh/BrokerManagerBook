@@ -45,6 +45,11 @@ public class InstrumentProperty {
     }
   }
 
+  public void deleteFromLevel(String instrumentPropertyKey, Order order) {
+
+    levelPropertiesHashMap.get(instrumentPropertyKey).removeOrderFromLevelProperties(order);
+  }
+
   public Optional<Long> getBestPrice() {
     return bestPrice;
   }

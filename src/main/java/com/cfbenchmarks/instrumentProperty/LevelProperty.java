@@ -40,6 +40,14 @@ public class LevelProperty {
     this.numberOfOrders += 1;
     this.ordersAtLevel.add(order);
     this.quantity += order.getQuantity();
-    this.volume += (order.getQuantity() + order.getPrice());
+    this.volume += (order.getQuantity() * order.getPrice());
+  }
+
+  public void removeOrderFromLevelProperties(Order order) {
+
+    this.numberOfOrders -= 1;
+    this.ordersAtLevel.remove(order);
+    this.quantity -= order.getQuantity();
+    this.volume -= (order.getQuantity() * order.getPrice());
   }
 }
