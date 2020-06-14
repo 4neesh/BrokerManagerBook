@@ -10,17 +10,17 @@ public class OrderBookManagerImpl implements OrderBookManager {
     HashMap<String, Long> askLookup = new HashMap<>();
     HashMap<String, Long> bidLookup = new HashMap<>();
 
-    HashMap<String, InstrumentProperty> instrumentProperties = new HashMap<>();
+    HashMap<String, InstrumentProperty> instrumentPropertyMap;
 
 
     AskBook askBook;
     BidBook bidBook;
 
-    public OrderBookManagerImpl(AskBook askBook, BidBook bidBook) {
+    public OrderBookManagerImpl(AskBook askBook, BidBook bidBook, HashMap<String, InstrumentProperty> instrumentPropertyMap) {
 
         this.askBook = askBook;
         this.bidBook = bidBook;
-
+        this.instrumentPropertyMap = instrumentPropertyMap;
     }
 
 
@@ -29,9 +29,34 @@ public class OrderBookManagerImpl implements OrderBookManager {
         if (order.getSide() == Side.BUY) {
             bidLookup.put(order.getOrderId(), order.getPrice());
             bidBook.addOrder(order.getPrice(), new OrderNode(order));
+
+            String propertyKey = order.getInstrument() + Side.BUY.toString();
+
+            if(instrumentPropertyMap.containsKey(propertyKey)){
+
+                instrumentPropertyMap.get(propertyKey).updateProperties(order);
+
+            }
+            else{
+                List<Order> newOrderList = new ArrayList<>();
+                newOrderList.add(order);
+                Optional<Long> bestPrice = Optional.of(order.getPrice());
+
+                instrumentPropertyMap.put(propertyKey, new InstrumentProperty(
+                        bestPrice,
+                        1,
+                        order.getQuantity(),
+                        order.getQuantity() * order.getPrice(),
+                        newOrderList
+                ));
+
+            }
+
         } else {
             askLookup.put(order.getOrderId(), order.getPrice());
             askBook.addOrder(order.getPrice(), new OrderNode(order));
+
+
         }
 
     }
@@ -83,6 +108,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
         String propertiesKey = instrument + side.toString();
 
+
         return Optional.empty();
     }
 
@@ -116,7 +142,9 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
         AskBook askBook = new AskBook();
         BidBook bidBook = new BidBook();
-        OrderBookManagerImpl orderBookManager = new OrderBookManagerImpl(askBook, bidBook);
+        HashMap<String, InstrumentProperty> instrumentPropertyHashMap = new HashMap<>();
+
+        OrderBookManagerImpl orderBookManager = new OrderBookManagerImpl(askBook, bidBook, instrumentPropertyHashMap);
         Order buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
         Order buy2 = new Order("order2", "VOD.L", Side.BUY, 100, 10);
         Order buy3 = new Order("order3", "VOD.L", Side.BUY, 40, 10);
@@ -135,12 +163,12 @@ public class OrderBookManagerImpl implements OrderBookManager {
         List<OrderLinkedList> bidListOfLevels = new ArrayList<>(orderBookManager.bidBook.values());
 
         System.out.println("ask levels:");
-        for(OrderLinkedList level : askListOfLevels){
+        for (OrderLinkedList level : askListOfLevels) {
             System.out.println(level.head.order.getPrice());
         }
 
         System.out.println("\nbid levels:");
-        for(OrderLinkedList level : bidListOfLevels){
+        for (OrderLinkedList level : bidListOfLevels) {
             System.out.println(level.head.order.getPrice());
         }
 

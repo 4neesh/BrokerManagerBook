@@ -2,10 +2,12 @@ package com.cfbenchmarks.interview;
 
 import com.cfbenchmarks.orderBook.AskBook;
 import com.cfbenchmarks.orderBook.BidBook;
+import com.cfbenchmarks.orderBook.InstrumentProperty;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Comparator;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +16,7 @@ public class DeleteOrderTest {
     private static OrderBookManagerImpl orderBookManager;
     private static BidBook bidBook;
     private static AskBook askBook;
+    private static HashMap<String, InstrumentProperty> instrumentPropertyHashMap;
     private static Order buy1;
     private static Order buy2;
     private static Order buy3;
@@ -26,7 +29,9 @@ public class DeleteOrderTest {
 
         askBook = new AskBook();
         bidBook = new BidBook();
-        orderBookManager = new OrderBookManagerImpl(askBook, bidBook);
+        instrumentPropertyHashMap = new HashMap<>();
+
+        orderBookManager = new OrderBookManagerImpl(askBook, bidBook, instrumentPropertyHashMap);
         buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
         buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
         buy3 = new Order("order3", "VOD.L", Side.BUY, 200, 10);
