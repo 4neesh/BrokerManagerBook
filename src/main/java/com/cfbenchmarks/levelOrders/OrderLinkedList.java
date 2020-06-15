@@ -1,6 +1,8 @@
 package com.cfbenchmarks.levelOrders;
 
 import com.cfbenchmarks.order.Order;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderLinkedList {
 
@@ -113,6 +115,22 @@ public class OrderLinkedList {
       this.removeNode(current.order.getOrderId());
 
       this.append(newOrder);
+    }
+  }
+
+  public List<Order> getListOfOrders() {
+    List<Order> orderAtLevel = new ArrayList<>();
+
+    if (head != null) {
+
+      while (head.next != null) {
+        orderAtLevel.add(head.order);
+        head = head.next;
+      }
+
+      return orderAtLevel;
+    } else {
+      return null;
     }
   }
 }

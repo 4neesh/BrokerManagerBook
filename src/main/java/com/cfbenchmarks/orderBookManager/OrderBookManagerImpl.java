@@ -2,6 +2,7 @@ package com.cfbenchmarks.orderBookManager;
 
 import com.cfbenchmarks.instrumentProperty.InstrumentProperty;
 import com.cfbenchmarks.instrumentProperty.LevelProperty;
+import com.cfbenchmarks.levelOrders.OrderLinkedList;
 import com.cfbenchmarks.levelOrders.OrderNode;
 import com.cfbenchmarks.order.Order;
 import com.cfbenchmarks.order.Side;
@@ -97,13 +98,14 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
   public List<Order> getOrdersAtLevel(String instrument, Side side, long price) {
 
-    String propertiesKey = instrument + side.toString();
-    String levelPropertiesKey = propertiesKey + price;
-    return instrumentPropertyMap
-            .get(propertiesKey)
-            .getLevelPropertiesHashMap()
-            .get(levelPropertiesKey)
-            .getOrdersAtLevel();
+    if (side.equals(Side.BUY)) {
+
+      OrderLinkedList orders = bidBookHashMap.get(instrument).get(price);
+      return orders.getListOfOrders();
+    } else {
+      OrderLinkedList orders = askBookHashMap.get(instrument).get(price);
+      return orders.getListOfOrders();
+    }
   }
 
   private Long getNextBestPrice(HashMap<String, ? extends OrderBook> orderBook, String orderId) {
@@ -185,11 +187,10 @@ public class OrderBookManagerImpl implements OrderBookManager {
     String propertiesKey = instrument + side.toString();
     String levelPropertiesKey = instrument + side.toString() + price;
     return instrumentPropertyMap
-              .get(propertiesKey)
-              .getLevelPropertiesHashMap()
-              .get(levelPropertiesKey)
-              .getNumberOfOrders();
-
+        .get(propertiesKey)
+        .getLevelPropertiesHashMap()
+        .get(levelPropertiesKey)
+        .getNumberOfOrders();
   }
 
   public long getTotalQuantityAtLevel(String instrument, Side side, long price) {
@@ -212,8 +213,6 @@ public class OrderBookManagerImpl implements OrderBookManager {
         .get(levelPropertiesKey)
         .getVolume();
   }
-
-
 
   private void createNewBookForOrder(Order order) {
 
