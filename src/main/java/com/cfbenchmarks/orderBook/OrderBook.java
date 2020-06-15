@@ -10,15 +10,15 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
   public OrderBook() {}
 
   public OrderBook(Comparator comparator) {
-    super(Comparator.reverseOrder());
+    super(comparator);
   }
 
-  public void addOrder(Long key, OrderNode order) {
+  public void addOrder(Long key, OrderNode orderNode) {
 
     if (super.get(key) == null) {
-      super.put(key, new OrderLinkedList(order.order));
+      super.put(key, new OrderLinkedList(orderNode.order));
     } else {
-      super.get(key).append(order);
+      super.get(key).append(orderNode);
     }
   }
 
@@ -33,7 +33,6 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
   }
 
   public void modifyOrder(String orderId, long newQuantity, long price) {
-
     super.get(price).modifyOrder(orderId, newQuantity);
   }
 }

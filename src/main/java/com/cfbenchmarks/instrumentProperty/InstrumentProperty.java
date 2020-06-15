@@ -21,11 +21,36 @@ public class InstrumentProperty {
 
   public void updateProperties(Order order) {
 
+    updatePropertiesAtLevel(order);
+
+    reviewBestPrice(order);
+  }
+
+  private void reviewBestPrice(Order order) {
     Optional<Long> orderPrice = Optional.of(order.getPrice());
+
+    if (this.getBestPrice().equals(Optional.empty())) {
+      this.bestPrice = orderPrice;
+    } else if (orderIsBidAndHigherThanBest(order)) {
+      this.bestPrice = orderPrice;
+    } else if (orderIsAskAndLessThanBest(order)) {
+      this.bestPrice = orderPrice;
+    }
+  }
+
+  private boolean orderIsAskAndLessThanBest(Order order) {
+    return order.getSide().equals(Side.SELL) && this.bestPrice.get() > order.getPrice();
+  }
+
+  private boolean orderIsBidAndHigherThanBest(Order order) {
+    return order.getSide().equals(Side.BUY) && this.bestPrice.get() < order.getPrice();
+  }
+
+  private void updatePropertiesAtLevel(Order order) {
     String levelPropertiesKey =
         order.getInstrument() + order.getSide().toString() + order.getPrice();
 
-    if (levelPropertiesHashMap.containsKey(levelPropertiesKey)) {
+    if (levelExists(levelPropertiesKey)) {
       levelPropertiesHashMap.get(levelPropertiesKey).updateLevelProperties(order);
     } else {
       List<Order> orderList = new ArrayList<>();
@@ -35,18 +60,13 @@ public class InstrumentProperty {
           new LevelProperty(
               1, order.getQuantity(), (order.getQuantity() * order.getPrice()), orderList));
     }
+  }
 
-    if (this.getBestPrice().equals(Optional.empty())) {
-      this.bestPrice = orderPrice;
-    } else if (order.getSide().equals(Side.BUY) && this.bestPrice.get() < orderPrice.get()) {
-      this.bestPrice = orderPrice;
-    } else if (order.getSide().equals(Side.SELL) && this.bestPrice.get() > orderPrice.get()) {
-      this.bestPrice = orderPrice;
-    }
+  private boolean levelExists(String levelPropertiesKey) {
+    return levelPropertiesHashMap.containsKey(levelPropertiesKey);
   }
 
   public void deleteFromLevel(String instrumentPropertyKey, Order order) {
-
     levelPropertiesHashMap.get(instrumentPropertyKey).removeOrderFromLevelProperties(order);
   }
 
@@ -55,7 +75,6 @@ public class InstrumentProperty {
   }
 
   public void setNextBestPrice(Optional<Long> newBestPrice) {
-
     this.bestPrice = newBestPrice;
   }
 
