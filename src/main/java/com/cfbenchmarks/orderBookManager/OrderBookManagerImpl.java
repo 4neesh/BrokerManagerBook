@@ -51,65 +51,39 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
   private HashMap<String, ? extends OrderBook> getOrderSideBook(String orderId) {
 
-    if (orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
-      return bidBookHashMap;
+    if (orderHashMap.containsKey(orderId)) {
+      if (orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
+        return bidBookHashMap;
+      } else {
+        return askBookHashMap;
+      }
     } else {
-      return askBookHashMap;
+      return null;
     }
   }
 
   public boolean deleteOrder(String orderId) {
 
-    if (orderHashMap.containsKey(orderId) && orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
+    HashMap<String, ? extends OrderBook> orderBook = getOrderSideBook(orderId);
+
+    if (orderHashMap.containsKey(orderId)) {
 
       long orderPrice = orderHashMap.get(orderId).getPrice();
-      bidBookHashMap
-          .get(orderHashMap.get(orderId).getInstrument())
-          .removeOrder(orderId, orderPrice);
+      orderBook.get(orderHashMap.get(orderId).getInstrument()).removeOrder(orderId, orderPrice);
 
-      String propertiesKey = orderHashMap.get(orderId).getInstrument() + Side.BUY.toString();
+      String propertiesKey =
+          orderHashMap.get(orderId).getInstrument()
+              + orderHashMap.get(orderId).getSide().toString();
 
       if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == orderPrice
-          && bidBookHashMap.get(orderHashMap.get(orderId).getInstrument()).get(orderPrice)
-              == null) {
+          && orderBook.get(orderHashMap.get(orderId).getInstrument()).get(orderPrice) == null) {
         Optional<Long> newBestPrice;
 
-        if (bidBookHashMap.get(orderHashMap.get(orderId).getInstrument()).isEmpty()) {
+        if (orderBook.get(orderHashMap.get(orderId).getInstrument()).isEmpty()) {
           newBestPrice = Optional.empty();
         } else {
           newBestPrice =
-              Optional.of(bidBookHashMap.get(orderHashMap.get(orderId).getInstrument()).firstKey());
-        }
-
-        instrumentPropertyMap.get(propertiesKey).setNextBestPrice(newBestPrice);
-      }
-      Order order = orderHashMap.get(orderId);
-      String levelPropertiesKey =
-          order.getInstrument() + order.getSide().toString() + order.getPrice();
-      instrumentPropertyMap.get(propertiesKey).deleteFromLevel(levelPropertiesKey, order);
-      orderHashMap.remove(orderId);
-
-      return true;
-    } else if (orderHashMap.containsKey(orderId)
-        && orderHashMap.get(orderId).getSide().equals(Side.SELL)) {
-
-      long orderPrice = orderHashMap.get(orderId).getPrice();
-      askBookHashMap
-          .get(orderHashMap.get(orderId).getInstrument())
-          .removeOrder(orderId, orderPrice);
-
-      String propertiesKey = orderHashMap.get(orderId).getInstrument() + Side.SELL.toString();
-
-      if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == orderPrice
-          && askBookHashMap.get(orderHashMap.get(orderId).getInstrument()).get(orderPrice)
-              == null) {
-        Optional<Long> newBestPrice;
-
-        if (askBookHashMap.get(orderHashMap.get(orderId).getInstrument()).isEmpty()) {
-          newBestPrice = Optional.empty();
-        } else {
-          newBestPrice =
-              Optional.of(askBookHashMap.get(orderHashMap.get(orderId).getInstrument()).firstKey());
+              Optional.of(orderBook.get(orderHashMap.get(orderId).getInstrument()).firstKey());
         }
 
         instrumentPropertyMap.get(propertiesKey).setNextBestPrice(newBestPrice);
