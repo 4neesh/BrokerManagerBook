@@ -38,21 +38,12 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
       HashMap<String, ? extends OrderBook> orderBook = getOrderSideBook(orderId);
 
-      if (orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
-        long orderPrice = orderHashMap.get(orderId).getPrice();
-        bidBookHashMap
-            .get(orderHashMap.get(orderId).getInstrument())
-            .modifyOrder(orderId, newQuantity, orderPrice);
+      long orderPrice = orderHashMap.get(orderId).getPrice();
+      orderBook
+          .get(orderHashMap.get(orderId).getInstrument())
+          .modifyOrder(orderId, newQuantity, orderPrice);
 
-        return true;
-      } else if (orderHashMap.get(orderId).getSide().equals(Side.SELL)) {
-        long orderPrice = orderHashMap.get(orderId).getPrice();
-        askBookHashMap
-            .get(orderHashMap.get(orderId).getInstrument())
-            .modifyOrder(orderId, newQuantity, orderPrice);
-
-        return true;
-      }
+      return true;
     }
 
     return false;
