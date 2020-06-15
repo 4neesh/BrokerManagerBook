@@ -95,6 +95,17 @@ public class OrderBookManagerImpl implements OrderBookManager {
     }
   }
 
+  public List<Order> getOrdersAtLevel(String instrument, Side side, long price) {
+
+    String propertiesKey = instrument + side.toString();
+    String levelPropertiesKey = propertiesKey + price;
+    return instrumentPropertyMap
+            .get(propertiesKey)
+            .getLevelPropertiesHashMap()
+            .get(levelPropertiesKey)
+            .getOrdersAtLevel();
+  }
+
   private Long getNextBestPrice(HashMap<String, ? extends OrderBook> orderBook, String orderId) {
     return orderBook.get(orderHashMap.get(orderId).getInstrument()).firstKey();
   }
@@ -174,10 +185,11 @@ public class OrderBookManagerImpl implements OrderBookManager {
     String propertiesKey = instrument + side.toString();
     String levelPropertiesKey = instrument + side.toString() + price;
     return instrumentPropertyMap
-        .get(propertiesKey)
-        .getLevelPropertiesHashMap()
-        .get(levelPropertiesKey)
-        .getNumberOfOrders();
+              .get(propertiesKey)
+              .getLevelPropertiesHashMap()
+              .get(levelPropertiesKey)
+              .getNumberOfOrders();
+
   }
 
   public long getTotalQuantityAtLevel(String instrument, Side side, long price) {
@@ -201,16 +213,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
         .getVolume();
   }
 
-  public List<Order> getOrdersAtLevel(String instrument, Side side, long price) {
 
-    String propertiesKey = instrument + side.toString();
-    String levelPropertiesKey = propertiesKey + price;
-    return instrumentPropertyMap
-        .get(propertiesKey)
-        .getLevelPropertiesHashMap()
-        .get(levelPropertiesKey)
-        .getOrdersAtLevel();
-  }
 
   private void createNewBookForOrder(Order order) {
 

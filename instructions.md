@@ -32,4 +32,5 @@ For this test assignment, you don’t need to implement matching of orders, so, 
 
 Additionally, we expect you to implement as many unit tests as you find reasonable for this problem. A sample test is provided.
 
-Your solution will be assessed for clarity of implementation, simplicity and readability of the code, proper usage of data structures and test coverage. At this moment, we don’t care much about low level optimization for CPU or memory usage, however we do care about the spatial and temporal complexity of the native data structures you choose and why you chose them.
+Your solution will be assessed for clarity of implementation, simplicity and readability of the code, proper usage of data structures and test coverage.
+At this moment, we don’t care much about low level optimization for CPU or memory usage, however we do care about the spatial and temporal complexity of the native data structures you choose and why you chose them.
