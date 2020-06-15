@@ -27,6 +27,7 @@ public class InstrumentProperty {
   }
 
   private void reviewBestPrice(Order order) {
+
     Optional<Long> orderPrice = Optional.of(order.getPrice());
 
     if (this.getBestPrice().equals(Optional.empty())) {

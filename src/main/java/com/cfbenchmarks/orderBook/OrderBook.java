@@ -15,11 +15,15 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
 
   public void addOrder(Long key, OrderNode orderNode) {
 
-    if (super.get(key) == null) {
+    if (keyDoesNotExist(key)) {
       super.put(key, new OrderLinkedList(orderNode.order));
     } else {
       super.get(key).append(orderNode);
     }
+  }
+
+  private boolean keyDoesNotExist(Long key) {
+    return super.get(key) == null;
   }
 
   public void removeOrder(String orderId, long orderPrice) {

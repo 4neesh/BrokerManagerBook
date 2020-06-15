@@ -45,21 +45,10 @@ public class OrderBookManagerImpl implements OrderBookManager {
     return false;
   }
 
-  private void modifyOrderInBook(
-      HashMap<String, ? extends OrderBook> orderBook, String orderId, long newQuantity) {
-
-    long orderPrice = orderHashMap.get(orderId).getPrice();
-
-    orderBook
-        .get(orderHashMap.get(orderId).getInstrument())
-        .modifyOrder(orderId, newQuantity, orderPrice);
-  }
-
   public boolean deleteOrder(String orderId) {
 
-    HashMap<String, ? extends OrderBook> orderBook = getOrderBook(orderId);
-
     if (orderExists(orderId)) {
+      HashMap<String, ? extends OrderBook> orderBook = getOrderBook(orderId);
 
       removeOrderFromBook(orderId, orderBook);
 
@@ -75,7 +64,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     }
   }
 
-  public void removeOrderFromPropertyMap(String orderId) {
+  private void removeOrderFromPropertyMap(String orderId) {
 
     String propertiesKey = getPropertiesKey(orderId);
 
@@ -91,22 +80,44 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
   private void reviewNextBestPriceInBook(
       String orderId, HashMap<String, ? extends OrderBook> orderBook) {
-    String propertiesKey = getPropertiesKey(orderId);
 
-    if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == getOrderPrice(orderId)
-        && orderBook.get(orderHashMap.get(orderId).getInstrument()).get(getOrderPrice(orderId))
-            == null) {
+    if (bestPriceRequiresUpdate(orderBook, orderId)) {
+
       Optional<Long> newBestPrice;
 
-      if (orderBook.get(orderHashMap.get(orderId).getInstrument()).isEmpty()) {
+      if (orderBookIsEmpty(orderBook, orderId)) {
         newBestPrice = Optional.empty();
       } else {
-        newBestPrice =
-            Optional.of(orderBook.get(orderHashMap.get(orderId).getInstrument()).firstKey());
+        newBestPrice = Optional.of(getNextBestPrice(orderBook, orderId));
       }
 
-      instrumentPropertyMap.get(propertiesKey).setNextBestPrice(newBestPrice);
+      instrumentPropertyMap.get(getPropertiesKey(orderId)).setNextBestPrice(newBestPrice);
     }
+  }
+
+  private Long getNextBestPrice(HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+    return orderBook.get(orderHashMap.get(orderId).getInstrument()).firstKey();
+  }
+
+  private boolean orderBookIsEmpty(HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+    return orderBook.get(orderHashMap.get(orderId).getInstrument()).isEmpty();
+  }
+
+  private boolean bestPriceRequiresUpdate(
+      HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+
+    return orderHasBestPrice(orderId) && orderLevelIsEmpty(orderBook, orderId);
+  }
+
+  private boolean orderLevelIsEmpty(
+      HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+    return orderBook.get(orderHashMap.get(orderId).getInstrument()).get(getOrderPrice(orderId))
+        == null;
+  }
+
+  private boolean orderHasBestPrice(String orderId) {
+    return instrumentPropertyMap.get(getPropertiesKey(orderId)).getBestPrice().get()
+        == getOrderPrice(orderId);
   }
 
   private String getPropertiesKey(String orderId) {
@@ -114,8 +125,17 @@ public class OrderBookManagerImpl implements OrderBookManager {
         + orderHashMap.get(orderId).getSide().toString();
   }
 
-  private void removeOrderFromBook(String orderId, HashMap<String, ? extends OrderBook> orderBook) {
+  private void modifyOrderInBook(
+      HashMap<String, ? extends OrderBook> orderBook, String orderId, long newQuantity) {
 
+    long orderPrice = orderHashMap.get(orderId).getPrice();
+
+    orderBook
+        .get(orderHashMap.get(orderId).getInstrument())
+        .modifyOrder(orderId, newQuantity, orderPrice);
+  }
+
+  private void removeOrderFromBook(String orderId, HashMap<String, ? extends OrderBook> orderBook) {
     orderBook
         .get(orderHashMap.get(orderId).getInstrument())
         .removeOrder(orderId, getOrderPrice(orderId));
