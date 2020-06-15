@@ -55,7 +55,7 @@ public class AddOrderTest {
     orderBookManager.addOrder(sell);
 
     assertEquals(
-        "Bid does not exist in orderBookHashMap",
+        "Bid does not exist in orderHashMap",
         orderBookManager.orderHashMap.containsKey(sell.getOrderId()),
         true);
     assertEquals(
@@ -67,6 +67,12 @@ public class AddOrderTest {
         orderBookManager.instrumentPropertyMap.containsKey(propertyKey),
         true);
   }
+
+  @Test
+  public void cannotAddSameBidOrderMultipleTimes() {}
+
+  @Test
+  public void cannotAddSameAskOrderMultipleTimes() {}
 
   @Test
   public void multipleBidAtSameLevelLogged() {

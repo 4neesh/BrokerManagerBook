@@ -29,47 +29,50 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager = new OrderBookManagerImpl();
     buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     buy1SamePrice = new Order("order9", "VOD.L", Side.BUY, 200, 10);
-    buy2 = new Order("order2", "VOD.L", Side.BUY, 100, 10);
+    buy2 = new Order("order2", "VOD.L", Side.BUY, 100, 11);
     buy3 = new Order("order3", "VOD.L", Side.BUY, 50, 10);
-    sell1 = new Order("order4", "VOD.L", Side.SELL, 200, 10);
+    sell1 = new Order("order4", "VOD.L", Side.SELL, 200, 11);
     sell1SamePrice = new Order("order10", "VOD.L", Side.SELL, 200, 10);
-    sell2 = new Order("order5", "VOD.L", Side.SELL, 100, 10);
+    sell2 = new Order("order5", "VOD.L", Side.SELL, 100, 11);
     sell3 = new Order("order6", "VOD.L", Side.SELL, 50, 10);
-    buyOther = new Order("order7", "APPL", Side.BUY, 50, 10);
-    sellOther = new Order("order8", "APPL", Side.SELL, 50, 10);
+    buyOther = new Order("order7", "APPL", Side.BUY, 50, 12);
+    sellOther = new Order("order8", "APPL", Side.SELL, 50, 12);
   }
 
   @Test
   public void bidBookReturnsOrdersAfterAdding() {
 
     assertEquals(
-        "Bid Book is not empty", orderBookManager.bidBookHashMap.get(buy1.getInstrument()), null);
-    assertEquals("buy1 does not have 200 orders", buy1.getQuantity(), 10);
+        "Bid Book for VOD.L is not empty",
+        orderBookManager.bidBookHashMap.get(buy1.getInstrument()),
+        null);
+    assertEquals("buy1 does not have 10 orders", buy1.getQuantity(), 10);
 
     orderBookManager.addOrder(buy1);
 
     assertEquals(
-        "Empty Bid book level does not add orderQuantity with order",
+        "Empty Bid book level does not add orderQuantity with first order",
         orderBookManager.getTotalQuantityAtLevel(
             buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
         buy1.getQuantity());
   }
 
-  // to do ones below
-
   @Test
   public void askBookReturnsOrdersAfterAdding() {
 
     assertEquals(
-        "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
+        "Ask Book for VOD.L is not empty",
+        orderBookManager.askBookHashMap.get(buy1.getInstrument()),
+        null);
+    assertEquals("sell1 does not have 10 orders", sell1.getQuantity(), 11);
 
     orderBookManager.addOrder(sell1);
 
     assertEquals(
-        "Empty Ask book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(
+        "Empty Ask book level does not add orderQuantity with first order",
+        orderBookManager.getTotalQuantityAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        1);
+        sell1.getQuantity());
   }
 
   @Test
@@ -82,9 +85,10 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager.addOrder(buy1SamePrice);
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        2);
+        "Empty Bid book quantity does not increases with multiple orders",
+        orderBookManager.getTotalQuantityAtLevel(
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
+        20);
   }
 
   @Test
@@ -97,10 +101,10 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager.addOrder(sell1SamePrice);
 
     assertEquals(
-        "Empty Ask book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(
+        "Empty Ask book quantity does not increase with multiple orders",
+        orderBookManager.getTotalQuantityAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        2);
+        21);
   }
 
   @Test
@@ -110,16 +114,18 @@ public class GetTotalQuantityAtLevelTest {
         "Bid Book is not empty", orderBookManager.bidBookHashMap.get(buy1.getInstrument()), null);
 
     orderBookManager.addOrder(buy1);
-    orderBookManager.addOrder(buy2);
+    orderBookManager.addOrder(buyOther);
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        1);
+        "Bid book quantity does not reflect on instrument",
+        orderBookManager.getTotalQuantityAtLevel(
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
+        10);
     assertEquals(
-        "Empty Bid book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        1);
+        "Bid book quantity does not reflect on instrument",
+        12,
+        orderBookManager.getTotalQuantityAtLevel(
+            buyOther.getInstrument(), buyOther.getSide(), buyOther.getPrice()));
   }
 
   @Test
@@ -129,18 +135,18 @@ public class GetTotalQuantityAtLevelTest {
         "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
 
     orderBookManager.addOrder(sell1);
-    orderBookManager.addOrder(sell2);
+    orderBookManager.addOrder(sellOther);
 
     assertEquals(
-        "Empty Ask book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        1);
+        "Ask book quantity does not reflect on instrument",
+        11,
+        orderBookManager.getTotalQuantityAtLevel(
+            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
     assertEquals(
-        "Empty Ask book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        1);
+        "Ask book quantity does not reflect on instrument",
+        12,
+        orderBookManager.getTotalQuantityAtLevel(
+            sellOther.getInstrument(), sellOther.getSide(), sellOther.getPrice()));
   }
 
   @Test
@@ -154,9 +160,10 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        1);
+        "Bid book level does not increment with order",
+        orderBookManager.getTotalQuantityAtLevel(
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
+        10);
   }
 
   @Test
@@ -169,10 +176,10 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager.addOrder(sell1SamePrice);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-        "Empty Ask book level does not increment with order",
-        orderBookManager.getOrderNumAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        1);
+        "Ask book quantity does not increment with order",
+        10,
+        orderBookManager.getTotalQuantityAtLevel(
+            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
@@ -185,9 +192,10 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
+        "Empty Bid book quantity does not equal 0",
         0,
-        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
+        orderBookManager.getTotalQuantityAtLevel(
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
@@ -199,9 +207,9 @@ public class GetTotalQuantityAtLevelTest {
     orderBookManager.addOrder(sell1);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-        "Empty Ask book level does not increment with order",
+        "Empty Ask book quantity does not equal 0",
         0,
-        orderBookManager.getOrderNumAtLevel(
+        orderBookManager.getTotalQuantityAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 }
