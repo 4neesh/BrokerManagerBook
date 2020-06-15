@@ -50,7 +50,7 @@ public class DeleteOrderTest {
 
     Order buy4 = new Order("order9", "VOD.L", Side.BUY, 200, 10);
 
-    assertFalse(orderBookManager.bidLookup.containsKey(buy4.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(buy4.getOrderId()));
 
     assertEquals(
         "buy4 does not exist in bidBook.", orderBookManager.deleteOrder(buy4.getOrderId()), false);
@@ -61,7 +61,7 @@ public class DeleteOrderTest {
 
     Order sell4 = new Order("order10", "VOD.L", Side.SELL, 200, 10);
 
-    assertFalse(orderBookManager.bidLookup.containsKey(sell4.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(sell4.getOrderId()));
 
     assertEquals(
         sell4.getOrderId() + " does not exist in ask book",
@@ -84,11 +84,11 @@ public class DeleteOrderTest {
                 .next
                 .order
             == buy2);
-    assertTrue(orderBookManager.bidLookup.containsKey(buy1.getOrderId()));
+    assertTrue(orderBookManager.orderHashMap.containsKey(buy1.getOrderId()));
 
     orderBookManager.deleteOrder(buy1.getOrderId());
 
-    assertFalse(orderBookManager.bidLookup.containsKey(buy1.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(buy1.getOrderId()));
     assertEquals(
         orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).head.order,
         buy2);
@@ -109,11 +109,11 @@ public class DeleteOrderTest {
                 .next
                 .order
             == sell2);
-    assertTrue(orderBookManager.askLookup.containsKey(sell1.getOrderId()));
+    assertTrue(orderBookManager.orderHashMap.containsKey(sell1.getOrderId()));
 
     orderBookManager.deleteOrder(sell1.getOrderId());
 
-    assertFalse(orderBookManager.askLookup.containsKey(sell1.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(sell1.getOrderId()));
     assertEquals(
         orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).head.order,
         sell2);
@@ -141,11 +141,11 @@ public class DeleteOrderTest {
                 .next
                 .order
             == buy3);
-    assertTrue(orderBookManager.bidLookup.containsKey(buy1.getOrderId()));
+    assertTrue(orderBookManager.orderHashMap.containsKey(buy1.getOrderId()));
 
     orderBookManager.deleteOrder(buy2.getOrderId());
 
-    assertFalse(orderBookManager.bidLookup.containsKey(buy2.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(buy2.getOrderId()));
     assertEquals(
         orderBookManager
             .bidBookHashMap
@@ -179,11 +179,11 @@ public class DeleteOrderTest {
                 .next
                 .order
             == sell3);
-    assertTrue(orderBookManager.askLookup.containsKey(sell2.getOrderId()));
+    assertTrue(orderBookManager.orderHashMap.containsKey(sell2.getOrderId()));
 
     orderBookManager.deleteOrder(sell2.getOrderId());
 
-    assertFalse(orderBookManager.askLookup.containsKey(sell2.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(sell2.getOrderId()));
     assertEquals(
         orderBookManager
             .askBookHashMap
@@ -210,11 +210,11 @@ public class DeleteOrderTest {
                 .previous
                 .order
             == buy2);
-    assertTrue(orderBookManager.bidLookup.containsKey(buy3.getOrderId()));
+    assertTrue(orderBookManager.orderHashMap.containsKey(buy3.getOrderId()));
 
     orderBookManager.deleteOrder(buy3.getOrderId());
 
-    assertFalse(orderBookManager.bidLookup.containsKey(buy3.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(buy3.getOrderId()));
     assertEquals(
         orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order,
         buy2);
@@ -240,11 +240,11 @@ public class DeleteOrderTest {
                 .previous
                 .order
             == sell2);
-    assertTrue(orderBookManager.askLookup.containsKey(sell3.getOrderId()));
+    assertTrue(orderBookManager.orderHashMap.containsKey(sell3.getOrderId()));
 
     orderBookManager.deleteOrder(sell3.getOrderId());
 
-    assertFalse(orderBookManager.askLookup.containsKey(sell3.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(sell3.getOrderId()));
     assertEquals(
         orderBookManager.askBookHashMap.get(sell1.getInstrument()).get(sell2.getPrice()).last.order,
         sell2);

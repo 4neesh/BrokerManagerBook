@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import com.cfbenchmarks.instrumentProperty.InstrumentProperty;
 import com.cfbenchmarks.order.Order;
 import com.cfbenchmarks.order.Side;
-import com.cfbenchmarks.orderBook.AskBook;
-import com.cfbenchmarks.orderBook.BidBook;
 import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +12,6 @@ import org.junit.Test;
 public class ModifyOrderTest {
 
   private static OrderBookManagerImpl orderBookManager;
-  private static BidBook bidBook;
-  private static AskBook askBook;
   private static HashMap<String, InstrumentProperty> instrumentPropertyHashMap;
 
   private static Order buy1;
@@ -28,8 +24,6 @@ public class ModifyOrderTest {
   @Before
   public void setUp() {
 
-    askBook = new AskBook();
-    bidBook = new BidBook();
     instrumentPropertyHashMap = new HashMap<>();
 
     orderBookManager = new OrderBookManagerImpl();
@@ -53,7 +47,7 @@ public class ModifyOrderTest {
 
     Order buy4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
 
-    assertFalse(orderBookManager.bidLookup.containsKey(buy4.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(buy4.getOrderId()));
 
     assertFalse(orderBookManager.modifyOrder(buy4.getOrderId(), 10));
   }
@@ -63,7 +57,7 @@ public class ModifyOrderTest {
 
     Order sell4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
 
-    assertFalse(orderBookManager.bidLookup.containsKey(sell4.getOrderId()));
+    assertFalse(orderBookManager.orderHashMap.containsKey(sell4.getOrderId()));
 
     assertFalse(orderBookManager.modifyOrder(sell4.getOrderId(), 10));
   }

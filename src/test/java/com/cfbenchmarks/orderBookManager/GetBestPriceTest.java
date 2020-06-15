@@ -47,25 +47,25 @@ public class GetBestPriceTest {
   @Test
   public void bestBidPriceIsHighest() {
 
-    Long bestBidPriceOfVodL =
+    long bestBidPriceOfVodL =
         orderBookManager.getBestPrice(buy1.getInstrument(), buy1.getSide()).get();
 
     assertEquals(
         "Best price of bid is not highest",
         bestBidPriceOfVodL,
-        orderBookManager.bidLookup.get(buy1.getOrderId()));
+        orderBookManager.orderHashMap.get(buy1.getOrderId()).getPrice());
   }
 
   @Test
   public void bestAskPriceIsLowest() {
 
-    Long bestAskPriceOfVodL =
+    long bestAskPriceOfVodL =
         orderBookManager.getBestPrice(sell3.getInstrument(), sell3.getSide()).get();
 
     assertEquals(
         "Best price of ask is not lowest",
         bestAskPriceOfVodL,
-        orderBookManager.askLookup.get(sell3.getOrderId()));
+        orderBookManager.orderHashMap.get(sell3.getOrderId()).getPrice());
   }
 
   @Test

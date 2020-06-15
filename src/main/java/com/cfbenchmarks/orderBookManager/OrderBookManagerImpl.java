@@ -10,9 +10,6 @@ import java.util.*;
 
 public class OrderBookManagerImpl implements OrderBookManager {
 
-  HashMap<String, Long> askLookup = new HashMap<>();
-  HashMap<String, Long> bidLookup = new HashMap<>();
-
   HashMap<String, Order> orderHashMap = new HashMap<>();
 
   HashMap<String, InstrumentProperty> instrumentPropertyMap = new HashMap<>();
@@ -66,11 +63,9 @@ public class OrderBookManagerImpl implements OrderBookManager {
   private void addOrderToBookAndLookup(OrderBook orderBook, Order order) {
     if (order.getSide().equals(Side.BUY)) {
 
-      bidLookup.put(order.getOrderId(), order.getPrice());
       orderBook.addOrder(order.getPrice(), new OrderNode(order));
 
     } else {
-      askLookup.put(order.getOrderId(), order.getPrice());
       orderBook.addOrder(order.getPrice(), new OrderNode(order));
     }
   }
@@ -80,14 +75,14 @@ public class OrderBookManagerImpl implements OrderBookManager {
     if (orderHashMap.containsKey(orderId)) {
 
       if (orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
-        long orderPrice = bidLookup.get(orderId);
+        long orderPrice = orderHashMap.get(orderId).getPrice();
         bidBookHashMap
             .get(orderHashMap.get(orderId).getInstrument())
             .modifyOrder(orderId, newQuantity, orderPrice);
 
         return true;
       } else if (orderHashMap.get(orderId).getSide().equals(Side.SELL)) {
-        long orderPrice = askLookup.get(orderId);
+        long orderPrice = orderHashMap.get(orderId).getPrice();
         askBookHashMap
             .get(orderHashMap.get(orderId).getInstrument())
             .modifyOrder(orderId, newQuantity, orderPrice);
@@ -97,68 +92,50 @@ public class OrderBookManagerImpl implements OrderBookManager {
     }
 
     return false;
-
-    //    if (bidLookup.containsKey(orderId)) {
-    //
-    //      long orderPrice = bidLookup.get(orderId);
-    //      bidBookHashMap
-    //          .get(orderHashMap.get(orderId).getInstrument())
-    //          .modifyOrder(orderId, newQuantity, orderPrice);
-    //
-    //      return true;
-    //    } else if (askLookup.containsKey(orderId)) {
-    //
-    //      long orderPrice = askLookup.get(orderId);
-    //      askBookHashMap
-    //          .get(orderHashMap.get(orderId).getInstrument())
-    //          .modifyOrder(orderId, newQuantity, orderPrice);
-    //
-    //      return true;
-    //
-    //    } else {
-    //
-    //      return false;
-    //    }
   }
 
   public boolean deleteOrder(String orderId) {
 
-    if (bidLookup.containsKey(orderId)) {
+    if (orderHashMap.containsKey(orderId) && orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
 
-      long orderPrice = bidLookup.get(orderId);
+      long orderPrice = orderHashMap.get(orderId).getPrice();
       bidBookHashMap
           .get(orderHashMap.get(orderId).getInstrument())
           .removeOrder(orderId, orderPrice);
-      bidLookup.remove(orderId);
 
       String propertiesKey = orderHashMap.get(orderId).getInstrument() + Side.BUY.toString();
+
       if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == orderPrice
           && bidBookHashMap.get(orderHashMap.get(orderId).getInstrument()).get(orderPrice)
               == null) {
         Optional<Long> newBestPrice;
+
         if (bidBookHashMap.get(orderHashMap.get(orderId).getInstrument()).isEmpty()) {
           newBestPrice = Optional.empty();
         } else {
           newBestPrice =
               Optional.of(bidBookHashMap.get(orderHashMap.get(orderId).getInstrument()).firstKey());
         }
+
         instrumentPropertyMap.get(propertiesKey).setNextBestPrice(newBestPrice);
       }
       Order order = orderHashMap.get(orderId);
       String levelPropertiesKey =
           order.getInstrument() + order.getSide().toString() + order.getPrice();
       instrumentPropertyMap.get(propertiesKey).deleteFromLevel(levelPropertiesKey, order);
+      orderHashMap.remove(orderId);
 
       return true;
-    } else if (askLookup.containsKey(orderId)) {
+    } else if (orderHashMap.containsKey(orderId)
+        && orderHashMap.get(orderId).getSide().equals(Side.SELL)) {
 
-      long orderPrice = askLookup.get(orderId);
+      long orderPrice = orderHashMap.get(orderId).getPrice();
       askBookHashMap
           .get(orderHashMap.get(orderId).getInstrument())
           .removeOrder(orderId, orderPrice);
-      askLookup.remove(orderId);
 
       String propertiesKey = orderHashMap.get(orderId).getInstrument() + Side.SELL.toString();
+
       if (instrumentPropertyMap.get(propertiesKey).getBestPrice().get() == orderPrice
           && askBookHashMap.get(orderHashMap.get(orderId).getInstrument()).get(orderPrice)
               == null) {
@@ -177,6 +154,8 @@ public class OrderBookManagerImpl implements OrderBookManager {
       String levelPropertiesKey =
           order.getInstrument() + order.getSide().toString() + order.getPrice();
       instrumentPropertyMap.get(propertiesKey).deleteFromLevel(levelPropertiesKey, order);
+      orderHashMap.remove(orderId);
+
       return true;
     } else {
       return false;
