@@ -1,7 +1,7 @@
 package com.cfbenchmarks.instrumentProperty;
 
-import com.cfbenchmarks.orderBookManager.Order;
-import com.cfbenchmarks.orderBookManager.Side;
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

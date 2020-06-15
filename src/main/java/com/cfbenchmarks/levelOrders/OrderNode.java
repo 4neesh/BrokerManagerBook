@@ -1,6 +1,6 @@
 package com.cfbenchmarks.levelOrders;
 
-import com.cfbenchmarks.orderBookManager.Order;
+import com.cfbenchmarks.order.Order;
 
 public class OrderNode {
 

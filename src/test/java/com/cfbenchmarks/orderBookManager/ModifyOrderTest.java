@@ -3,6 +3,8 @@ package com.cfbenchmarks.orderBookManager;
 import static org.junit.Assert.*;
 
 import com.cfbenchmarks.instrumentProperty.InstrumentProperty;
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import com.cfbenchmarks.orderBook.AskBook;
 import com.cfbenchmarks.orderBook.BidBook;
 import java.util.HashMap;

@@ -3,6 +3,8 @@ package com.cfbenchmarks.orderBookManager;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;

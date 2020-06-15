@@ -1,5 +1,7 @@
 package com.cfbenchmarks.orderBookManager;
 
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import java.util.List;
 import java.util.Optional;
 

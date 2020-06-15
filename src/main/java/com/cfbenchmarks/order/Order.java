@@ -1,4 +1,4 @@
-package com.cfbenchmarks.orderBookManager;
+package com.cfbenchmarks.order;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;

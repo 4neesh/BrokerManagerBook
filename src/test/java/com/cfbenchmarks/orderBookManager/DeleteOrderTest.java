@@ -2,6 +2,8 @@ package com.cfbenchmarks.orderBookManager;
 
 import static org.junit.Assert.*;
 
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,8 +1,6 @@
 com/cfbenchmarks/orderBookManager/OrderBookManagerImpl.class
 com/cfbenchmarks/orderBookManager/OrderBookManager.class
 com/cfbenchmarks/levelOrders/OrderNode.class
-com/cfbenchmarks/orderBookManager/Order.class
 com/cfbenchmarks/instrumentProperty/InstrumentProperty.class
 com/cfbenchmarks/instrumentProperty/LevelProperty.class
 com/cfbenchmarks/levelOrders/OrderLinkedList.class
-com/cfbenchmarks/orderBookManager/Side.class

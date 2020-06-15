@@ -3,6 +3,8 @@ package com.cfbenchmarks.orderBookManager;
 import com.cfbenchmarks.instrumentProperty.InstrumentProperty;
 import com.cfbenchmarks.instrumentProperty.LevelProperty;
 import com.cfbenchmarks.levelOrders.OrderNode;
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import com.cfbenchmarks.orderBook.*;
 import java.util.*;
 
@@ -75,27 +77,48 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
   public boolean modifyOrder(String orderId, long newQuantity) {
 
-    if (bidLookup.containsKey(orderId)) {
+    if (orderHashMap.containsKey(orderId)) {
 
-      long orderPrice = bidLookup.get(orderId);
-      bidBookHashMap
-          .get(orderHashMap.get(orderId).getInstrument())
-          .modifyOrder(orderId, newQuantity, orderPrice);
+      if (orderHashMap.get(orderId).getSide().equals(Side.BUY)) {
+        long orderPrice = bidLookup.get(orderId);
+        bidBookHashMap
+            .get(orderHashMap.get(orderId).getInstrument())
+            .modifyOrder(orderId, newQuantity, orderPrice);
 
-      return true;
-    } else if (askLookup.containsKey(orderId)) {
+        return true;
+      } else if (orderHashMap.get(orderId).getSide().equals(Side.SELL)) {
+        long orderPrice = askLookup.get(orderId);
+        askBookHashMap
+            .get(orderHashMap.get(orderId).getInstrument())
+            .modifyOrder(orderId, newQuantity, orderPrice);
 
-      long orderPrice = askLookup.get(orderId);
-      askBookHashMap
-          .get(orderHashMap.get(orderId).getInstrument())
-          .modifyOrder(orderId, newQuantity, orderPrice);
-
-      return true;
-
-    } else {
-
-      return false;
+        return true;
+      }
     }
+
+    return false;
+
+    //    if (bidLookup.containsKey(orderId)) {
+    //
+    //      long orderPrice = bidLookup.get(orderId);
+    //      bidBookHashMap
+    //          .get(orderHashMap.get(orderId).getInstrument())
+    //          .modifyOrder(orderId, newQuantity, orderPrice);
+    //
+    //      return true;
+    //    } else if (askLookup.containsKey(orderId)) {
+    //
+    //      long orderPrice = askLookup.get(orderId);
+    //      askBookHashMap
+    //          .get(orderHashMap.get(orderId).getInstrument())
+    //          .modifyOrder(orderId, newQuantity, orderPrice);
+    //
+    //      return true;
+    //
+    //    } else {
+    //
+    //      return false;
+    //    }
   }
 
   public boolean deleteOrder(String orderId) {

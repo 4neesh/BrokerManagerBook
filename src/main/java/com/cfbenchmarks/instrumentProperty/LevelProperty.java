@@ -1,6 +1,6 @@
 package com.cfbenchmarks.instrumentProperty;
 
-import com.cfbenchmarks.orderBookManager.Order;
+import com.cfbenchmarks.order.Order;
 import java.util.List;
 
 public class LevelProperty {

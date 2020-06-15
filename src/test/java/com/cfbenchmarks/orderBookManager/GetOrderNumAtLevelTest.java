@@ -2,6 +2,8 @@ package com.cfbenchmarks.orderBookManager;
 
 import static org.junit.Assert.assertEquals;
 
+import com.cfbenchmarks.order.Order;
+import com.cfbenchmarks.order.Side;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -167,5 +169,35 @@ public class GetOrderNumAtLevelTest {
         orderBookManager.getOrderNumAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
         1);
+  }
+
+  @Test
+  public void bidBookNumberReducesToZero() {
+
+    assertEquals(
+        "Bid Book is not empty", orderBookManager.bidBookHashMap.get(buy1.getInstrument()), null);
+
+    orderBookManager.addOrder(buy1);
+    orderBookManager.deleteOrder(buy1.getOrderId());
+
+    assertEquals(
+        "Empty Bid book level does not increment with order",
+        0,
+        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
+  }
+
+  @Test
+  public void askBookNumberReducesToZero() {
+
+    assertEquals(
+        "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
+
+    orderBookManager.addOrder(sell1);
+    orderBookManager.deleteOrder(sell1.getOrderId());
+    assertEquals(
+        "Empty Ask book level does not increment with order",
+        0,
+        orderBookManager.getOrderNumAtLevel(
+            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 }
