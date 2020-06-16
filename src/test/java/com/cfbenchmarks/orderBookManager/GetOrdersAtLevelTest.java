@@ -89,11 +89,6 @@ public class GetOrdersAtLevelTest {
   @Test
   public void bidReturnsMultipleOrdersSequentiallyWhenAdded() {
 
-    assertEquals("buy1 and buy2 have different prices", buy1.getPrice(), buy2.getPrice());
-    assertEquals(
-        "buy1 and buy2 have different instrument", buy1.getInstrument(), buy2.getInstrument());
-    assertEquals("buy1 and buy2 have different side", buy1.getSide(), buy2.getSide());
-
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
     List<Order> expected = new ArrayList<>();
@@ -108,11 +103,6 @@ public class GetOrdersAtLevelTest {
 
   @Test
   public void askReturnsMultipleOrdersWhenAdded() {
-
-    assertEquals("sell1 and sell2 have different prices", sell1.getPrice(), sell2.getPrice());
-    assertEquals(
-        "sell1 and sell2 have different instrument", sell1.getInstrument(), sell2.getInstrument());
-    assertEquals("sell1 and sell2 have different side", sell1.getSide(), sell2.getSide());
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell2);
@@ -129,13 +119,6 @@ public class GetOrdersAtLevelTest {
 
   @Test
   public void bidCreatesSeparateListsForInstruments() {
-
-    assertEquals("buy1 and buyOther have different prices", buy1.getPrice(), buyOther.getPrice());
-    assertEquals(
-        "buy1 and buyOther have same instrument",
-        buy1.getInstrument().equals(buyOther.getInstrument()),
-        false);
-    assertEquals("buy1 and buyOther have different side", buy1.getSide(), buyOther.getSide());
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buyOther);
@@ -157,13 +140,6 @@ public class GetOrdersAtLevelTest {
 
   @Test
   public void askCreatesSeparateListsForInstruments() {
-
-    assertEquals("sell1 and sell2 have different prices", sell1.getPrice(), sellOther.getPrice());
-    assertEquals(
-        "sell1 and sell2 have same instrument",
-        sell1.getInstrument().equals(sellOther.getInstrument()),
-        false);
-    assertEquals("sell1 and sell2 have different side", sell1.getSide(), sellOther.getSide());
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sellOther);
@@ -187,11 +163,6 @@ public class GetOrdersAtLevelTest {
   @Test
   public void bidCreatesSeparateListsForPrices() {
 
-    assertEquals("buy1 and buy3 have same prices", buy1.getPrice() == buy3.getPrice(), false);
-    assertEquals(
-        "buy1 and buy3 have different instruments", buy1.getInstrument(), buy3.getInstrument());
-    assertEquals("buy1 and buy3 have different sides", buy1.getSide(), buy3.getSide());
-
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy3);
     List<Order> expected1 = new ArrayList<>();
@@ -211,11 +182,6 @@ public class GetOrdersAtLevelTest {
 
   @Test
   public void askCreatesSeparateListsForPrices() {
-
-    assertEquals("sell1 and sell3 have same prices", sell1.getPrice() == sell3.getPrice(), false);
-    assertEquals(
-        "sell1 and sell3 have different instruments", sell1.getInstrument(), sell3.getInstrument());
-    assertEquals("sell1 and sell3 have different sides", sell1.getSide(), sell3.getSide());
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell3);
@@ -238,12 +204,6 @@ public class GetOrdersAtLevelTest {
 
   @Test
   public void getOrdersAtLevelReturnsForPrices() {
-    assertEquals("buy1 and sell1 have different prices", buy1.getPrice(), sell1.getPrice());
-    assertEquals(
-        "buy1 and sell1 have different instrument",
-        buy1.getInstrument().equals(sell1.getInstrument()),
-        true);
-    assertEquals("buy1 and sell1 have same side", buy1.getSide().equals(sell1.getSide()), false);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(sell1);

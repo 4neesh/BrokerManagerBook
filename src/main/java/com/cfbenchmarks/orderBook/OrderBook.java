@@ -1,7 +1,5 @@
 package com.cfbenchmarks.orderBook;
 
-import com.cfbenchmarks.levelOrders.OrderLinkedList;
-import com.cfbenchmarks.levelOrders.OrderNode;
 import java.util.Comparator;
 import java.util.TreeMap;
 
@@ -18,7 +16,7 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
     if (keyDoesNotExist(key)) {
       super.put(key, new OrderLinkedList(orderNode.getOrder()));
     } else {
-      super.get(key).append(orderNode);
+      super.get(key).appendOrder(orderNode);
     }
   }
 

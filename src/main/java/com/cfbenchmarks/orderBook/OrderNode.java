@@ -1,4 +1,4 @@
-package com.cfbenchmarks.levelOrders;
+package com.cfbenchmarks.orderBook;
 
 import com.cfbenchmarks.order.Order;
 

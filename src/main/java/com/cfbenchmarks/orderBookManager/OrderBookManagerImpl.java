@@ -2,11 +2,11 @@ package com.cfbenchmarks.orderBookManager;
 
 import com.cfbenchmarks.instrumentProperty.InstrumentProperty;
 import com.cfbenchmarks.instrumentProperty.LevelProperty;
-import com.cfbenchmarks.levelOrders.OrderLinkedList;
-import com.cfbenchmarks.levelOrders.OrderNode;
 import com.cfbenchmarks.order.Order;
 import com.cfbenchmarks.order.Side;
 import com.cfbenchmarks.orderBook.*;
+import com.cfbenchmarks.orderBook.OrderLinkedList;
+import com.cfbenchmarks.orderBook.OrderNode;
 import java.util.*;
 
 public class OrderBookManagerImpl implements OrderBookManager {
@@ -21,20 +21,24 @@ public class OrderBookManagerImpl implements OrderBookManager {
     this.orderBookHashMap = new HashMap<>();
   }
 
-  public void addOrder(Order order) {
+  public void addOrder(Order order) throws RuntimeException {
 
-    orderHashMap.putIfAbsent(order.getOrderId(), order);
+    if (!orderHashMap.containsKey(order.getOrderId())) {
+      orderHashMap.putIfAbsent(order.getOrderId(), order);
 
-    addOrderToInstrumentPropertyMap(order);
+      addOrderToInstrumentPropertyMap(order);
 
-    addOrderToRespectiveBook(order);
+      addOrderToRespectiveBook(order);
+    } else {
+      throw new RuntimeException("Cannot add multiple orders with same orderId");
+    }
   }
 
   public boolean modifyOrder(String orderId, long newQuantity) {
 
     if (orderExists(orderId)) {
 
-      HashMap<String, ? extends OrderBook> orderBook = getOrderBook(orderId);
+      HashMap<String, OrderBook> orderBook = getOrderBook(orderId);
 
       modifyOrderInBook(orderBook, orderId, newQuantity);
 
@@ -47,7 +51,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
   public boolean deleteOrder(String orderId) {
 
     if (orderExists(orderId)) {
-      HashMap<String, ? extends OrderBook> orderBook = getOrderBook(orderId);
+      HashMap<String, OrderBook> orderBook = getOrderBook(orderId);
 
       removeOrderFromBook(orderId, orderBook);
 
@@ -130,8 +134,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     return order.getInstrument() + order.getSide().toString() + order.getPrice();
   }
 
-  private void reviewNextBestPriceInBook(
-      String orderId, HashMap<String, ? extends OrderBook> orderBook) {
+  private void reviewNextBestPriceInBook(String orderId, HashMap<String, OrderBook> orderBook) {
 
     if (bestPriceRequiresUpdate(orderBook, orderId)) {
 
@@ -147,7 +150,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     }
   }
 
-  private Long getNextBestPrice(HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+  private Long getNextBestPrice(HashMap<String, OrderBook> orderBook, String orderId) {
     return orderBook
         .get(
             orderHashMap.get(orderId).getInstrument()
@@ -155,7 +158,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
         .firstKey();
   }
 
-  private boolean orderBookIsEmpty(HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+  private boolean orderBookIsEmpty(HashMap<String, OrderBook> orderBook, String orderId) {
     return orderBook
         .get(
             orderHashMap.get(orderId).getInstrument()
@@ -163,14 +166,12 @@ public class OrderBookManagerImpl implements OrderBookManager {
         .isEmpty();
   }
 
-  private boolean bestPriceRequiresUpdate(
-      HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+  private boolean bestPriceRequiresUpdate(HashMap<String, OrderBook> orderBook, String orderId) {
 
     return orderHasBestPrice(orderId) && orderLevelIsEmpty(orderBook, orderId);
   }
 
-  private boolean orderLevelIsEmpty(
-      HashMap<String, ? extends OrderBook> orderBook, String orderId) {
+  private boolean orderLevelIsEmpty(HashMap<String, OrderBook> orderBook, String orderId) {
     return orderBook
             .get(
                 orderHashMap.get(orderId).getInstrument()
@@ -190,23 +191,15 @@ public class OrderBookManagerImpl implements OrderBookManager {
   }
 
   private void modifyOrderInBook(
-      HashMap<String, ? extends OrderBook> orderBook, String orderId, long newQuantity) {
+      HashMap<String, OrderBook> orderBook, String orderId, long newQuantity) {
 
     long orderPrice = orderHashMap.get(orderId).getPrice();
 
-    orderBook
-        .get(
-            orderHashMap.get(orderId).getInstrument()
-                + orderHashMap.get(orderId).getSide().toString())
-        .modifyOrder(orderId, newQuantity, orderPrice);
+    orderBook.get(getPropertiesKey(orderId)).modifyOrder(orderId, newQuantity, orderPrice);
   }
 
-  private void removeOrderFromBook(String orderId, HashMap<String, ? extends OrderBook> orderBook) {
-    orderBook
-        .get(
-            orderHashMap.get(orderId).getInstrument()
-                + orderHashMap.get(orderId).getSide().toString())
-        .removeOrder(orderId, getOrderPrice(orderId));
+  private void removeOrderFromBook(String orderId, HashMap<String, OrderBook> orderBook) {
+    orderBook.get(getPropertiesKey(orderId)).removeOrder(orderId, getOrderPrice(orderId));
   }
 
   private long getOrderPrice(String orderId) {
@@ -217,7 +210,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     return orderHashMap.containsKey(orderId);
   }
 
-  private HashMap<String, ? extends OrderBook> getOrderBook(String orderId) {
+  private HashMap<String, OrderBook> getOrderBook(String orderId) {
 
     if (orderExists(orderId)) {
       return orderBookHashMap;

@@ -1,7 +1,6 @@
 package com.cfbenchmarks.orderBookManager;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import com.cfbenchmarks.order.Order;
 import com.cfbenchmarks.order.Side;
@@ -71,10 +70,7 @@ public class GetBestPriceTest {
   @Test
   public void bestBidPriceIsHighestAfterHigherAdd() {
 
-    Order buy4 = new Order("order7", "VOD.L", Side.BUY, 300, 10);
-    assertTrue(buy4.getPrice() > buy1.getPrice());
-    assertTrue(buy4.getInstrument() == buy1.getInstrument());
-    assertTrue(buy4.getSide() == buy1.getSide());
+    Order buy4 = new Order("order9", "VOD.L", Side.BUY, 300, 10);
     orderBookManager.addOrder(buy4);
 
     Long expectedPrice = buy4.getPrice();
@@ -85,10 +81,7 @@ public class GetBestPriceTest {
   @Test
   public void bestBidPriceIsHighestAfterLowerAdd() {
 
-    Order buy4 = new Order("order7", "VOD.L", Side.BUY, 100, 10);
-    assertTrue(buy4.getPrice() < buy1.getPrice());
-    assertTrue(buy4.getInstrument() == buy1.getInstrument());
-    assertTrue(buy4.getSide() == buy1.getSide());
+    Order buy4 = new Order("order9", "VOD.L", Side.BUY, 100, 10);
     orderBookManager.addOrder(buy4);
 
     Long expectedPrice = buy1.getPrice();
@@ -99,10 +92,7 @@ public class GetBestPriceTest {
   @Test
   public void bestBidPriceIsHighestAfterEqualAdd() {
 
-    Order buy4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
-    assertTrue(buy4.getPrice() == buy1.getPrice());
-    assertTrue(buy4.getInstrument() == buy1.getInstrument());
-    assertTrue(buy4.getSide() == buy1.getSide());
+    Order buy4 = new Order("order9", "VOD.L", Side.BUY, 200, 10);
     orderBookManager.addOrder(buy4);
 
     Long expectedPrice = buy1.getPrice();
@@ -113,10 +103,7 @@ public class GetBestPriceTest {
   @Test
   public void bestAskPriceIsLowestAfterHigherAdd() {
 
-    Order sell4 = new Order("order7", "VOD.L", Side.SELL, 300, 10);
-    assertTrue(sell4.getPrice() > sell3.getPrice());
-    assertTrue(sell4.getInstrument() == sell3.getInstrument());
-    assertTrue(sell4.getSide() == sell3.getSide());
+    Order sell4 = new Order("order9", "VOD.L", Side.SELL, 300, 10);
     orderBookManager.addOrder(sell4);
 
     Long expectedPrice = sell3.getPrice();
@@ -127,10 +114,7 @@ public class GetBestPriceTest {
   @Test
   public void bestAskPriceIsLowestAfterLowerAdd() {
 
-    Order sell4 = new Order("order7", "VOD.L", Side.SELL, 10, 10);
-    assertTrue(sell4.getPrice() < sell3.getPrice());
-    assertTrue(sell4.getInstrument() == sell3.getInstrument());
-    assertTrue(sell4.getSide() == sell3.getSide());
+    Order sell4 = new Order("order9", "VOD.L", Side.SELL, 10, 10);
     orderBookManager.addOrder(sell4);
 
     Long expectedPrice = sell4.getPrice();
@@ -141,10 +125,7 @@ public class GetBestPriceTest {
   @Test
   public void bestAskPriceIsLowestAfterEqualAdd() {
 
-    Order sell4 = new Order("order7", "VOD.L", Side.SELL, 50, 10);
-    assertTrue(sell4.getPrice() == sell3.getPrice());
-    assertTrue(sell4.getInstrument() == sell3.getInstrument());
-    assertTrue(sell4.getSide() == sell3.getSide());
+    Order sell4 = new Order("order9", "VOD.L", Side.SELL, 50, 10);
     orderBookManager.addOrder(sell4);
 
     Long expectedPrice = sell3.getPrice();
@@ -167,10 +148,6 @@ public class GetBestPriceTest {
   @Test
   public void bestBidPriceStillHighestAfterDeleteNonHighest() {
 
-    assertEquals(
-        "buy2 is incorrectly the best price bid",
-        orderBookManager.getBestPrice(buy2.getInstrument(), buy2.getSide()).equals(buy2.getPrice()),
-        false);
     orderBookManager.deleteOrder(buy2.getOrderId());
 
     Long expectedPrice = buy1.getPrice();
@@ -193,12 +170,6 @@ public class GetBestPriceTest {
   @Test
   public void bestAskPriceStillHighestAfterDeleteNonHighest() {
 
-    assertEquals(
-        "sell2 is incorrectly the best price ask",
-        orderBookManager
-            .getBestPrice(sell2.getInstrument(), sell2.getSide())
-            .equals(sell2.getPrice()),
-        false);
     orderBookManager.deleteOrder(sell2.getOrderId());
 
     Long expectedPrice = sell3.getPrice();
@@ -210,13 +181,6 @@ public class GetBestPriceTest {
   @Test
   public void bestBidIsOptionalEmptyWhenOnlyOrderIsDeleted() {
 
-    assertEquals(
-        "buyOther is not the best price bid",
-        orderBookManager
-            .getBestPrice(buyOther.getInstrument(), buyOther.getSide())
-            .get()
-            .equals(buyOther.getPrice()),
-        true);
     orderBookManager.deleteOrder(buyOther.getOrderId());
 
     Optional<Long> expectedPrice = Optional.empty();
@@ -231,12 +195,6 @@ public class GetBestPriceTest {
   @Test
   public void bestAskIsOptionalEmptyWhenOnlyOrderIsDeleted() {
 
-    assertEquals(
-        "sellOther is not the best price ask",
-        orderBookManager
-            .getBestPrice(sell2.getInstrument(), sell2.getSide())
-            .equals(sell2.getPrice()),
-        false);
     orderBookManager.deleteOrder(sell2.getOrderId());
 
     Long expectedPrice = sell3.getPrice();

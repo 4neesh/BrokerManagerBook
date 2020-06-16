@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.004" tests="11" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.022" tests="11" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -17,7 +17,7 @@
     <property name="user.country" value="GB"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib"/>
-    <property name="sun.java.command" value="/Users/aneesh/Documents/Development/Java/Broker Order Book/target/surefire/surefirebooter632814415333472051.jar /Users/aneesh/Documents/Development/Java/Broker Order Book/target/surefire 2020-06-16T16-18-12_823-jvmRun1 surefire3338155212057876800tmp surefire_01180930508752894962tmp"/>
+    <property name="sun.java.command" value="/Users/aneesh/Documents/Development/Java/Broker Order Book/target/surefire/surefirebooter3485329802247116362.jar /Users/aneesh/Documents/Development/Java/Broker Order Book/target/surefire 2020-06-16T20-27-14_180-jvmRun1 surefire2250014540758081384tmp surefire_01794581611490599681tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="surefire.test.class.path" value="/Users/aneesh/Documents/Development/Java/Broker Order Book/target/test-classes:/Users/aneesh/Documents/Development/Java/Broker Order Book/target/classes:/Users/aneesh/.m2/repository/com/google/guava/guava/29.0-jre/guava-29.0-jre.jar:/Users/aneesh/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/Users/aneesh/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/Users/aneesh/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/aneesh/.m2/repository/org/checkerframework/checker-qual/2.11.1/checker-qual-2.11.1.jar:/Users/aneesh/.m2/repository/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar:/Users/aneesh/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar:/Users/aneesh/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/aneesh/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/aneesh/.m2/repository/org/mockito/mockito-all/2.0.2-beta/mockito-all-2.0.2-beta.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/Users/aneesh/Documents/Development/Java/Broker Order Book/target/surefire/surefirebooter632814415333472051.jar"/>
+    <property name="surefire.real.class.path" value="/Users/aneesh/Documents/Development/Java/Broker Order Book/target/surefire/surefirebooter3485329802247116362.jar"/>
     <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_191.jdk/Contents/Home/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
@@ -62,15 +62,15 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="getOrdersAtLevelReturnsForPrices" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
+  <testcase name="getOrdersAtLevelReturnsForPrices" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.006"/>
   <testcase name="bidReturnsOrderWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
   <testcase name="bidCreatesSeparateListsForPrices" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="emptyBidLevelReturnsNull" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
+  <testcase name="emptyBidLevelReturnsNull" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.003"/>
   <testcase name="bidCreatesSeparateListsForInstruments" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
   <testcase name="askCreatesSeparateListsForPrices" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
   <testcase name="bidReturnsMultipleOrdersSequentiallyWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="emptyAskLevelReturnsNull" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="askReturnsOrderWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="askCreatesSeparateListsForInstruments" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.001"/>
+  <testcase name="emptyAskLevelReturnsNull" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.001"/>
+  <testcase name="askReturnsOrderWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.001"/>
+  <testcase name="askCreatesSeparateListsForInstruments" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
   <testcase name="askReturnsMultipleOrdersWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
 </testsuite>

@@ -42,101 +42,64 @@ public class GetTotalQuantityAtLevelTest {
   @Test
   public void bidBookReturnsOrdersAfterAdding() {
 
-    assertEquals(
-        "Bid Book for VOD.L is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString()),
-        null);
-    assertEquals("buy1 does not have 10 orders", buy1.getQuantity(), 10);
-
     orderBookManager.addOrder(buy1);
 
     assertEquals(
         "Empty Bid book level does not add orderQuantity with first order",
+        buy1.getQuantity(),
         orderBookManager.getTotalQuantityAtLevel(
-            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        buy1.getQuantity());
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
   public void askBookReturnsOrdersAfterAdding() {
 
-    assertEquals(
-        "Ask Book for VOD.L is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString()),
-        null);
-    assertEquals("sell1 does not have 10 orders", sell1.getQuantity(), 11);
-
     orderBookManager.addOrder(sell1);
 
     assertEquals(
         "Empty Ask book level does not add orderQuantity with first order",
+        sell1.getQuantity(),
         orderBookManager.getTotalQuantityAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        sell1.getQuantity());
+            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
   public void bidBookReturnsAddedOrdersAfterAddingMultiple() {
-
-    assertEquals(
-        "Bid Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString()),
-        null);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy1SamePrice);
 
     assertEquals(
         "Empty Bid book quantity does not increases with multiple orders",
+        20,
         orderBookManager.getTotalQuantityAtLevel(
-            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        20);
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
   public void askBookReturnsAddedOrdersAfterAddingMultiple() {
-
-    assertEquals(
-        "Ask Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString()),
-        null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell1SamePrice);
 
     assertEquals(
         "Empty Ask book quantity does not increase with multiple orders",
+        21,
         orderBookManager.getTotalQuantityAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()),
-        21);
+            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
   public void bidBookOrdersReflectsLevel() {
-
-    assertEquals(
-        "Bid Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString()),
-        null);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buyOther);
 
     assertEquals(
         "Bid book quantity does not reflect on instrument",
+        10,
         orderBookManager.getTotalQuantityAtLevel(
-            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()),
-        10);
+            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
     assertEquals(
         "Bid book quantity does not reflect on instrument",
         12,
@@ -146,13 +109,6 @@ public class GetTotalQuantityAtLevelTest {
 
   @Test
   public void askBookOrdersReflectsLevel() {
-
-    assertEquals(
-        "Ask Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString()),
-        null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sellOther);
@@ -172,13 +128,6 @@ public class GetTotalQuantityAtLevelTest {
   @Test
   public void bidBookOrdersReducesAfterOneDeleted() {
 
-    assertEquals(
-        "Bid Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString()),
-        null);
-
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy1SamePrice);
     orderBookManager.deleteOrder(buy1.getOrderId());
@@ -193,58 +142,12 @@ public class GetTotalQuantityAtLevelTest {
   @Test
   public void askBookOrdersReduceAfterOneDeleted() {
 
-    assertEquals(
-        "Ask Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString()),
-        null);
-
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell1SamePrice);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
         "Ask book quantity does not increment with order",
         10,
-        orderBookManager.getTotalQuantityAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
-  }
-
-  @Test
-  public void bidBookOrdersReducesToZero() {
-
-    assertEquals(
-        "Bid Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString()),
-        null);
-
-    orderBookManager.addOrder(buy1);
-    orderBookManager.deleteOrder(buy1.getOrderId());
-
-    assertEquals(
-        "Empty Bid book quantity does not equal 0",
-        0,
-        orderBookManager.getTotalQuantityAtLevel(
-            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
-  }
-
-  @Test
-  public void askBookOrdersReducesToZero() {
-
-    assertEquals(
-        "Ask Book is not empty",
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString()),
-        null);
-
-    orderBookManager.addOrder(sell1);
-    orderBookManager.deleteOrder(sell1.getOrderId());
-    assertEquals(
-        "Empty Ask book quantity does not equal 0",
-        0,
         orderBookManager.getTotalQuantityAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }

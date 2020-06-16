@@ -1,4 +1,4 @@
-package com.cfbenchmarks.levelOrders;
+package com.cfbenchmarks.orderBook;
 
 import com.cfbenchmarks.order.Order;
 import java.util.ArrayList;
@@ -10,11 +10,11 @@ public class OrderLinkedList {
   private OrderNode last;
 
   public OrderNode getHead() {
-    return head;
+    return this.head;
   }
 
   public OrderNode getLast() {
-    return last;
+    return this.last;
   }
 
   public OrderLinkedList(Order order) {
@@ -22,7 +22,7 @@ public class OrderLinkedList {
     this.last = new OrderNode(order);
   }
 
-  public void append(OrderNode order) {
+  public void appendOrder(OrderNode order) {
     if (headEqualsLast()) {
       this.head.setNext(order);
       order.setPrevious(this.head);
@@ -32,10 +32,6 @@ public class OrderLinkedList {
       lastOrderNode.setNext(order);
     }
     this.last = order;
-  }
-
-  private boolean headEqualsLast() {
-    return this.head.getOrder().equals(this.last.getOrder());
   }
 
   public void modifyOrder(String orderId, long quantity) {
@@ -82,6 +78,10 @@ public class OrderLinkedList {
     } else {
       return null;
     }
+  }
+
+  private boolean headEqualsLast() {
+    return this.head.getOrder().equals(this.last.getOrder());
   }
 
   private void removeOrderFromLast() {
@@ -137,7 +137,7 @@ public class OrderLinkedList {
       OrderNode newOrder = current;
       this.removeNode(current.getOrder().getOrderId());
 
-      this.append(newOrder);
+      this.appendOrder(newOrder);
     }
   }
 }

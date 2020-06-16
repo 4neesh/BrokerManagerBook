@@ -43,367 +43,161 @@ public class ModifyOrderTest {
   }
 
   @Test
-  public void bidMustExistInBookToModify() {
+  public void orderMustExistInOrderLinkedListToModify() {
 
     Order buy4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
 
-    assertFalse(orderBookManager.getOrderHashMap().containsKey(buy4.getOrderId()));
-
-    assertFalse(orderBookManager.modifyOrder(buy4.getOrderId(), 10));
+    assertFalse(
+        "Returning modification for order not in the orderBook",
+        orderBookManager.modifyOrder(buy4.getOrderId(), 10));
   }
 
   @Test
-  public void askMustExistInBookToModify() {
-
-    Order sell4 = new Order("order7", "VOD.L", Side.BUY, 200, 10);
-
-    assertFalse(orderBookManager.getOrderHashMap().containsKey(sell4.getOrderId()));
-
-    assertFalse(orderBookManager.modifyOrder(sell4.getOrderId(), 10));
-  }
-
-  @Test
-  public void modifyBidBeforeEndToLower() {
+  public void lastRemainsAfterModifyOrderBeforeEndToLower() {
 
     long newQuantity = 7;
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getHead()
-                .getNext()
-                .getOrder()
-                .getQuantity()
-            > newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getLast()
-                .getOrder()
-            == buy3);
 
     orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
 
     assertEquals(
+        "Last is changed when bid before end is lowered",
+        buy3,
         orderBookManager
             .getOrderBookHashMap()
             .get(buy2.getInstrument() + buy2.getSide().toString())
             .get(buy2.getPrice())
             .getLast()
-            .getOrder(),
-        buy3);
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy2.getInstrument() + buy2.getSide().toString())
-            .get(buy2.getPrice())
-            .getHead()
-            .getNext()
-            .getOrder()
-            .getQuantity(),
-        newQuantity);
+            .getOrder());
   }
 
   @Test
-  public void modifyBidAtEndToLower() {
+  public void quantityUpdatedAfterModifyOrderBeforeEndToLower() {
 
     long newQuantity = 7;
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getLast()
-                .getOrder()
-                .getQuantity()
-            > newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getLast()
-                .getOrder()
-            == buy3);
-
-    orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
-
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy2.getInstrument() + buy2.getSide().toString())
-            .get(buy2.getPrice())
-            .getLast()
-            .getOrder(),
-        buy3);
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy2.getInstrument() + buy2.getSide().toString())
-            .get(buy2.getPrice())
-            .getLast()
-            .getOrder()
-            .getQuantity(),
-        newQuantity);
-  }
-
-  @Test
-  public void modifyBidBeforeEndToHigher() {
-
-    long newQuantity = 13;
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getHead()
-                .getNext()
-                .getOrder()
-                .getQuantity()
-            < newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getLast()
-                .getOrder()
-            != buy2);
 
     orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
 
     assertEquals(
+        "New quantity is not updated when bid before end is lowered",
+        newQuantity,
         orderBookManager
             .getOrderBookHashMap()
             .get(buy2.getInstrument() + buy2.getSide().toString())
             .get(buy2.getPrice())
-            .getLast()
-            .getOrder(),
-        buy2);
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy2.getInstrument() + buy2.getSide().toString())
-            .get(buy2.getPrice())
-            .getLast()
+            .getHead()
+            .getNext()
             .getOrder()
-            .getQuantity(),
-        newQuantity);
+            .getQuantity());
   }
 
   @Test
-  public void modifyBidAtEndToHigher() {
+  public void lastRemainsWhenOrderAtEndModifiedToLower() {
 
-    long newQuantity = 13;
-    // need to assert that there are 3 items in the level
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getLast()
-                .getOrder()
-                .getQuantity()
-            < newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(buy2.getInstrument() + buy2.getSide().toString())
-                .get(buy2.getPrice())
-                .getLast()
-                .getOrder()
-            == buy3);
+    long newQuantity = 7;
 
     orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
 
     assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy2.getInstrument() + buy2.getSide().toString())
-            .get(buy2.getPrice())
-            .getHead()
-            .getNext()
-            .getOrder(),
-        buy2);
-    assertEquals(
+        "Last in OrderLinkedList is changed when bid at end modified to lower",
+        buy3,
         orderBookManager
             .getOrderBookHashMap()
             .get(buy2.getInstrument() + buy2.getSide().toString())
             .get(buy2.getPrice())
             .getLast()
-            .getOrder()
-            .getQuantity(),
-        newQuantity);
+            .getOrder());
   }
 
   @Test
-  public void modifyAskBeforeEndToLower() {
+  public void quantityUpdatedWhenOrderAtEndModifiedToLower() {
 
     long newQuantity = 7;
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getHead()
-                .getNext()
-                .getOrder()
-                .getQuantity()
-            > newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getLast()
-                .getOrder()
-            == sell3);
 
-    orderBookManager.modifyOrder(sell2.getOrderId(), newQuantity);
+    orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
 
     assertEquals(
+        "Quantity is not updated when bid at end of OrderLinkedList is changed",
+        newQuantity,
         orderBookManager
             .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
+            .get(buy2.getInstrument() + buy2.getSide().toString())
+            .get(buy2.getPrice())
             .getLast()
-            .getOrder(),
-        sell3);
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
-            .getHead()
-            .getNext()
             .getOrder()
-            .getQuantity(),
-        newQuantity);
+            .getQuantity());
   }
 
   @Test
-  public void modifyAskAtEndToLower() {
-
-    long newQuantity = 7;
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getLast()
-                .getOrder()
-                .getQuantity()
-            > newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getLast()
-                .getOrder()
-            == sell3);
-
-    orderBookManager.modifyOrder(sell3.getOrderId(), newQuantity);
-
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
-            .getLast()
-            .getOrder(),
-        sell3);
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
-            .getLast()
-            .getOrder()
-            .getQuantity(),
-        newQuantity);
-  }
-
-  @Test
-  public void modifyAskBeforeEndToHigher() {
+  public void lastUpdatedWhenOrderBeforeEndModifiedToHigher() {
 
     long newQuantity = 13;
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getHead()
-                .getNext()
-                .getOrder()
-                .getQuantity()
-            < newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getLast()
-                .getOrder()
-            != sell2);
 
-    orderBookManager.modifyOrder(sell2.getOrderId(), newQuantity);
+    orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
 
     assertEquals(
+        "Order in body of OrderLinkedList not moved to end when quantity increased",
+        buy2,
         orderBookManager
             .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
+            .get(buy2.getInstrument() + buy2.getSide().toString())
+            .get(buy2.getPrice())
             .getLast()
-            .getOrder(),
-        sell2);
-    assertEquals(
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
-            .getLast()
-            .getOrder()
-            .getQuantity(),
-        newQuantity);
+            .getOrder());
   }
 
   @Test
-  public void modifyAskAtEndToHigher() {
+  public void quantityUpdatedWhenOrderBeforeEndModifiedToHigher() {
 
     long newQuantity = 13;
-    // need to assert that there are 3 items in the level
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getLast()
-                .getOrder()
-                .getQuantity()
-            < newQuantity);
-    assertTrue(
-        orderBookManager
-                .getOrderBookHashMap()
-                .get(sell2.getInstrument() + sell2.getSide().toString())
-                .get(sell2.getPrice())
-                .getLast()
-                .getOrder()
-            == sell3);
 
-    orderBookManager.modifyOrder(sell3.getOrderId(), newQuantity);
+    orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
 
     assertEquals(
+        "Quantity is not updated when body node in OrderLinkedList is modified to higher",
+        newQuantity,
         orderBookManager
             .getOrderBookHashMap()
-            .get(sell2.getInstrument() + sell2.getSide().toString())
-            .get(sell2.getPrice())
+            .get(buy2.getInstrument() + buy2.getSide().toString())
+            .get(buy2.getPrice())
             .getLast()
             .getOrder()
-            .getQuantity(),
-        newQuantity);
+            .getQuantity());
+  }
+
+  @Test
+  public void lastUpdatedWhenOrderAtEndModifiedToHigher() {
+
+    long newQuantity = 13;
+
+    orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
+
+    assertEquals(
+        "Order in body of OrderLinkedList not moved to end when quantity increased",
+        buy3,
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy2.getInstrument() + buy2.getSide().toString())
+            .get(buy2.getPrice())
+            .getLast()
+            .getOrder());
+  }
+
+  @Test
+  public void quantityUpdatedWhenOrderAtEndModifiedToHigher() {
+
+    long newQuantity = 13;
+
+    orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
+
+    assertEquals(
+        "Quantity is not updated when end node in OrderLinkedList is modified to higher",
+        newQuantity,
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy2.getInstrument() + buy2.getSide().toString())
+            .get(buy2.getPrice())
+            .getLast()
+            .getOrder()
+            .getQuantity());
   }
 }
