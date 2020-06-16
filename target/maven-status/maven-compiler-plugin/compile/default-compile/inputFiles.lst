@@ -6,6 +6,4 @@
 /Users/aneesh/Documents/Development/Java/Broker Order Book/src/main/java/com/cfbenchmarks/instrumentProperty/InstrumentProperty.java
 /Users/aneesh/Documents/Development/Java/Broker Order Book/src/main/java/com/cfbenchmarks/orderBookManager/OrderBookManagerImpl.java
 /Users/aneesh/Documents/Development/Java/Broker Order Book/src/main/java/com/cfbenchmarks/levelOrders/OrderLinkedList.java
-/Users/aneesh/Documents/Development/Java/Broker Order Book/src/main/java/com/cfbenchmarks/orderBook/AskBook.java
-/Users/aneesh/Documents/Development/Java/Broker Order Book/src/main/java/com/cfbenchmarks/orderBook/BidBook.java
 /Users/aneesh/Documents/Development/Java/Broker Order Book/src/main/java/com/cfbenchmarks/levelOrders/OrderNode.java

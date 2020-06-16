@@ -22,7 +22,7 @@ public class AddOrderTest {
     Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     String propertyKey = buy.getInstrument() + buy.getSide().toString();
     assertFalse(orderBookManager.getOrderHashMap().containsKey(buy.getOrderId()));
-    assertTrue(orderBookManager.getBidBookHashMap().isEmpty());
+    assertTrue(orderBookManager.getOrderBookHashMap().isEmpty());
     assertFalse(orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey));
 
     orderBookManager.addOrder(buy);
@@ -33,7 +33,10 @@ public class AddOrderTest {
         true);
     assertEquals(
         "Bid does not exist in bidBookHashMap",
-        orderBookManager.getBidBookHashMap().get(buy.getInstrument()).containsKey(buy.getPrice()),
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy.getInstrument() + buy.getSide().toString())
+            .containsKey(buy.getPrice()),
         true);
     assertEquals(
         "Bid does not exist in instrumentPropertyMap",
@@ -48,7 +51,7 @@ public class AddOrderTest {
     String propertyKey = sell.getInstrument() + sell.getSide().toString();
 
     assertFalse(orderBookManager.getOrderHashMap().containsKey(sell.getOrderId()));
-    assertTrue(orderBookManager.getAskBookHashMap().isEmpty());
+    assertTrue(orderBookManager.getOrderBookHashMap().isEmpty());
     assertFalse(orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey));
 
     orderBookManager.addOrder(sell);
@@ -59,7 +62,10 @@ public class AddOrderTest {
         true);
     assertEquals(
         "Bid does not exist in askBookHashMap",
-        orderBookManager.getAskBookHashMap().get(sell.getInstrument()).containsKey(sell.getPrice()),
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(sell.getInstrument() + sell.getSide().toString())
+            .containsKey(sell.getPrice()),
         true);
     assertEquals(
         "Bid does not exist in instrumentPropertyMap",
@@ -83,23 +89,23 @@ public class AddOrderTest {
         "buy1 and buy2 have different instruments", buy1.getInstrument(), buy2.getInstrument());
     assertEquals("buy1 and buy2 have different sides", buy1.getSide(), buy2.getSide());
     assertEquals(
-        "bidBookHashMap is not empty", orderBookManager.getBidBookHashMap().isEmpty(), true);
+        "bidBookHashMap is not empty", orderBookManager.getOrderBookHashMap().isEmpty(), true);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
 
     String expected1 =
         orderBookManager
-            .getBidBookHashMap()
-            .get(buy1.getInstrument())
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString())
             .get(buy1.getPrice())
             .getHead()
             .getOrder()
             .getOrderId();
     String expected2 =
         orderBookManager
-            .getBidBookHashMap()
-            .get(buy2.getInstrument())
+            .getOrderBookHashMap()
+            .get(buy2.getInstrument() + buy2.getSide().toString())
             .get(buy2.getPrice())
             .getHead()
             .getNext()
@@ -116,7 +122,7 @@ public class AddOrderTest {
     Order sell1 = new Order("order1", "VOD.L", Side.SELL, 200, 10);
     Order sell2 = new Order("order2", "VOD.L", Side.SELL, 200, 10);
     assertTrue(sell1.getPrice() == sell2.getPrice());
-    assertTrue(orderBookManager.getAskBookHashMap().isEmpty());
+    assertTrue(orderBookManager.getOrderBookHashMap().isEmpty());
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell2);
@@ -124,8 +130,8 @@ public class AddOrderTest {
     assertEquals(
         "sell1 is not added to askBookHashMap.",
         orderBookManager
-            .getAskBookHashMap()
-            .get(sell1.getInstrument())
+            .getOrderBookHashMap()
+            .get(sell1.getInstrument() + sell1.getSide().toString())
             .get(sell1.getPrice())
             .getHead()
             .getOrder()
@@ -134,8 +140,8 @@ public class AddOrderTest {
     assertEquals(
         "sell2 is not added to askBookHashMap.",
         orderBookManager
-            .getAskBookHashMap()
-            .get(sell1.getInstrument())
+            .getOrderBookHashMap()
+            .get(sell1.getInstrument() + sell1.getSide().toString())
             .get(sell1.getPrice())
             .getHead()
             .getNext()

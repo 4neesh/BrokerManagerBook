@@ -30,7 +30,10 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not contain 2 levels",
         2,
-        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()).size());
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString())
+            .size());
     assertEquals(
         "buy1 price is not greater than buy3 price", true, buy1.getPrice() > buy3.getPrice());
     assertEquals(
@@ -39,7 +42,10 @@ public class BidBookTest {
         buy1.getInstrument().equals(buy3.getInstrument()));
     assertEquals("buy1 and buy3 have different sides", true, buy1.getSide().equals(buy3.getSide()));
 
-    BidBook bidBook = orderBookManager.getBidBookHashMap().get(buy1.getInstrument());
+    OrderBook bidBook =
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString());
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
@@ -61,7 +67,10 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not contain 2 levels",
         2,
-        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()).size());
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString())
+            .size());
 
     Order buy2 = new Order("order5", "VOD.L", Side.BUY, 90, 10);
     assertEquals(
@@ -73,7 +82,10 @@ public class BidBookTest {
     assertEquals("buy2 is not more than buy3", true, buy2.getPrice() > buy3.getPrice());
     orderBookManager.addOrder(buy2);
 
-    BidBook bidBook = orderBookManager.getBidBookHashMap().get(buy1.getInstrument());
+    OrderBook bidBook =
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString());
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
@@ -95,7 +107,10 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not contain 2 levels",
         2,
-        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()).size());
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString())
+            .size());
 
     Order buy4 = new Order("order5", "VOD.L", Side.BUY, 110, 10);
     assertEquals(
@@ -107,7 +122,10 @@ public class BidBookTest {
     assertEquals("buy4 price is not greater than buy3", true, buy4.getPrice() > buy3.getPrice());
     orderBookManager.addOrder(buy4);
 
-    BidBook bidBook = orderBookManager.getBidBookHashMap().get(buy1.getInstrument());
+    OrderBook bidBook =
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString());
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
@@ -129,7 +147,10 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not contain 2 levels",
         2,
-        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()).size());
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString())
+            .size());
 
     Order buy5 = new Order("order5", "VOD.L", Side.BUY, 70, 10);
     assertEquals(
@@ -142,7 +163,10 @@ public class BidBookTest {
     assertEquals("buy5 price is not less than buy3", true, buy5.getPrice() < buy3.getPrice());
     orderBookManager.addOrder(buy5);
 
-    BidBook bidBook = orderBookManager.getBidBookHashMap().get(buy1.getInstrument());
+    OrderBook bidBook =
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy1.getInstrument() + buy1.getSide().toString());
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
