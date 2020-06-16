@@ -53,7 +53,7 @@ public class GetTotalVolumeAtLevelTest {
     assertEquals(
         "Bid Book for VOD.L is not empty",
         null,
-        orderBookManager.bidBookHashMap.get(buy1.getInstrument()));
+        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()));
     assertEquals("buy1 does not have 10 orders", 10, buy1.getQuantity());
     assertEquals("buy1 does not have 200 price", 200, buy1.getPrice());
 
@@ -72,7 +72,7 @@ public class GetTotalVolumeAtLevelTest {
     assertEquals(
         "Ask Book for VOD.L is not empty",
         null,
-        orderBookManager.askBookHashMap.get(buy1.getInstrument()));
+        orderBookManager.getAskBookHashMap().get(buy1.getInstrument()));
     assertEquals("sell1 does not have 11 orders", 11, sell1.getQuantity());
     assertEquals("sell1 does not have 200 price", 200, sell1.getPrice());
 
@@ -89,7 +89,9 @@ public class GetTotalVolumeAtLevelTest {
   public void bidBookReturnsAddedOrdersAfterAddingMultiple() {
 
     assertEquals(
-        "Bid Book is not empty", null, orderBookManager.bidBookHashMap.get(buy1.getInstrument()));
+        "Bid Book is not empty",
+        null,
+        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()));
     assertEquals("buy1 does not have 10 orders", 10, buy1.getQuantity());
     assertEquals("buy1 does not have 200 price", 200, buy1.getPrice());
     assertEquals("buy1SamePrice does not have 9 orders", 9, buy1SamePrice.getQuantity());
@@ -109,7 +111,9 @@ public class GetTotalVolumeAtLevelTest {
   public void askBookReturnsAddedOrdersAfterAddingMultiple() {
 
     assertEquals(
-        "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
+        "Ask Book is not empty",
+        orderBookManager.getAskBookHashMap().get(sell1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell1SamePrice);
@@ -125,7 +129,9 @@ public class GetTotalVolumeAtLevelTest {
   public void bidBookOrdersReflectsLevel() {
 
     assertEquals(
-        "Bid Book is not empty", orderBookManager.bidBookHashMap.get(buy1.getInstrument()), null);
+        "Bid Book is not empty",
+        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buyOther);
@@ -146,7 +152,9 @@ public class GetTotalVolumeAtLevelTest {
   public void askBookOrdersReflectsLevel() {
 
     assertEquals(
-        "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
+        "Ask Book is not empty",
+        orderBookManager.getAskBookHashMap().get(sell1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sellOther);
@@ -167,7 +175,9 @@ public class GetTotalVolumeAtLevelTest {
   public void bidBookOrdersReducesAfterOneDeleted() {
 
     assertEquals(
-        "Bid Book is not empty", orderBookManager.bidBookHashMap.get(buy1.getInstrument()), null);
+        "Bid Book is not empty",
+        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy1SamePrice);
@@ -184,7 +194,9 @@ public class GetTotalVolumeAtLevelTest {
   public void askBookOrdersReduceAfterOneDeleted() {
 
     assertEquals(
-        "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
+        "Ask Book is not empty",
+        orderBookManager.getAskBookHashMap().get(sell1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell1SamePrice);
@@ -200,7 +212,9 @@ public class GetTotalVolumeAtLevelTest {
   public void bidBookOrdersReducesToZero() {
 
     assertEquals(
-        "Bid Book is not empty", orderBookManager.bidBookHashMap.get(buy1.getInstrument()), null);
+        "Bid Book is not empty",
+        orderBookManager.getBidBookHashMap().get(buy1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.deleteOrder(buy1.getOrderId());
@@ -216,7 +230,9 @@ public class GetTotalVolumeAtLevelTest {
   public void askBookOrdersReducesToZero() {
 
     assertEquals(
-        "Ask Book is not empty", orderBookManager.bidBookHashMap.get(sell1.getInstrument()), null);
+        "Ask Book is not empty",
+        orderBookManager.getAskBookHashMap().get(sell1.getInstrument()),
+        null);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.deleteOrder(sell1.getOrderId());

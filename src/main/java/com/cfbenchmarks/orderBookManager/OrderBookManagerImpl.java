@@ -11,10 +11,10 @@ import java.util.*;
 
 public class OrderBookManagerImpl implements OrderBookManager {
 
-  HashMap<String, Order> orderHashMap;
-  HashMap<String, InstrumentProperty> instrumentPropertyMap;
-  public HashMap<String, AskBook> askBookHashMap;
-  public HashMap<String, BidBook> bidBookHashMap;
+  private HashMap<String, Order> orderHashMap;
+  private HashMap<String, InstrumentProperty> instrumentPropertyMap;
+  private HashMap<String, AskBook> askBookHashMap;
+  private HashMap<String, BidBook> bidBookHashMap;
 
   public OrderBookManagerImpl() {
     this.orderHashMap = new HashMap<>();
@@ -114,6 +114,22 @@ public class OrderBookManagerImpl implements OrderBookManager {
         .getLevelPropertiesHashMap()
         .get(levelPropertiesKey)
         .getVolume();
+  }
+
+  public HashMap<String, AskBook> getAskBookHashMap() {
+    return askBookHashMap;
+  }
+
+  public HashMap<String, BidBook> getBidBookHashMap() {
+    return bidBookHashMap;
+  }
+
+  public HashMap<String, Order> getOrderHashMap() {
+    return orderHashMap;
+  }
+
+  public HashMap<String, InstrumentProperty> getInstrumentPropertyMap() {
+    return instrumentPropertyMap;
   }
 
   private void removeOrderFromPropertyMap(String orderId) {

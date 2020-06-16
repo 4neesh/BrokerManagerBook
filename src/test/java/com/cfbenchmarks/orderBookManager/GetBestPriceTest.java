@@ -53,7 +53,7 @@ public class GetBestPriceTest {
     assertEquals(
         "Best price of bid is not highest",
         bestBidPriceOfVodL,
-        orderBookManager.orderHashMap.get(buy1.getOrderId()).getPrice());
+        orderBookManager.getOrderHashMap().get(buy1.getOrderId()).getPrice());
   }
 
   @Test
@@ -65,7 +65,7 @@ public class GetBestPriceTest {
     assertEquals(
         "Best price of ask is not lowest",
         bestAskPriceOfVodL,
-        orderBookManager.orderHashMap.get(sell3.getOrderId()).getPrice());
+        orderBookManager.getOrderHashMap().get(sell3.getOrderId()).getPrice());
   }
 
   @Test

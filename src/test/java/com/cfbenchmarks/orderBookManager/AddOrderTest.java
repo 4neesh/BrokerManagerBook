@@ -13,7 +13,6 @@ public class AddOrderTest {
 
   @Before
   public void setUp() {
-
     orderBookManager = new OrderBookManagerImpl();
   }
 
@@ -22,23 +21,23 @@ public class AddOrderTest {
 
     Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     String propertyKey = buy.getInstrument() + buy.getSide().toString();
-    assertFalse(orderBookManager.orderHashMap.containsKey(buy.getOrderId()));
-    assertTrue(orderBookManager.bidBookHashMap.isEmpty());
-    assertFalse(orderBookManager.instrumentPropertyMap.containsKey(propertyKey));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(buy.getOrderId()));
+    assertTrue(orderBookManager.getBidBookHashMap().isEmpty());
+    assertFalse(orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey));
 
     orderBookManager.addOrder(buy);
 
     assertEquals(
         "Bid does not exist in orderBookHashMap",
-        orderBookManager.orderHashMap.containsKey(buy.getOrderId()),
+        orderBookManager.getOrderHashMap().containsKey(buy.getOrderId()),
         true);
     assertEquals(
         "Bid does not exist in bidBookHashMap",
-        orderBookManager.bidBookHashMap.get(buy.getInstrument()).containsKey(buy.getPrice()),
+        orderBookManager.getBidBookHashMap().get(buy.getInstrument()).containsKey(buy.getPrice()),
         true);
     assertEquals(
         "Bid does not exist in instrumentPropertyMap",
-        orderBookManager.instrumentPropertyMap.containsKey(propertyKey),
+        orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey),
         true);
   }
 
@@ -48,23 +47,23 @@ public class AddOrderTest {
     Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
     String propertyKey = sell.getInstrument() + sell.getSide().toString();
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(sell.getOrderId()));
-    assertTrue(orderBookManager.askBookHashMap.isEmpty());
-    assertFalse(orderBookManager.instrumentPropertyMap.containsKey(propertyKey));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(sell.getOrderId()));
+    assertTrue(orderBookManager.getAskBookHashMap().isEmpty());
+    assertFalse(orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey));
 
     orderBookManager.addOrder(sell);
 
     assertEquals(
         "Bid does not exist in orderHashMap",
-        orderBookManager.orderHashMap.containsKey(sell.getOrderId()),
+        orderBookManager.getOrderHashMap().containsKey(sell.getOrderId()),
         true);
     assertEquals(
         "Bid does not exist in askBookHashMap",
-        orderBookManager.askBookHashMap.get(sell.getInstrument()).containsKey(sell.getPrice()),
+        orderBookManager.getAskBookHashMap().get(sell.getInstrument()).containsKey(sell.getPrice()),
         true);
     assertEquals(
         "Bid does not exist in instrumentPropertyMap",
-        orderBookManager.instrumentPropertyMap.containsKey(propertyKey),
+        orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey),
         true);
   }
 
@@ -83,14 +82,15 @@ public class AddOrderTest {
     assertEquals(
         "buy1 and buy2 have different instruments", buy1.getInstrument(), buy2.getInstrument());
     assertEquals("buy1 and buy2 have different sides", buy1.getSide(), buy2.getSide());
-    assertEquals("bidBookHashMap is not empty", orderBookManager.bidBookHashMap.isEmpty(), true);
+    assertEquals(
+        "bidBookHashMap is not empty", orderBookManager.getBidBookHashMap().isEmpty(), true);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
 
     String expected1 =
         orderBookManager
-            .bidBookHashMap
+            .getBidBookHashMap()
             .get(buy1.getInstrument())
             .get(buy1.getPrice())
             .head
@@ -98,7 +98,7 @@ public class AddOrderTest {
             .getOrderId();
     String expected2 =
         orderBookManager
-            .bidBookHashMap
+            .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
             .head
@@ -116,7 +116,7 @@ public class AddOrderTest {
     Order sell1 = new Order("order1", "VOD.L", Side.SELL, 200, 10);
     Order sell2 = new Order("order2", "VOD.L", Side.SELL, 200, 10);
     assertTrue(sell1.getPrice() == sell2.getPrice());
-    assertTrue(orderBookManager.askBookHashMap.isEmpty());
+    assertTrue(orderBookManager.getAskBookHashMap().isEmpty());
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell2);
@@ -124,7 +124,7 @@ public class AddOrderTest {
     assertEquals(
         "sell1 is not added to askBookHashMap.",
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sell1.getInstrument())
             .get(sell1.getPrice())
             .head
@@ -134,7 +134,7 @@ public class AddOrderTest {
     assertEquals(
         "sell2 is not added to askBookHashMap.",
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sell1.getInstrument())
             .get(sell1.getPrice())
             .head

@@ -50,7 +50,7 @@ public class DeleteOrderTest {
 
     Order buy4 = new Order("order9", "VOD.L", Side.BUY, 200, 10);
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(buy4.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(buy4.getOrderId()));
 
     assertEquals(
         "buy4 does not exist in bidBook.", orderBookManager.deleteOrder(buy4.getOrderId()), false);
@@ -61,7 +61,7 @@ public class DeleteOrderTest {
 
     Order sell4 = new Order("order10", "VOD.L", Side.SELL, 200, 10);
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(sell4.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(sell4.getOrderId()));
 
     assertEquals(
         sell4.getOrderId() + " does not exist in ask book",
@@ -73,24 +73,34 @@ public class DeleteOrderTest {
   public void deleteFromHeadInBid() {
 
     assertTrue(
-        orderBookManager.bidBookHashMap.get(buy1.getInstrument()).get(buy1.getPrice()).head.order
+        orderBookManager
+                .getBidBookHashMap()
+                .get(buy1.getInstrument())
+                .get(buy1.getPrice())
+                .head
+                .order
             == buy1);
     assertTrue(
         orderBookManager
-                .bidBookHashMap
+                .getBidBookHashMap()
                 .get(buy1.getInstrument())
                 .get(buy1.getPrice())
                 .head
                 .next
                 .order
             == buy2);
-    assertTrue(orderBookManager.orderHashMap.containsKey(buy1.getOrderId()));
+    assertTrue(orderBookManager.getOrderHashMap().containsKey(buy1.getOrderId()));
 
     orderBookManager.deleteOrder(buy1.getOrderId());
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(buy1.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(buy1.getOrderId()));
     assertEquals(
-        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).head.order,
+        orderBookManager
+            .getBidBookHashMap()
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .head
+            .order,
         buy2);
   }
 
@@ -98,24 +108,34 @@ public class DeleteOrderTest {
   public void deleteFromHeadInAsk() {
 
     assertTrue(
-        orderBookManager.askBookHashMap.get(sell1.getInstrument()).get(sell1.getPrice()).head.order
+        orderBookManager
+                .getAskBookHashMap()
+                .get(sell1.getInstrument())
+                .get(sell1.getPrice())
+                .head
+                .order
             == sell1);
     assertTrue(
         orderBookManager
-                .askBookHashMap
+                .getAskBookHashMap()
                 .get(sell1.getInstrument())
                 .get(sell1.getPrice())
                 .head
                 .next
                 .order
             == sell2);
-    assertTrue(orderBookManager.orderHashMap.containsKey(sell1.getOrderId()));
+    assertTrue(orderBookManager.getOrderHashMap().containsKey(sell1.getOrderId()));
 
     orderBookManager.deleteOrder(sell1.getOrderId());
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(sell1.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(sell1.getOrderId()));
     assertEquals(
-        orderBookManager.askBookHashMap.get(sell2.getInstrument()).get(sell2.getPrice()).head.order,
+        orderBookManager
+            .getAskBookHashMap()
+            .get(sell2.getInstrument())
+            .get(sell2.getPrice())
+            .head
+            .order,
         sell2);
   }
 
@@ -124,7 +144,7 @@ public class DeleteOrderTest {
 
     assertTrue(
         orderBookManager
-                .bidBookHashMap
+                .getBidBookHashMap()
                 .get(buy1.getInstrument())
                 .get(buy1.getPrice())
                 .head
@@ -133,7 +153,7 @@ public class DeleteOrderTest {
             == buy2);
     assertTrue(
         orderBookManager
-                .bidBookHashMap
+                .getBidBookHashMap()
                 .get(buy1.getInstrument())
                 .get(buy1.getPrice())
                 .head
@@ -141,14 +161,14 @@ public class DeleteOrderTest {
                 .next
                 .order
             == buy3);
-    assertTrue(orderBookManager.orderHashMap.containsKey(buy1.getOrderId()));
+    assertTrue(orderBookManager.getOrderHashMap().containsKey(buy1.getOrderId()));
 
     orderBookManager.deleteOrder(buy2.getOrderId());
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(buy2.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(buy2.getOrderId()));
     assertEquals(
         orderBookManager
-            .bidBookHashMap
+            .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy1.getPrice())
             .head
@@ -162,7 +182,7 @@ public class DeleteOrderTest {
 
     assertTrue(
         orderBookManager
-                .askBookHashMap
+                .getAskBookHashMap()
                 .get(sell1.getInstrument())
                 .get(sell1.getPrice())
                 .head
@@ -171,7 +191,7 @@ public class DeleteOrderTest {
             == sell2);
     assertTrue(
         orderBookManager
-                .askBookHashMap
+                .getAskBookHashMap()
                 .get(sell1.getInstrument())
                 .get(sell1.getPrice())
                 .head
@@ -179,14 +199,14 @@ public class DeleteOrderTest {
                 .next
                 .order
             == sell3);
-    assertTrue(orderBookManager.orderHashMap.containsKey(sell2.getOrderId()));
+    assertTrue(orderBookManager.getOrderHashMap().containsKey(sell2.getOrderId()));
 
     orderBookManager.deleteOrder(sell2.getOrderId());
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(sell2.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(sell2.getOrderId()));
     assertEquals(
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sell1.getInstrument())
             .get(sell1.getPrice())
             .head
@@ -199,24 +219,34 @@ public class DeleteOrderTest {
   public void deleteFromEndInBid() {
 
     assertEquals(
-        orderBookManager.bidBookHashMap.get(buy1.getInstrument()).get(buy1.getPrice()).last.order,
+        orderBookManager
+            .getBidBookHashMap()
+            .get(buy1.getInstrument())
+            .get(buy1.getPrice())
+            .last
+            .order,
         buy3);
     assertTrue(
         orderBookManager
-                .bidBookHashMap
+                .getBidBookHashMap()
                 .get(buy1.getInstrument())
                 .get(buy1.getPrice())
                 .last
                 .previous
                 .order
             == buy2);
-    assertTrue(orderBookManager.orderHashMap.containsKey(buy3.getOrderId()));
+    assertTrue(orderBookManager.getOrderHashMap().containsKey(buy3.getOrderId()));
 
     orderBookManager.deleteOrder(buy3.getOrderId());
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(buy3.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(buy3.getOrderId()));
     assertEquals(
-        orderBookManager.bidBookHashMap.get(buy2.getInstrument()).get(buy2.getPrice()).last.order,
+        orderBookManager
+            .getBidBookHashMap()
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
+            .last
+            .order,
         buy2);
   }
 
@@ -225,7 +255,7 @@ public class DeleteOrderTest {
 
     assertTrue(
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sell1.getInstrument())
             .get(sell1.getPrice())
             .last
@@ -233,20 +263,25 @@ public class DeleteOrderTest {
             .equals(sell3));
     assertTrue(
         orderBookManager
-                .askBookHashMap
+                .getAskBookHashMap()
                 .get(sell1.getInstrument())
                 .get(sell1.getPrice())
                 .last
                 .previous
                 .order
             == sell2);
-    assertTrue(orderBookManager.orderHashMap.containsKey(sell3.getOrderId()));
+    assertTrue(orderBookManager.getOrderHashMap().containsKey(sell3.getOrderId()));
 
     orderBookManager.deleteOrder(sell3.getOrderId());
 
-    assertFalse(orderBookManager.orderHashMap.containsKey(sell3.getOrderId()));
+    assertFalse(orderBookManager.getOrderHashMap().containsKey(sell3.getOrderId()));
     assertEquals(
-        orderBookManager.askBookHashMap.get(sell1.getInstrument()).get(sell2.getPrice()).last.order,
+        orderBookManager
+            .getAskBookHashMap()
+            .get(sell1.getInstrument())
+            .get(sell2.getPrice())
+            .last
+            .order,
         sell2);
   }
 
@@ -256,13 +291,13 @@ public class DeleteOrderTest {
     assertEquals(
         "Head and Last Node are not equal for single order in bid book",
         orderBookManager
-            .bidBookHashMap
+            .getBidBookHashMap()
             .get(buyOther.getInstrument())
             .get(buyOther.getPrice())
             .last
             .order,
         orderBookManager
-            .bidBookHashMap
+            .getBidBookHashMap()
             .get(buyOther.getInstrument())
             .get(buyOther.getPrice())
             .head
@@ -270,7 +305,7 @@ public class DeleteOrderTest {
     assertEquals(
         "Head is not buyOther in bidBook",
         orderBookManager
-            .bidBookHashMap
+            .getBidBookHashMap()
             .get(buyOther.getInstrument())
             .get(buyOther.getPrice())
             .head
@@ -281,7 +316,7 @@ public class DeleteOrderTest {
 
     assertEquals(
         "Removing single entry from level does not remove the level from bidBook",
-        orderBookManager.bidBookHashMap.get(buyOther.getInstrument()).get(buyOther.getPrice()),
+        orderBookManager.getBidBookHashMap().get(buyOther.getInstrument()).get(buyOther.getPrice()),
         null);
   }
 
@@ -290,13 +325,13 @@ public class DeleteOrderTest {
     assertEquals(
         "Head and Last Node are not equal for single order in ask book",
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sellOther.getInstrument())
             .get(sellOther.getPrice())
             .last
             .order,
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sellOther.getInstrument())
             .get(sellOther.getPrice())
             .head
@@ -304,7 +339,7 @@ public class DeleteOrderTest {
     assertEquals(
         "Head is not buyOther in askBook",
         orderBookManager
-            .askBookHashMap
+            .getAskBookHashMap()
             .get(sellOther.getInstrument())
             .get(sellOther.getPrice())
             .head
@@ -315,7 +350,10 @@ public class DeleteOrderTest {
 
     assertEquals(
         "Removing single entry from level does not remove the level from askBook",
-        orderBookManager.askBookHashMap.get(sellOther.getInstrument()).get(sellOther.getPrice()),
+        orderBookManager
+            .getAskBookHashMap()
+            .get(sellOther.getInstrument())
+            .get(sellOther.getPrice()),
         null);
   }
 }
