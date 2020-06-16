@@ -23,21 +23,19 @@ public class OrderLinkedList {
   }
 
   public void append(OrderNode order) {
+    if (this.head.getOrder().equals(this.last.getOrder())) {
+      this.head.setNext(order);
+      order.setPrevious(this.head);
+      this.last = order;
+    } else {
+      OrderNode lastOrderNode = this.last;
+      order.setPrevious(lastOrderNode);
 
-    OrderNode lastOrderNode = getLastNode();
-    order.setPrevious(lastOrderNode);
-
-    lastOrderNode.setNext(order);
-    this.last = order;
-  }
-
-  private OrderNode getLastNode() {
-    OrderNode current = this.head;
-    while (current.getNext() != null) {
-      current = current.getNext();
+      lastOrderNode.setNext(order);
+      this.last = order;
     }
-    return current;
   }
+  
 
   public void modifyOrder(String orderId, long quantity) {
 
