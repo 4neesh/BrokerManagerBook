@@ -26,6 +26,22 @@ public class InstrumentProperty {
     reviewBestPrice(order);
   }
 
+  public void deleteFromLevel(String instrumentPropertyKey, Order order) {
+    levelPropertiesHashMap.get(instrumentPropertyKey).removeOrderFromLevelProperties(order);
+  }
+
+  public Optional<Long> getBestPrice() {
+    return bestPrice;
+  }
+
+  public void setNextBestPrice(Optional<Long> newBestPrice) {
+    this.bestPrice = newBestPrice;
+  }
+
+  public HashMap<String, LevelProperty> getLevelPropertiesHashMap() {
+    return levelPropertiesHashMap;
+  }
+
   private void reviewBestPrice(Order order) {
 
     Optional<Long> orderPrice = Optional.of(order.getPrice());
@@ -65,21 +81,5 @@ public class InstrumentProperty {
 
   private boolean levelExists(String levelPropertiesKey) {
     return levelPropertiesHashMap.containsKey(levelPropertiesKey);
-  }
-
-  public void deleteFromLevel(String instrumentPropertyKey, Order order) {
-    levelPropertiesHashMap.get(instrumentPropertyKey).removeOrderFromLevelProperties(order);
-  }
-
-  public Optional<Long> getBestPrice() {
-    return bestPrice;
-  }
-
-  public void setNextBestPrice(Optional<Long> newBestPrice) {
-    this.bestPrice = newBestPrice;
-  }
-
-  public HashMap<String, LevelProperty> getLevelPropertiesHashMap() {
-    return levelPropertiesHashMap;
   }
 }

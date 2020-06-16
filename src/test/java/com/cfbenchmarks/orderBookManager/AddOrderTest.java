@@ -79,33 +79,35 @@ public class AddOrderTest {
 
     Order buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     Order buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
-    assertTrue(buy1.getPrice() == buy2.getPrice());
-    assertTrue(orderBookManager.bidBookHashMap.isEmpty());
+    assertEquals("buy1 and buy2 have different prices", buy1.getPrice(), buy2.getPrice());
+    assertEquals(
+        "buy1 and buy2 have different instruments", buy1.getInstrument(), buy2.getInstrument());
+    assertEquals("buy1 and buy2 have different sides", buy1.getSide(), buy2.getSide());
+    assertEquals("bidBookHashMap is not empty", orderBookManager.bidBookHashMap.isEmpty(), true);
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
 
-    assertEquals(
-        "buy1 is not added to bidBookHashMap.",
+    String expected1 =
         orderBookManager
             .bidBookHashMap
             .get(buy1.getInstrument())
             .get(buy1.getPrice())
             .head
             .order
-            .getOrderId(),
-        buy1.getOrderId());
-    assertEquals(
-        "buy2 is not added to bidBookHashMap.",
+            .getOrderId();
+    String expected2 =
         orderBookManager
             .bidBookHashMap
-            .get(buy1.getInstrument())
-            .get(buy1.getPrice())
+            .get(buy2.getInstrument())
+            .get(buy2.getPrice())
             .head
             .next
             .order
-            .getOrderId(),
-        buy2.getOrderId());
+            .getOrderId();
+    assertEquals("buy1 is not added to bidBookHashMap.", expected1, buy1.getOrderId());
+
+    assertEquals("buy2 is not added to bidBookHashMap.", expected2, buy2.getOrderId());
   }
 
   @Test

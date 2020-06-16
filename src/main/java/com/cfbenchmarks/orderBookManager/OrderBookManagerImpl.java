@@ -13,8 +13,8 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
   HashMap<String, Order> orderHashMap;
   HashMap<String, InstrumentProperty> instrumentPropertyMap;
-  HashMap<String, AskBook> askBookHashMap;
-  HashMap<String, BidBook> bidBookHashMap;
+  public HashMap<String, AskBook> askBookHashMap;
+  public HashMap<String, BidBook> bidBookHashMap;
 
   public OrderBookManagerImpl() {
     this.orderHashMap = new HashMap<>();
@@ -65,6 +65,57 @@ public class OrderBookManagerImpl implements OrderBookManager {
     }
   }
 
+  public List<Order> getOrdersAtLevel(String instrument, Side side, long price) {
+
+    if (side.equals(Side.BUY)) {
+
+      OrderLinkedList orders = bidBookHashMap.get(instrument).get(price);
+      return orders.getListOfOrders();
+    } else {
+      OrderLinkedList orders = askBookHashMap.get(instrument).get(price);
+      return orders.getListOfOrders();
+    }
+  }
+
+  public Optional<Long> getBestPrice(String instrument, Side side) {
+
+    String propertiesKey = instrument + side.toString();
+
+    return instrumentPropertyMap.get(propertiesKey).getBestPrice();
+  }
+
+  public long getOrderNumAtLevel(String instrument, Side side, long price) {
+
+    String propertiesKey = instrument + side.toString();
+    String levelPropertiesKey = instrument + side.toString() + price;
+    return instrumentPropertyMap
+        .get(propertiesKey)
+        .getLevelPropertiesHashMap()
+        .get(levelPropertiesKey)
+        .getNumberOfOrders();
+  }
+
+  public long getTotalQuantityAtLevel(String instrument, Side side, long price) {
+    String propertiesKey = instrument + side.toString();
+    String levelPropertiesKey = propertiesKey + price;
+    return instrumentPropertyMap
+        .get(propertiesKey)
+        .getLevelPropertiesHashMap()
+        .get(levelPropertiesKey)
+        .getQuantity();
+  }
+
+  public long getTotalVolumeAtLevel(String instrument, Side side, long price) {
+
+    String propertiesKey = instrument + side.toString();
+    String levelPropertiesKey = propertiesKey + price;
+    return instrumentPropertyMap
+        .get(propertiesKey)
+        .getLevelPropertiesHashMap()
+        .get(levelPropertiesKey)
+        .getVolume();
+  }
+
   private void removeOrderFromPropertyMap(String orderId) {
 
     String propertiesKey = getPropertiesKey(orderId);
@@ -93,18 +144,6 @@ public class OrderBookManagerImpl implements OrderBookManager {
       }
 
       instrumentPropertyMap.get(getPropertiesKey(orderId)).setNextBestPrice(newBestPrice);
-    }
-  }
-
-  public List<Order> getOrdersAtLevel(String instrument, Side side, long price) {
-
-    if (side.equals(Side.BUY)) {
-
-      OrderLinkedList orders = bidBookHashMap.get(instrument).get(price);
-      return orders.getListOfOrders();
-    } else {
-      OrderLinkedList orders = askBookHashMap.get(instrument).get(price);
-      return orders.getListOfOrders();
     }
   }
 
@@ -175,45 +214,6 @@ public class OrderBookManagerImpl implements OrderBookManager {
     }
   }
 
-  public Optional<Long> getBestPrice(String instrument, Side side) {
-
-    String propertiesKey = instrument + side.toString();
-
-    return instrumentPropertyMap.get(propertiesKey).getBestPrice();
-  }
-
-  public long getOrderNumAtLevel(String instrument, Side side, long price) {
-
-    String propertiesKey = instrument + side.toString();
-    String levelPropertiesKey = instrument + side.toString() + price;
-    return instrumentPropertyMap
-        .get(propertiesKey)
-        .getLevelPropertiesHashMap()
-        .get(levelPropertiesKey)
-        .getNumberOfOrders();
-  }
-
-  public long getTotalQuantityAtLevel(String instrument, Side side, long price) {
-    String propertiesKey = instrument + side.toString();
-    String levelPropertiesKey = propertiesKey + price;
-    return instrumentPropertyMap
-        .get(propertiesKey)
-        .getLevelPropertiesHashMap()
-        .get(levelPropertiesKey)
-        .getQuantity();
-  }
-
-  public long getTotalVolumeAtLevel(String instrument, Side side, long price) {
-
-    String propertiesKey = instrument + side.toString();
-    String levelPropertiesKey = propertiesKey + price;
-    return instrumentPropertyMap
-        .get(propertiesKey)
-        .getLevelPropertiesHashMap()
-        .get(levelPropertiesKey)
-        .getVolume();
-  }
-
   private void createNewBookForOrder(Order order) {
 
     if (order.getSide().equals(Side.BUY)) {
@@ -243,13 +243,18 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
     } else {
 
-      Optional<Long> bestPrice = Optional.of(order.getPrice());
-      HashMap<String, LevelProperty> levelPropertiesHashMap = new HashMap<>();
-
-      instrumentPropertyMap.put(
-          propertyKey, new InstrumentProperty(bestPrice, levelPropertiesHashMap));
-      instrumentPropertyMap.get(propertyKey).updateProperties(order);
+      addNewInstrumentProperty(propertyKey, order);
     }
+  }
+
+  private void addNewInstrumentProperty(String propertyKey, Order order) {
+
+    Optional<Long> bestPrice = Optional.of(order.getPrice());
+    HashMap<String, LevelProperty> levelPropertiesHashMap = new HashMap<>();
+
+    instrumentPropertyMap.put(
+        propertyKey, new InstrumentProperty(bestPrice, levelPropertiesHashMap));
+    instrumentPropertyMap.get(propertyKey).updateProperties(order);
   }
 
   private void addOrderToRespectiveBook(Order order) {

@@ -1,5 +1,7 @@
+com/cfbenchmarks/orderBook/AskBookTest.class
 com/cfbenchmarks/orderBookManager/GetTotalQuantityAtLevelTest.class
 com/cfbenchmarks/orderBookManager/GetOrdersAtLevelTest.class
+com/cfbenchmarks/orderBook/BidBookTest.class
 com/cfbenchmarks/orderBookManager/GetTotalVolumeAtLevelTest.class
 com/cfbenchmarks/orderBookManager/GetBestPriceTest.class
 com/cfbenchmarks/orderBookManager/AddOrderTest.class

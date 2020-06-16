@@ -16,16 +16,24 @@ public class OrderLinkedList {
 
   public void append(OrderNode order) {
 
-    OrderNode lastOrderNode = getLastOrderNode();
+    OrderNode lastOrderNode = getLastNode();
     order.previous = lastOrderNode;
 
     lastOrderNode.next = order;
     this.last = order;
   }
 
+  private OrderNode getLastNode() {
+    OrderNode current = this.head;
+    while (current.next != null) {
+      current = current.next;
+    }
+    return current;
+  }
+
   public void modifyOrder(String orderId, long quantity) {
 
-    OrderNode orderToModify = findOrderToModify(orderId);
+    OrderNode orderToModify = findOrder(orderId);
 
     if (quantityIsIncreasing(quantity, orderToModify)) {
 
@@ -52,13 +60,21 @@ public class OrderLinkedList {
     }
   }
 
-  private OrderNode getLastOrderNode() {
+  public List<Order> getListOfOrders() {
+    List<Order> orderAtLevel = new ArrayList<>();
     OrderNode current = this.head;
 
-    while (current.next != null) {
-      current = current.next;
+    if (current != null) {
+      while (current != null) {
+
+        orderAtLevel.add(current.order);
+        current = current.next;
+      }
+
+      return orderAtLevel;
+    } else {
+      return null;
     }
-    return current;
   }
 
   private void removeOrderFromLast() {
@@ -75,7 +91,7 @@ public class OrderLinkedList {
     return quantity > orderToModify.order.getQuantity();
   }
 
-  private OrderNode findOrderToModify(String orderId) {
+  private OrderNode findOrder(String orderId) {
     OrderNode current = this.head;
 
     while (current.order.getOrderId() != orderId) {
@@ -115,22 +131,6 @@ public class OrderLinkedList {
       this.removeNode(current.order.getOrderId());
 
       this.append(newOrder);
-    }
-  }
-
-  public List<Order> getListOfOrders() {
-    List<Order> orderAtLevel = new ArrayList<>();
-
-    if (head != null) {
-
-      while (head.next != null) {
-        orderAtLevel.add(head.order);
-        head = head.next;
-      }
-
-      return orderAtLevel;
-    } else {
-      return null;
     }
   }
 }

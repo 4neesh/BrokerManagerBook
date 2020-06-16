@@ -22,10 +22,6 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
     }
   }
 
-  private boolean keyDoesNotExist(Long key) {
-    return super.get(key) == null;
-  }
-
   public void removeOrder(String orderId, long orderPrice) {
 
     if (super.get(orderPrice).head.next == null) {
@@ -38,5 +34,9 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
 
   public void modifyOrder(String orderId, long newQuantity, long price) {
     super.get(price).modifyOrder(orderId, newQuantity);
+  }
+
+  private boolean keyDoesNotExist(Long key) {
+    return super.get(key) == null;
   }
 }
