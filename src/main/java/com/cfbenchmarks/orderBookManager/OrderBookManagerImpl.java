@@ -13,6 +13,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
   private HashMap<String, Order> orderHashMap;
   private HashMap<String, InstrumentProperty> instrumentPropertyMap;
+  private HashMap<String, OrderBook> orderBookHashMap;
   private HashMap<String, AskBook> askBookHashMap;
   private HashMap<String, BidBook> bidBookHashMap;
 
@@ -21,6 +22,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     this.instrumentPropertyMap = new HashMap<>();
     this.askBookHashMap = new HashMap<>();
     this.bidBookHashMap = new HashMap<>();
+    this.orderBookHashMap = new HashMap<>();
   }
 
   public void addOrder(Order order) {

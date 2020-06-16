@@ -163,5 +163,3 @@ public class AskBookTest {
         askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 }
-
-// test that the hashmap of prices are ordered in a increasing manner
