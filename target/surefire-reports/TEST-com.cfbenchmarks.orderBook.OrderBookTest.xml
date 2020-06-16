@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0.009" tests="9" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBook.OrderBookTest" time="0.007" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,13 +62,18 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="lastRemainsAfterModifyOrderBeforeEndToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="quantityUpdatedWhenOrderAtEndModifiedToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0.001"/>
-  <testcase name="lastUpdatedWhenOrderBeforeEndModifiedToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="quantityUpdatedAfterModifyOrderBeforeEndToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="lastRemainsWhenOrderAtEndModifiedToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="orderMustExistInOrderLinkedListToModify" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="quantityUpdatedWhenOrderBeforeEndModifiedToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0.001"/>
-  <testcase name="quantityUpdatedWhenOrderAtEndModifiedToLower" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
-  <testcase name="lastUpdatedWhenOrderAtEndModifiedToHigher" classname="com.cfbenchmarks.orderBookManager.ModifyOrderTest" time="0"/>
+  <testcase name="lastIsMaintainedWithNewHigherPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="bidBookStoresOrdersInDescendingOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="lastRemainsInOrderWhenMiddleOrderAdded" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="lastIsUpdatedWithNewHighestPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0.001"/>
+  <testcase name="headRemainsWithNewHighestPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="lastRemainsWithMiddleOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="headRemainsInOrderWhenMiddleOrderAdded" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0.001"/>
+  <testcase name="askBookStoresLevelsInAscendingOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="headIsUpdatedWithNewHigherPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0.001"/>
+  <testcase name="headIsMaintainedWithNewLowPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="headIsUpdatedWithNewLowerPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="headRemainsWithMiddleOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="lastRemainsWithNewLowerPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
+  <testcase name="lastIsUpdatedWithNewLowPriceOrder" classname="com.cfbenchmarks.orderBook.OrderBookTest" time="0"/>
 </testsuite>
