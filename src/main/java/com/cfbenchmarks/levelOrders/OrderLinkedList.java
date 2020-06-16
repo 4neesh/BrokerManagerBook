@@ -6,8 +6,16 @@ import java.util.List;
 
 public class OrderLinkedList {
 
-  public OrderNode head;
-  public OrderNode last;
+  private OrderNode head;
+  private OrderNode last;
+
+  public OrderNode getHead() {
+    return head;
+  }
+
+  public OrderNode getLast() {
+    return last;
+  }
 
   public OrderLinkedList(Order order) {
     this.head = new OrderNode(order);
@@ -17,16 +25,16 @@ public class OrderLinkedList {
   public void append(OrderNode order) {
 
     OrderNode lastOrderNode = getLastNode();
-    order.previous = lastOrderNode;
+    order.setPrevious(lastOrderNode);
 
-    lastOrderNode.next = order;
+    lastOrderNode.setNext(order);
     this.last = order;
   }
 
   private OrderNode getLastNode() {
     OrderNode current = this.head;
-    while (current.next != null) {
-      current = current.next;
+    while (current.getNext() != null) {
+      current = current.getNext();
     }
     return current;
   }
@@ -41,7 +49,7 @@ public class OrderLinkedList {
 
     } else {
 
-      orderToModify.order.setQuantity(quantity);
+      orderToModify.getOrder().setQuantity(quantity);
     }
   }
 
@@ -67,8 +75,8 @@ public class OrderLinkedList {
     if (current != null) {
       while (current != null) {
 
-        orderAtLevel.add(current.order);
-        current = current.next;
+        orderAtLevel.add(current.getOrder());
+        current = current.getNext();
       }
 
       return orderAtLevel;
@@ -78,57 +86,57 @@ public class OrderLinkedList {
   }
 
   private void removeOrderFromLast() {
-    this.last = this.last.previous;
-    this.last.next = null;
+    this.last = this.last.getPrevious();
+    this.last.setNext(null);
   }
 
   private void removeOrderFromHead() {
-    this.head = this.head.next;
-    this.head.previous = null;
+    this.head = this.head.getNext();
+    this.head.setPrevious(null);
   }
 
   private boolean quantityIsIncreasing(long quantity, OrderNode orderToModify) {
-    return quantity > orderToModify.order.getQuantity();
+    return quantity > orderToModify.getOrder().getQuantity();
   }
 
   private OrderNode findOrder(String orderId) {
     OrderNode current = this.head;
 
-    while (current.order.getOrderId() != orderId) {
-      current = current.next;
+    while (current.getOrder().getOrderId() != orderId) {
+      current = current.getNext();
     }
     return current;
   }
 
   private void removeOrderFromMiddle(String orderId) {
     OrderNode previous = this.head;
-    OrderNode current = this.head.next;
-    while (current.next != null) {
-      if (current.order.getOrderId().equals(orderId)) {
+    OrderNode current = this.head.getNext();
+    while (current.getNext() != null) {
+      if (current.getOrder().getOrderId().equals(orderId)) {
         break;
       }
-      current = current.next;
-      previous = previous.next;
+      current = current.getNext();
+      previous = previous.getNext();
     }
-    previous.next = current.next;
-    current.next.previous = previous;
+    previous.setNext(current.getNext());
+    current.getNext().setPrevious(previous);
   }
 
   private boolean orderIsLast(String orderId) {
-    return this.last.order.getOrderId() == orderId;
+    return this.last.getOrder().getOrderId() == orderId;
   }
 
   private boolean orderIsHead(String orderId) {
-    return this.head.order.getOrderId() == orderId;
+    return this.head.getOrder().getOrderId() == orderId;
   }
 
   private void moveOrderToEnd(OrderNode current, long quantity) {
-    current.order.setQuantity(quantity);
+    current.getOrder().setQuantity(quantity);
 
     if (current != this.last) {
 
       OrderNode newOrder = current;
-      this.removeNode(current.order.getOrderId());
+      this.removeNode(current.getOrder().getOrderId());
 
       this.append(newOrder);
     }

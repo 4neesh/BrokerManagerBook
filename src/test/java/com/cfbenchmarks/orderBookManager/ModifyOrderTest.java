@@ -71,9 +71,9 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .head
-                .next
-                .order
+                .getHead()
+                .getNext()
+                .getOrder()
                 .getQuantity()
             > newQuantity);
     assertTrue(
@@ -81,8 +81,8 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             == buy3);
 
     orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
@@ -92,17 +92,17 @@ public class ModifyOrderTest {
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .last
-            .order,
+            .getLast()
+            .getOrder(),
         buy3);
     assertEquals(
         orderBookManager
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .head
-            .next
-            .order
+            .getHead()
+            .getNext()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -116,8 +116,8 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
                 .getQuantity()
             > newQuantity);
     assertTrue(
@@ -125,8 +125,8 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             == buy3);
 
     orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
@@ -136,16 +136,16 @@ public class ModifyOrderTest {
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .last
-            .order,
+            .getLast()
+            .getOrder(),
         buy3);
     assertEquals(
         orderBookManager
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .last
-            .order
+            .getLast()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -159,9 +159,9 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .head
-                .next
-                .order
+                .getHead()
+                .getNext()
+                .getOrder()
                 .getQuantity()
             < newQuantity);
     assertTrue(
@@ -169,8 +169,8 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             != buy2);
 
     orderBookManager.modifyOrder(buy2.getOrderId(), newQuantity);
@@ -180,16 +180,16 @@ public class ModifyOrderTest {
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .last
-            .order,
+            .getLast()
+            .getOrder(),
         buy2);
     assertEquals(
         orderBookManager
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .last
-            .order
+            .getLast()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -204,8 +204,8 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
                 .getQuantity()
             < newQuantity);
     assertTrue(
@@ -213,8 +213,8 @@ public class ModifyOrderTest {
                 .getBidBookHashMap()
                 .get(buy2.getInstrument())
                 .get(buy2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             == buy3);
 
     orderBookManager.modifyOrder(buy3.getOrderId(), newQuantity);
@@ -224,17 +224,17 @@ public class ModifyOrderTest {
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .head
-            .next
-            .order,
+            .getHead()
+            .getNext()
+            .getOrder(),
         buy2);
     assertEquals(
         orderBookManager
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .last
-            .order
+            .getLast()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -248,9 +248,9 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .head
-                .next
-                .order
+                .getHead()
+                .getNext()
+                .getOrder()
                 .getQuantity()
             > newQuantity);
     assertTrue(
@@ -258,8 +258,8 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             == sell3);
 
     orderBookManager.modifyOrder(sell2.getOrderId(), newQuantity);
@@ -269,17 +269,17 @@ public class ModifyOrderTest {
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .last
-            .order,
+            .getLast()
+            .getOrder(),
         sell3);
     assertEquals(
         orderBookManager
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .head
-            .next
-            .order
+            .getHead()
+            .getNext()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -293,8 +293,8 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
                 .getQuantity()
             > newQuantity);
     assertTrue(
@@ -302,8 +302,8 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             == sell3);
 
     orderBookManager.modifyOrder(sell3.getOrderId(), newQuantity);
@@ -313,16 +313,16 @@ public class ModifyOrderTest {
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .last
-            .order,
+            .getLast()
+            .getOrder(),
         sell3);
     assertEquals(
         orderBookManager
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .last
-            .order
+            .getLast()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -336,9 +336,9 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .head
-                .next
-                .order
+                .getHead()
+                .getNext()
+                .getOrder()
                 .getQuantity()
             < newQuantity);
     assertTrue(
@@ -346,8 +346,8 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             != sell2);
 
     orderBookManager.modifyOrder(sell2.getOrderId(), newQuantity);
@@ -357,16 +357,16 @@ public class ModifyOrderTest {
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .last
-            .order,
+            .getLast()
+            .getOrder(),
         sell2);
     assertEquals(
         orderBookManager
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .last
-            .order
+            .getLast()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }
@@ -381,8 +381,8 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
                 .getQuantity()
             < newQuantity);
     assertTrue(
@@ -390,8 +390,8 @@ public class ModifyOrderTest {
                 .getAskBookHashMap()
                 .get(sell2.getInstrument())
                 .get(sell2.getPrice())
-                .last
-                .order
+                .getLast()
+                .getOrder()
             == sell3);
 
     orderBookManager.modifyOrder(sell3.getOrderId(), newQuantity);
@@ -401,8 +401,8 @@ public class ModifyOrderTest {
             .getAskBookHashMap()
             .get(sell2.getInstrument())
             .get(sell2.getPrice())
-            .last
-            .order
+            .getLast()
+            .getOrder()
             .getQuantity(),
         newQuantity);
   }

@@ -93,17 +93,17 @@ public class AddOrderTest {
             .getBidBookHashMap()
             .get(buy1.getInstrument())
             .get(buy1.getPrice())
-            .head
-            .order
+            .getHead()
+            .getOrder()
             .getOrderId();
     String expected2 =
         orderBookManager
             .getBidBookHashMap()
             .get(buy2.getInstrument())
             .get(buy2.getPrice())
-            .head
-            .next
-            .order
+            .getHead()
+            .getNext()
+            .getOrder()
             .getOrderId();
     assertEquals("buy1 is not added to bidBookHashMap.", expected1, buy1.getOrderId());
 
@@ -127,8 +127,8 @@ public class AddOrderTest {
             .getAskBookHashMap()
             .get(sell1.getInstrument())
             .get(sell1.getPrice())
-            .head
-            .order
+            .getHead()
+            .getOrder()
             .getOrderId(),
         sell1.getOrderId());
     assertEquals(
@@ -137,9 +137,9 @@ public class AddOrderTest {
             .getAskBookHashMap()
             .get(sell1.getInstrument())
             .get(sell1.getPrice())
-            .head
-            .next
-            .order
+            .getHead()
+            .getNext()
+            .getOrder()
             .getOrderId(),
         sell2.getOrderId());
   }

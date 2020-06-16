@@ -43,16 +43,16 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
-        bidBook.firstEntry().getValue().head.order.getPrice()
-            > bidBook.lastEntry().getValue().head.order.getPrice());
+        bidBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            > bidBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Bid book first entry is not buy1",
         buy1.getOrderId(),
-        bidBook.firstEntry().getValue().head.order.getOrderId());
+        bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Bid book last entry is not buy3",
         buy3.getOrderId(),
-        bidBook.lastEntry().getValue().head.order.getOrderId());
+        bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
@@ -77,16 +77,16 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
-        bidBook.firstEntry().getValue().head.order.getPrice()
-            > bidBook.lastEntry().getValue().head.order.getPrice());
+        bidBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            > bidBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Bid book first entry is not buy1",
         buy1.getOrderId(),
-        bidBook.firstEntry().getValue().head.order.getOrderId());
+        bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Bid book last entry is not buy3",
         buy3.getOrderId(),
-        bidBook.lastEntry().getValue().head.order.getOrderId());
+        bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
@@ -111,16 +111,16 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
-        bidBook.firstEntry().getValue().head.order.getPrice()
-            > bidBook.lastEntry().getValue().head.order.getPrice());
+        bidBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            > bidBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Bid book first entry is not buy4",
         buy4.getOrderId(),
-        bidBook.firstEntry().getValue().head.order.getOrderId());
+        bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Bid book last entry is not buy3",
         buy3.getOrderId(),
-        bidBook.lastEntry().getValue().head.order.getOrderId());
+        bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
@@ -146,15 +146,15 @@ public class BidBookTest {
     assertEquals(
         "Bid book does not sort levels in descending order",
         true,
-        bidBook.firstEntry().getValue().head.order.getPrice()
-            > bidBook.lastEntry().getValue().head.order.getPrice());
+        bidBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            > bidBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Bid book first entry is not buy1",
         buy1.getOrderId(),
-        bidBook.firstEntry().getValue().head.order.getOrderId());
+        bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Bid book last entry is not buy5",
         buy5.getOrderId(),
-        bidBook.lastEntry().getValue().head.order.getOrderId());
+        bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 }

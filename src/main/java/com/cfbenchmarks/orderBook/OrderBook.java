@@ -16,7 +16,7 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
   public void addOrder(Long key, OrderNode orderNode) {
 
     if (keyDoesNotExist(key)) {
-      super.put(key, new OrderLinkedList(orderNode.order));
+      super.put(key, new OrderLinkedList(orderNode.getOrder()));
     } else {
       super.get(key).append(orderNode);
     }
@@ -24,7 +24,7 @@ public class OrderBook extends TreeMap<Long, OrderLinkedList> {
 
   public void removeOrder(String orderId, long orderPrice) {
 
-    if (super.get(orderPrice).head.next == null) {
+    if (super.get(orderPrice).getHead().getNext() == null) {
       remove(orderPrice);
 
     } else {

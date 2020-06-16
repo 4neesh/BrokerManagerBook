@@ -44,16 +44,16 @@ public class AskBookTest {
     assertEquals(
         "Ask book does not sort levels in ascending order",
         true,
-        askBook.firstEntry().getValue().head.order.getPrice()
-            < askBook.lastEntry().getValue().head.order.getPrice());
+        askBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            < askBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Ask book first entry is not sell3",
         sell3.getOrderId(),
-        askBook.firstEntry().getValue().head.order.getOrderId());
+        askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Ask book last entry is not sell1",
         sell1.getOrderId(),
-        askBook.lastEntry().getValue().head.order.getOrderId());
+        askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
@@ -79,16 +79,16 @@ public class AskBookTest {
     assertEquals(
         "Ask book does not sort levels in ascending order",
         true,
-        askBook.firstEntry().getValue().head.order.getPrice()
-            < askBook.lastEntry().getValue().head.order.getPrice());
+        askBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            < askBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Ask book first entry is not sell3",
         sell3.getOrderId(),
-        askBook.firstEntry().getValue().head.order.getOrderId());
+        askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Ask book last entry is not sell1",
         sell1.getOrderId(),
-        askBook.lastEntry().getValue().head.order.getOrderId());
+        askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
@@ -114,16 +114,16 @@ public class AskBookTest {
     assertEquals(
         "Ask book does not sort levels in ascending order",
         true,
-        askBook.firstEntry().getValue().head.order.getPrice()
-            < askBook.lastEntry().getValue().head.order.getPrice());
+        askBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            < askBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Ask book first entry is not sell4",
         sell4.getOrderId(),
-        askBook.firstEntry().getValue().head.order.getOrderId());
+        askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Ask book last entry is not sell1",
         sell1.getOrderId(),
-        askBook.lastEntry().getValue().head.order.getOrderId());
+        askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
@@ -151,16 +151,16 @@ public class AskBookTest {
     assertEquals(
         "Ask book does not sort levels in ascending order",
         true,
-        askBook.firstEntry().getValue().head.order.getPrice()
-            < askBook.lastEntry().getValue().head.order.getPrice());
+        askBook.firstEntry().getValue().getHead().getOrder().getPrice()
+            < askBook.lastEntry().getValue().getHead().getOrder().getPrice());
     assertEquals(
         "Ask book first entry is not sell3",
         sell3.getOrderId(),
-        askBook.firstEntry().getValue().head.order.getOrderId());
+        askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
     assertEquals(
         "Ask book last entry is not sell5",
         sell5.getOrderId(),
-        askBook.lastEntry().getValue().head.order.getOrderId());
+        askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 }
 
