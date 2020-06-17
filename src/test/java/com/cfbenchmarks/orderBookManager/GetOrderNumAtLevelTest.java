@@ -35,7 +35,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(buy1);
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
+        "Bid book orderNumAtLevel does not increment with order",
         1,
         orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
@@ -46,7 +46,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(sell1);
 
     assertEquals(
-        "Empty Ask book level does not increment with order",
+            "Ask book orderNumAtLevel does not increment with order",
         1,
         orderBookManager.getOrderNumAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -59,7 +59,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(buy1SamePrice);
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
+            "Bid book orderNumAtLevel does not increment with multiple orders",
         2,
         orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
@@ -71,7 +71,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(sell1SamePrice);
 
     assertEquals(
-        "Empty Ask book level does not increment with order",
+            "Ask book orderNumAtLevel does not increment with multiple orders",
         2,
         orderBookManager.getOrderNumAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -84,11 +84,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(buy2);
 
     assertEquals(
-        "Empty Bid book level does not increment with order",
-        1,
-        orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
-    assertEquals(
-        "Empty Bid book level does not increment with order",
+        "Bid book orderNumAtLevel does not reflect different levels with value",
         1,
         orderBookManager.getOrderNumAtLevel(buy2.getInstrument(), buy2.getSide(), buy2.getPrice()));
   }
@@ -100,12 +96,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(sell2);
 
     assertEquals(
-        "Empty Ask book level does not increment with order",
-        1,
-        orderBookManager.getOrderNumAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
-    assertEquals(
-        "Empty Ask book level does not increment with order",
+            "Ask book orderNumAtLevel does not reflect different levels with value",
         1,
         orderBookManager.getOrderNumAtLevel(
             sell2.getInstrument(), sell2.getSide(), sell2.getPrice()));
@@ -119,7 +110,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertEquals(
-        "Empty Bid book level does not reduce with deleted order",
+        "Bid book orderNumAtLevel does not reduce with deleted order",
         1,
         orderBookManager.getOrderNumAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
@@ -131,7 +122,7 @@ public class GetOrderNumAtLevelTest {
     orderBookManager.addOrder(sell1SamePrice);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-        "Empty Ask book level does not reduce with deleted order",
+        "Ask book orderNumAtLevel does not reduce with deleted order",
         1,
         orderBookManager.getOrderNumAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
