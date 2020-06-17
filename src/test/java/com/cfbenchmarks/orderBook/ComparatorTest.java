@@ -8,7 +8,7 @@ import com.cfbenchmarks.orderBookManager.OrderBookManagerImpl;
 import org.junit.Before;
 import org.junit.Test;
 
-public class OrderBookTest {
+public class ComparatorTest {
 
   private OrderBookManagerImpl orderBookManager;
   private Order buy1;

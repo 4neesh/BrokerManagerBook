@@ -2,7 +2,7 @@ package com.cfbenchmarks.order;
 
 import org.junit.Test;
 
-public class OrderTest {
+public class OrderConstructorTest {
 
   @Test(expected = NullPointerException.class)
   public void orderIdCannotBeNull() {
