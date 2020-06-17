@@ -54,7 +54,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.addOrder(sell1);
 
     assertEquals(
-            "ask orderVolume not reflected with first order",
+        "ask orderVolume not reflected with first order",
         SELL1_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -67,7 +67,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.addOrder(buy1SamePrice);
 
     assertEquals(
-            "bid orderVolume not reflected with multiple orders",
+        "bid orderVolume not reflected with multiple orders",
         BUY1_VOLUME + BUY1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
@@ -80,7 +80,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.addOrder(sell1SamePrice);
 
     assertEquals(
-            "ask orderVolume not reflected with multiple orders",
+        "ask orderVolume not reflected with multiple orders",
         SELL1_VOLUME + SELL1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -133,7 +133,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.addOrder(sell1SamePrice);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-            "Ask book orderVolume does not reduce when order is deleted",
+        "Ask book orderVolume does not reduce when order is deleted",
         SELL1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -158,7 +158,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.addOrder(sell1);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-            "Bid book orderVolume does not equal 0 when same order added and removed",
+        "Bid book orderVolume does not equal 0 when same order added and removed",
         0,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
