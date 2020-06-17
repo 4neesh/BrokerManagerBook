@@ -48,7 +48,7 @@ public class GetOrdersAtLevelTest {
   public void emptyAskLevelReturnsNull() {
 
     assertEquals(
-            "NullPointer not thrown for trying to access empty ask level",
+        "NullPointer not thrown for trying to access empty ask level",
         null,
         orderBookManager.getOrdersAtLevel("VOD.L", Side.SELL, 10L));
   }
@@ -74,7 +74,7 @@ public class GetOrdersAtLevelTest {
     expected.add(sell1);
 
     assertEquals(
-            "ordersAtLevel ask does not return single order",
+        "ordersAtLevel ask does not return single order",
         expected,
         orderBookManager.getOrdersAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -105,7 +105,7 @@ public class GetOrdersAtLevelTest {
     expected.add(sell2);
 
     assertEquals(
-            "orderAtLevel ask does not return multiple orders sequentially on level",
+        "orderAtLevel ask does not return multiple orders sequentially on level",
         expected,
         orderBookManager.getOrdersAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -139,7 +139,7 @@ public class GetOrdersAtLevelTest {
     expected2.add(sellOther);
 
     assertEquals(
-            "ordersAtLevel ask does not create new list for different instruments",
+        "ordersAtLevel ask does not create new list for different instruments",
         expected2,
         orderBookManager.getOrdersAtLevel(
             sellOther.getInstrument(), sellOther.getSide(), sellOther.getPrice()));
@@ -156,7 +156,7 @@ public class GetOrdersAtLevelTest {
     expected2.add(buy3);
 
     assertEquals(
-            "ordersAtLevel bid does not create new list for different prices",
+        "ordersAtLevel bid does not create new list for different prices",
         expected2,
         orderBookManager.getOrdersAtLevel(buy3.getInstrument(), buy3.getSide(), buy3.getPrice()));
   }
@@ -172,7 +172,7 @@ public class GetOrdersAtLevelTest {
     expected2.add(sell3);
 
     assertEquals(
-            "ordersAtLevel ask does not create new list for different prices",
+        "ordersAtLevel ask does not create new list for different prices",
         expected2,
         orderBookManager.getOrdersAtLevel(
             sell3.getInstrument(), sell3.getSide(), sell3.getPrice()));

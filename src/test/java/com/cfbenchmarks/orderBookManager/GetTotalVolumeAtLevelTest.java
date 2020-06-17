@@ -12,22 +12,14 @@ public class GetTotalVolumeAtLevelTest {
   private OrderBookManagerImpl orderBookManager;
   private Order buy1;
   private Order buy1SamePrice;
-  private Order buy2;
-  private Order buy3;
   private Order sell1;
   private Order sell1SamePrice;
-  private Order sell2;
-  private Order sell3;
   private Order buyOther;
   private Order sellOther;
-  private Order buyUnique;
-  private Order sellUnique;
   private static final long BUY1_VOLUME = 2000;
-  private static final long BUY2_VOLUME = 1100;
   private static final long BUY1OTHER_VOLUME = 600;
   private static final long BUY1SAMEPRICE_VOLUME = 1800;
   private static final long SELL1_VOLUME = 2200;
-  private static final long SELL2_VOLUME = 1100;
   private static final long SELL1OTHER_VOLUME = 500;
   private static final long SELL1SAMEPRICE_VOLUME = 1600;
 
@@ -36,125 +28,112 @@ public class GetTotalVolumeAtLevelTest {
 
     orderBookManager = new OrderBookManagerImpl();
     buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
+    buyOther = new Order("order7", "APPL", Side.BUY, 60, 10);
+
     buy1SamePrice = new Order("order9", "VOD.L", Side.BUY, 200, 9);
-    buy2 = new Order("order2", "VOD.L", Side.BUY, 100, 11);
-    buy3 = new Order("order3", "VOD.L", Side.BUY, 50, 10);
     sell1 = new Order("order4", "VOD.L", Side.SELL, 200, 11);
     sell1SamePrice = new Order("order10", "VOD.L", Side.SELL, 200, 8);
-    sell2 = new Order("order5", "VOD.L", Side.SELL, 100, 11);
-    sell3 = new Order("order6", "VOD.L", Side.SELL, 50, 10);
-    buyOther = new Order("order7", "APPL", Side.BUY, 50, 12);
     sellOther = new Order("order8", "APPL", Side.SELL, 50, 10);
   }
 
   @Test
-  public void bidBookReturnsOrdersAfterAdding() {
+  public void bidOrderVolumeReflectedForSingleOrder() {
 
     orderBookManager.addOrder(buy1);
 
     assertEquals(
-        "Empty Bid book level does not add orderVolume with first order",
+        "bid orderVolume not reflected with first order",
         BUY1_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
-  public void askBookReturnsOrdersAfterAdding() {
+  public void askOrderVolumeReflectedForSingleOrder() {
 
     orderBookManager.addOrder(sell1);
 
     assertEquals(
-        "Empty Ask book level does not add orderQuantity with first order",
+            "ask orderVolume not reflected with first order",
         SELL1_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
-  public void bidBookReturnsAddedOrdersAfterAddingMultiple() {
+  public void bidBookReturnsOrderVolumeAfterAddingMultiple() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy1SamePrice);
 
     assertEquals(
-        "Empty Bid book quantity does not increases with multiple orders",
+            "bid orderVolume not reflected with multiple orders",
         BUY1_VOLUME + BUY1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
-  public void askBookReturnsAddedOrdersAfterAddingMultiple() {
+  public void askBookReturnsOrderVolumeAfterAddingMultiple() {
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell1SamePrice);
 
     assertEquals(
-        "Empty Ask book quantity does not increase with multiple orders",
+            "ask orderVolume not reflected with multiple orders",
         SELL1_VOLUME + SELL1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
-  public void bidBookOrdersReflectsLevel() {
+  public void bidBookReturnsOrderVolumeForDifferentInstruments() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buyOther);
 
     assertEquals(
-        "Bid book quantity does not reflect on instrument",
-        BUY1_VOLUME,
-        orderBookManager.getTotalVolumeAtLevel(
-            buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
-    assertEquals(
-        "Bid book quantity does not reflect on instrument",
+        "Bid book orderVolume does not reflect on instrument",
         BUY1OTHER_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             buyOther.getInstrument(), buyOther.getSide(), buyOther.getPrice()));
   }
 
   @Test
-  public void askBookOrdersReflectsLevel() {
+  public void askBookReturnsOrderVolumeForDifferentInstruments() {
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sellOther);
 
     assertEquals(
-        "Ask book quantity does not reflect on instrument",
-        SELL1_VOLUME,
-        orderBookManager.getTotalVolumeAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
-    assertEquals(
-        "Ask book quantity does not reflect on instrument",
+        "Ask book orderVolume does not reflect on instrument",
         SELL1OTHER_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sellOther.getInstrument(), sellOther.getSide(), sellOther.getPrice()));
   }
 
   @Test
-  public void bidBookOrdersReducesAfterOneDeleted() {
+  public void bidBookOrderVolumeReducesAfterOneDeleted() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy1SamePrice);
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertEquals(
-        "Bid book level does not increment with order",
+        "Bid book orderVolume does not reduce when order is deleted",
         BUY1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
-  public void askBookOrdersReduceAfterOneDeleted() {
+  public void askBookOrderVolumeReducesAfterOneDeleted() {
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell1SamePrice);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-        "Ask book quantity does not increment with order",
+            "Ask book orderVolume does not reduce when order is deleted",
         SELL1SAMEPRICE_VOLUME,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
@@ -167,7 +146,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertEquals(
-        "Empty Bid book quantity does not equal 0",
+        "Bid book orderVolume does not equal 0 when same order added and removed",
         0,
         orderBookManager.getTotalVolumeAtLevel(
             buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
@@ -179,7 +158,7 @@ public class GetTotalVolumeAtLevelTest {
     orderBookManager.addOrder(sell1);
     orderBookManager.deleteOrder(sell1.getOrderId());
     assertEquals(
-        "Empty Ask book quantity does not equal 0",
+            "Bid book orderVolume does not equal 0 when same order added and removed",
         0,
         orderBookManager.getTotalVolumeAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
