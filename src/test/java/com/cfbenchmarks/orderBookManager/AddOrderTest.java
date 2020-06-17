@@ -46,7 +46,7 @@ public class AddOrderTest {
   }
 
   @Test
-  public void bidOrderIsAddedToPropertyMap() {
+  public void bidOrderIsAddedToPropertyHashMap() {
 
     Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     String propertyKey = buy.getInstrument() + buy.getSide().toString();
@@ -60,7 +60,7 @@ public class AddOrderTest {
   }
 
   @Test
-  public void askOrderIsAddedToPropertyMap() {
+  public void askOrderIsAddedToPropertyHashMap() {
 
     Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
     String propertyKey = sell.getInstrument() + sell.getSide().toString();
@@ -74,7 +74,7 @@ public class AddOrderTest {
   }
 
   @Test
-  public void askOrderIsAddedToOrderMap() {
+  public void askOrderIsAddedToOrderHashMap() {
 
     Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
 
@@ -87,7 +87,7 @@ public class AddOrderTest {
   }
 
   @Test
-  public void askOrderIsAddedToOrderHashMap() {
+  public void askOrderIsAddedToOrderBookHashMap() {
 
     Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
 
@@ -118,7 +118,7 @@ public class AddOrderTest {
   }
 
   @Test
-  public void multipleBidAtSameLevelLogged() {
+  public void multipleBidAtSameLevelLoggedInOrderBookHashMap() {
 
     Order buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
     Order buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
@@ -126,14 +126,6 @@ public class AddOrderTest {
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
 
-    String expected1 =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(buy1.getInstrument() + buy1.getSide().toString())
-            .get(buy1.getPrice())
-            .getHead()
-            .getOrder()
-            .getOrderId();
     String expected2 =
         orderBookManager
             .getOrderBookHashMap()
@@ -143,27 +135,18 @@ public class AddOrderTest {
             .getNext()
             .getOrder()
             .getOrderId();
-    assertEquals("buy1 is not added to orderBookHashMap.", expected1, buy1.getOrderId());
-    assertEquals("buy2 is not added to orderBookHashMap.", expected2, buy2.getOrderId());
+
+    assertEquals("OrderBookHashMap is not updated for multiple bid orders", expected2, buy2.getOrderId());
   }
 
   @Test
-  public void multipleAskAtSameLevelLogged() {
+  public void multipleAskAtSameLevelLoggedInOrderBookHashMap() {
 
     Order sell1 = new Order("order1", "VOD.L", Side.SELL, 200, 10);
     Order sell2 = new Order("order2", "VOD.L", Side.SELL, 200, 10);
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell2);
-
-    String expected1 =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString())
-            .get(sell1.getPrice())
-            .getHead()
-            .getOrder()
-            .getOrderId();
 
     String expected2 =
         orderBookManager
@@ -175,13 +158,12 @@ public class AddOrderTest {
             .getOrder()
             .getOrderId();
 
-    assertEquals("sell1 is not added to orderBookHashMap.", sell1.getOrderId(), expected1);
 
-    assertEquals("sell2 is not added to orderBookHashMap.", expected2, sell2.getOrderId());
+    assertEquals("OrderBookHashMap is not updated for multiple ask orders.", expected2, sell2.getOrderId());
   }
 
   @Test
-  public void askBookContainsTwoLevelsWhenTwoOrdersAdded() {
+  public void askBookContainsTwoLevelsWhenTwoPriceOrdersAdded() {
 
     Order sell1 = new Order("order4", "VOD.L", Side.SELL, 100, 10);
     Order sell3 = new Order("order6", "VOD.L", Side.SELL, 80, 10);
@@ -189,7 +171,7 @@ public class AddOrderTest {
     orderBookManager.addOrder(sell3);
 
     assertEquals(
-        "Ask book does not contain 2 levels",
+        "Ask book does not reflect multiple levels for multiple price orders",
         2,
         orderBookManager
             .getOrderBookHashMap()
@@ -206,7 +188,7 @@ public class AddOrderTest {
     orderBookManager.addOrder(buy3);
 
     assertEquals(
-        "Bid book does not contain 2 levels",
+        "Bid book does not reflect multiple levels for multiple price orders",
         2,
         orderBookManager
             .getOrderBookHashMap()
