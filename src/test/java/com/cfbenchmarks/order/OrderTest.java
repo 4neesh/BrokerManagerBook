@@ -19,7 +19,7 @@ public class OrderTest {
   @Test(expected = IllegalArgumentException.class)
   public void priceMustBeGreaterThanZero() {
 
-    Order order1 = new Order("001", "VOD.L", Side.BUY, -1, 10);
+    Order order1 = new Order("001", "VOD.L", Side.BUY, -200, 10);
   }
 
   @Test(expected = IllegalArgumentException.class)

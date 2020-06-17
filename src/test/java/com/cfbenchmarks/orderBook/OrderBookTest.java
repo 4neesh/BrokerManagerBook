@@ -42,7 +42,7 @@ public class OrderBookTest {
   }
 
   @Test
-  public void bidBookStoresOrdersInDescendingOrder() {
+  public void bidBookStoresLevelsInDescendingOrder() {
 
     assertEquals(
         "Bid book does not sort levels in descending order",
@@ -52,73 +52,73 @@ public class OrderBookTest {
   }
 
   @Test
-  public void headRemainsWithMiddleOrder() {
+  public void headBidRemainsWithNewMiddlePriceOrder() {
 
     Order buy2 = new Order("order5", "VOD.L", Side.BUY, 90, 10);
     orderBookManager.addOrder(buy2);
 
     assertEquals(
-        "Bid book first entry is not buy1",
+        "OrderLinkedList head is changed with new middle value bid",
         buy1.getOrderId(),
         bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void lastRemainsWithMiddleOrder() {
+  public void lastBidRemainsWithNewMiddlePriceOrder() {
 
     Order buy2 = new Order("order5", "VOD.L", Side.BUY, 90, 10);
     orderBookManager.addOrder(buy2);
 
     assertEquals(
-        "Bid book last entry is not buy3",
+        "OrderLinkedList last is changed with new middle value bid",
         buy3.getOrderId(),
         bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void headIsUpdatedWithNewHigherPriceOrder() {
+  public void headBidUpdatedWithNewHigherPriceOrder() {
 
     Order buy4 = new Order("order5", "VOD.L", Side.BUY, 110, 10);
     orderBookManager.addOrder(buy4);
 
     assertEquals(
-        "Bid book first entry is not buy4",
+        "OrderLinkedList head is not changed with new high value bid",
         buy4.getOrderId(),
         bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void lastIsMaintainedWithNewHigherPriceOrder() {
+  public void lastBidRemainsWithNewHigherPriceOrder() {
 
     Order buy4 = new Order("order5", "VOD.L", Side.BUY, 110, 10);
     orderBookManager.addOrder(buy4);
 
     assertEquals(
-        "Bid book last entry is not buy3",
+        "OrderLinkedList last is changed with new high value bid",
         buy3.getOrderId(),
         bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void headIsMaintainedWithNewLowPriceOrder() {
+  public void headBidRemainsWithNewLowPriceOrder() {
 
     Order buy5 = new Order("order5", "VOD.L", Side.BUY, 70, 10);
     orderBookManager.addOrder(buy5);
 
     assertEquals(
-        "Bid book first entry is not buy1",
+        "OrderLinkedList head is changed with new low value bid",
         buy1.getOrderId(),
         bidBook.firstEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void lastIsUpdatedWithNewLowPriceOrder() {
+  public void lastBidUpdatedWithNewLowerPriceOrder() {
 
     Order buy5 = new Order("order5", "VOD.L", Side.BUY, 70, 10);
     orderBookManager.addOrder(buy5);
 
     assertEquals(
-        "Bid book last entry is not buy5",
+        "OrderLinkedList last is not changed with new low value bid",
         buy5.getOrderId(),
         bidBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
@@ -134,112 +134,73 @@ public class OrderBookTest {
   }
 
   @Test
-  public void headRemainsInOrderWhenMiddleOrderAdded() {
+  public void headAskRemainsWithNewMiddlePriceOrder() {
 
     Order sell2 = new Order("order5", "VOD.L", Side.SELL, 90, 10);
-    OrderBook askBook =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString());
-
     orderBookManager.addOrder(sell2);
 
     assertEquals(
-        "Ask book first entry is not sell3",
+        "OrderLinkedList head is changed with new middle value ask",
         sell3.getOrderId(),
         askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void lastRemainsInOrderWhenMiddleOrderAdded() {
+  public void lastAskRemainsWithNewMiddlePriceOrder() {
 
     Order sell2 = new Order("order5", "VOD.L", Side.SELL, 90, 10);
-    OrderBook askBook =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString());
-
     orderBookManager.addOrder(sell2);
 
     assertEquals(
-        "Ask book last entry is not sell1",
+        "OrderLinkedList last is changed with new middle value ask",
         sell1.getOrderId(),
         askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void headIsUpdatedWithNewLowerPriceOrder() {
+  public void headAskUpdatedWithNewLowerPriceOrder() {
 
     Order sell4 = new Order("order5", "VOD.L", Side.SELL, 70, 10);
-    OrderBook askBook =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString());
-
     orderBookManager.addOrder(sell4);
 
     assertEquals(
-        "Ask book first entry is not sell4",
+        "OrderLinkedList head is not changed with new low value ask",
         sell4.getOrderId(),
         askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
-    assertEquals(
-        "Ask book last entry is not sell1",
-        sell1.getOrderId(),
-        askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void lastRemainsWithNewLowerPriceOrder() {
+  public void lastAskRemainsWithNewLowerPriceOrder() {
 
     Order sell4 = new Order("order5", "VOD.L", Side.SELL, 70, 10);
-    OrderBook askBook =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString());
-
     orderBookManager.addOrder(sell4);
 
     assertEquals(
-        "Ask book last entry is not sell1",
+        "OrderLinkedList last is changed with new low value ask",
         sell1.getOrderId(),
         askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void headRemainsWithNewHighestPriceOrder() {
+  public void headAskRemainsWithNewHigherPriceOrder() {
 
     Order sell5 = new Order("order5", "VOD.L", Side.SELL, 110, 10);
 
     orderBookManager.addOrder(sell5);
-
-    OrderBook askBook =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString());
-
     assertEquals(
-        "Ask book first entry is not sell3",
+        "OrderLinkedList head is changed with new high value ask",
         sell3.getOrderId(),
         askBook.firstEntry().getValue().getHead().getOrder().getOrderId());
-    assertEquals(
-        "Ask book last entry is not sell5",
-        sell5.getOrderId(),
-        askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }
 
   @Test
-  public void lastIsUpdatedWithNewHighestPriceOrder() {
+  public void lastAskUpdatedWithNewHigherPriceOrder() {
 
     Order sell5 = new Order("order5", "VOD.L", Side.SELL, 110, 10);
     orderBookManager.addOrder(sell5);
 
-    OrderBook askBook =
-        orderBookManager
-            .getOrderBookHashMap()
-            .get(sell1.getInstrument() + sell1.getSide().toString());
-
     assertEquals(
-        "Ask book last entry is not sell5",
+        "OrderLinkedList last is not changed with new high value ask",
         sell5.getOrderId(),
         askBook.lastEntry().getValue().getHead().getOrder().getOrderId());
   }

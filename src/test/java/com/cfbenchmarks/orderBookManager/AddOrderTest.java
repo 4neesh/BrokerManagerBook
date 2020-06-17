@@ -56,7 +56,7 @@ public class AddOrderTest {
     assertEquals(
         "Bid does not exist in instrumentPropertyMap after being added",
         true,
-        orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey));
+        orderBookManager.getInstrumentPropertyHashMap().containsKey(propertyKey));
   }
 
   @Test
@@ -70,7 +70,7 @@ public class AddOrderTest {
     assertEquals(
         "Ask does not exist in instrumentPropertyMap after being added",
         true,
-        orderBookManager.getInstrumentPropertyMap().containsKey(propertyKey));
+        orderBookManager.getInstrumentPropertyHashMap().containsKey(propertyKey));
   }
 
   @Test

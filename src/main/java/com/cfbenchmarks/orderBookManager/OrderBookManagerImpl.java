@@ -12,12 +12,12 @@ import java.util.*;
 public class OrderBookManagerImpl implements OrderBookManager {
 
   private HashMap<String, Order> orderHashMap;
-  private HashMap<String, InstrumentProperty> instrumentPropertyMap;
+  private HashMap<String, InstrumentProperty> instrumentPropertyHashMap;
   private HashMap<String, OrderBook> orderBookHashMap;
 
   public OrderBookManagerImpl() {
     this.orderHashMap = new HashMap<>();
-    this.instrumentPropertyMap = new HashMap<>();
+    this.instrumentPropertyHashMap = new HashMap<>();
     this.orderBookHashMap = new HashMap<>();
   }
 
@@ -77,14 +77,14 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
     String propertiesKey = instrument + side.toString();
 
-    return instrumentPropertyMap.get(propertiesKey).getBestPrice();
+    return instrumentPropertyHashMap.get(propertiesKey).getBestPrice();
   }
 
   public long getOrderNumAtLevel(String instrument, Side side, long price) {
 
     String propertiesKey = instrument + side.toString();
     String levelPropertiesKey = instrument + side.toString() + price;
-    return instrumentPropertyMap
+    return instrumentPropertyHashMap
         .get(propertiesKey)
         .getLevelPropertiesHashMap()
         .get(levelPropertiesKey)
@@ -94,7 +94,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
   public long getTotalQuantityAtLevel(String instrument, Side side, long price) {
     String propertiesKey = instrument + side.toString();
     String levelPropertiesKey = propertiesKey + price;
-    return instrumentPropertyMap
+    return instrumentPropertyHashMap
         .get(propertiesKey)
         .getLevelPropertiesHashMap()
         .get(levelPropertiesKey)
@@ -105,7 +105,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
     String propertiesKey = instrument + side.toString();
     String levelPropertiesKey = propertiesKey + price;
-    return instrumentPropertyMap
+    return instrumentPropertyHashMap
         .get(propertiesKey)
         .getLevelPropertiesHashMap()
         .get(levelPropertiesKey)
@@ -116,8 +116,8 @@ public class OrderBookManagerImpl implements OrderBookManager {
     return orderHashMap;
   }
 
-  public HashMap<String, InstrumentProperty> getInstrumentPropertyMap() {
-    return instrumentPropertyMap;
+  public HashMap<String, InstrumentProperty> getInstrumentPropertyHashMap() {
+    return instrumentPropertyHashMap;
   }
 
   private void removeOrderFromPropertyMap(String orderId) {
@@ -127,7 +127,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
     Order order = orderHashMap.get(orderId);
     String levelPropertiesKey = getLevelPropertiesKey(order);
 
-    instrumentPropertyMap.get(propertiesKey).deleteFromLevel(levelPropertiesKey, order);
+    instrumentPropertyHashMap.get(propertiesKey).deleteFromLevel(levelPropertiesKey, order);
   }
 
   private String getLevelPropertiesKey(Order order) {
@@ -146,7 +146,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
         newBestPrice = Optional.of(getNextBestPrice(orderBook, orderId));
       }
 
-      instrumentPropertyMap.get(getPropertiesKey(orderId)).setNextBestPrice(newBestPrice);
+      instrumentPropertyHashMap.get(getPropertiesKey(orderId)).setNextBestPrice(newBestPrice);
     }
   }
 
@@ -181,7 +181,7 @@ public class OrderBookManagerImpl implements OrderBookManager {
   }
 
   private boolean orderHasBestPrice(String orderId) {
-    return instrumentPropertyMap.get(getPropertiesKey(orderId)).getBestPrice().get()
+    return instrumentPropertyHashMap.get(getPropertiesKey(orderId)).getBestPrice().get()
         == getOrderPrice(orderId);
   }
 
@@ -239,9 +239,9 @@ public class OrderBookManagerImpl implements OrderBookManager {
   private void addOrderToInstrumentPropertyMap(Order order) {
     String propertyKey = order.getInstrument() + order.getSide().toString();
 
-    if (instrumentPropertyMap.containsKey(propertyKey)) {
+    if (instrumentPropertyHashMap.containsKey(propertyKey)) {
 
-      instrumentPropertyMap.get(propertyKey).updateProperties(order);
+      instrumentPropertyHashMap.get(propertyKey).updateProperties(order);
 
     } else {
 
@@ -254,9 +254,9 @@ public class OrderBookManagerImpl implements OrderBookManager {
     Optional<Long> bestPrice = Optional.of(order.getPrice());
     HashMap<String, LevelProperty> levelPropertiesHashMap = new HashMap<>();
 
-    instrumentPropertyMap.put(
+    instrumentPropertyHashMap.put(
         propertyKey, new InstrumentProperty(bestPrice, levelPropertiesHashMap));
-    instrumentPropertyMap.get(propertyKey).updateProperties(order);
+    instrumentPropertyHashMap.get(propertyKey).updateProperties(order);
   }
 
   public HashMap<String, OrderBook> getOrderBookHashMap() {
