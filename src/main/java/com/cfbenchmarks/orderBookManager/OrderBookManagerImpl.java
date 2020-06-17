@@ -280,4 +280,16 @@ public class OrderBookManagerImpl implements OrderBookManager {
 
     orderBook.addOrder(order.getPrice(), new OrderNode(order));
   }
+
+  public static void main(String[] args) {
+    OrderBookManagerImpl o = new OrderBookManagerImpl();
+    o.addOrder(new Order("001", "AA", Side.BUY, 10,10));
+    o.addOrder(new Order("002", "AA", Side.BUY, 15,10));
+    o.addOrder(new Order("003", "AA", Side.BUY, 12,10));
+    o.addOrder(new Order("004", "AA", Side.BUY, 18,10));
+    o.addOrder(new Order("005", "AA", Side.BUY, 9,10));
+
+      
+
+  }
 }

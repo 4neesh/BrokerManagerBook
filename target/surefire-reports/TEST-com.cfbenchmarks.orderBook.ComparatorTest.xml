@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.001" tests="11" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.cfbenchmarks.orderBook.ComparatorTest" time="0.001" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,15 +62,18 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="bidOrdersAtLevelCreatesSeparateListsForInstruments" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="bidReturnsMultipleOrdersAtLevelSequentiallyWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="askReturnsMultipleOrdersAtLevelSequentiallyWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="getOrdersAtLevelReturnsForDifferentSides" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="emptyBidLevelReturnsNull" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="bidOrderAtLevelReturnsOrderWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="bidOrdersAtLevelCreatesSeparateListsForPrices" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="emptyAskLevelReturnsNull" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="askOrdersAtLevelCreatesSeparateListsForInstruments" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0.001"/>
-  <testcase name="askOrderAtLevelReturnsOrderWhenAdded" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
-  <testcase name="askOrdersAtLevelCreatesSeparateListsForPrices" classname="com.cfbenchmarks.orderBookManager.GetOrdersAtLevelTest" time="0"/>
+  <testcase name="headAskRemainsWithNewHigherPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="lastBidRemainsWithNewHigherPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="headAskUpdatedWithNewLowerPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="headBidRemainsWithNewLowPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="lastAskRemainsWithNewMiddlePriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="headBidRemainsWithNewMiddlePriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="lastBidUpdatedWithNewLowerPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="lastAskRemainsWithNewLowerPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="bidBookStoresLevelsInDescendingOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="lastAskUpdatedWithNewHigherPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="headBidUpdatedWithNewHigherPriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="headAskRemainsWithNewMiddlePriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="askBookStoresLevelsInAscendingOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
+  <testcase name="lastBidRemainsWithNewMiddlePriceOrder" classname="com.cfbenchmarks.orderBook.ComparatorTest" time="0"/>
 </testsuite>
