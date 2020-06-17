@@ -13,28 +13,22 @@ public class GetOrdersAtLevelTest {
 
   private OrderBookManagerImpl orderBookManager;
   private Order buy1;
-  private Order buy1SamePrice;
   private Order buy2;
   private Order buy3;
   private Order sell1;
-  private Order sell1SamePrice;
   private Order sell2;
   private Order sell3;
   private Order buyOther;
   private Order sellOther;
-  private Order buyUnique;
-  private Order sellUnique;
 
   @Before
   public void setUp() {
 
     orderBookManager = new OrderBookManagerImpl();
     buy1 = new Order("order1", "VOD.L", Side.BUY, 200, 10);
-    buy1SamePrice = new Order("order9", "VOD.L", Side.BUY, 200, 10);
     buy2 = new Order("order2", "VOD.L", Side.BUY, 200, 10);
     buy3 = new Order("order3", "VOD.L", Side.BUY, 50, 10);
     sell1 = new Order("order4", "VOD.L", Side.SELL, 200, 10);
-    sell1SamePrice = new Order("order10", "VOD.L", Side.SELL, 200, 10);
     sell2 = new Order("order5", "VOD.L", Side.SELL, 200, 10);
     sell3 = new Order("order6", "VOD.L", Side.SELL, 50, 10);
     buyOther = new Order("order7", "APPL", Side.BUY, 200, 10);
@@ -45,7 +39,7 @@ public class GetOrdersAtLevelTest {
   public void emptyBidLevelReturnsNull() {
 
     assertEquals(
-        "Bid book level is not empty",
+        "NullPointer not thrown for trying to access empty bid level",
         null,
         orderBookManager.getOrdersAtLevel("VOD.L", Side.BUY, 10L));
   }
@@ -54,40 +48,40 @@ public class GetOrdersAtLevelTest {
   public void emptyAskLevelReturnsNull() {
 
     assertEquals(
-        "Ask book level is not empty",
+            "NullPointer not thrown for trying to access empty ask level",
         null,
         orderBookManager.getOrdersAtLevel("VOD.L", Side.SELL, 10L));
   }
 
   @Test
-  public void bidReturnsOrderWhenAdded() {
+  public void bidOrderAtLevelReturnsOrderWhenAdded() {
 
     orderBookManager.addOrder(buy1);
     List<Order> expected = new ArrayList<>();
     expected.add(buy1);
 
     assertEquals(
-        "Bid book does not return orders on level",
+        "ordersAtLevel bid does not return single order",
         expected,
         orderBookManager.getOrdersAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
-  public void askReturnsOrderWhenAdded() {
+  public void askOrderAtLevelReturnsOrderWhenAdded() {
 
     orderBookManager.addOrder(sell1);
     List<Order> expected = new ArrayList<>();
     expected.add(sell1);
 
     assertEquals(
-        "Ask book does not return orders on level",
+            "ordersAtLevel ask does not return single order",
         expected,
         orderBookManager.getOrdersAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
-  public void bidReturnsMultipleOrdersSequentiallyWhenAdded() {
+  public void bidReturnsMultipleOrdersAtLevelSequentiallyWhenAdded() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy2);
@@ -96,13 +90,13 @@ public class GetOrdersAtLevelTest {
     expected.add(buy2);
 
     assertEquals(
-        "Bid book does not return multiple orders on level",
+        "orderAtLevel bid does not return multiple orders sequentially on level",
         expected,
         orderBookManager.getOrdersAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
   }
 
   @Test
-  public void askReturnsMultipleOrdersWhenAdded() {
+  public void askReturnsMultipleOrdersAtLevelSequentiallyWhenAdded() {
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell2);
@@ -111,14 +105,14 @@ public class GetOrdersAtLevelTest {
     expected.add(sell2);
 
     assertEquals(
-        "Ask book does not return multiple orders on level",
+            "orderAtLevel ask does not return multiple orders sequentially on level",
         expected,
         orderBookManager.getOrdersAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
   }
 
   @Test
-  public void bidCreatesSeparateListsForInstruments() {
+  public void bidOrdersAtLevelCreatesSeparateListsForInstruments() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buyOther);
@@ -128,18 +122,14 @@ public class GetOrdersAtLevelTest {
     expected2.add(buyOther);
 
     assertEquals(
-        "Bid book returns different instruments in same list",
-        expected1,
-        orderBookManager.getOrdersAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
-    assertEquals(
-        "Bid book returns different instruments in same list",
+        "ordersAtLevel bid does not create new list for different instruments",
         expected2,
         orderBookManager.getOrdersAtLevel(
             buyOther.getInstrument(), buyOther.getSide(), buyOther.getPrice()));
   }
 
   @Test
-  public void askCreatesSeparateListsForInstruments() {
+  public void askOrdersAtLevelCreatesSeparateListsForInstruments() {
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sellOther);
@@ -149,19 +139,14 @@ public class GetOrdersAtLevelTest {
     expected2.add(sellOther);
 
     assertEquals(
-        "Ask book returns different instruments in same list",
-        expected1,
-        orderBookManager.getOrdersAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
-    assertEquals(
-        "Ask book returns different instruments in same list",
+            "ordersAtLevel ask does not create new list for different instruments",
         expected2,
         orderBookManager.getOrdersAtLevel(
             sellOther.getInstrument(), sellOther.getSide(), sellOther.getPrice()));
   }
 
   @Test
-  public void bidCreatesSeparateListsForPrices() {
+  public void bidOrdersAtLevelCreatesSeparateListsForPrices() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(buy3);
@@ -171,17 +156,13 @@ public class GetOrdersAtLevelTest {
     expected2.add(buy3);
 
     assertEquals(
-        "Bid book returns different prices in same list",
-        expected1,
-        orderBookManager.getOrdersAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
-    assertEquals(
-        "Bid book returns different prices in same list",
+            "ordersAtLevel bid does not create new list for different prices",
         expected2,
         orderBookManager.getOrdersAtLevel(buy3.getInstrument(), buy3.getSide(), buy3.getPrice()));
   }
 
   @Test
-  public void askCreatesSeparateListsForPrices() {
+  public void askOrdersAtLevelCreatesSeparateListsForPrices() {
 
     orderBookManager.addOrder(sell1);
     orderBookManager.addOrder(sell3);
@@ -191,19 +172,14 @@ public class GetOrdersAtLevelTest {
     expected2.add(sell3);
 
     assertEquals(
-        "Ask book returns different prices in same list",
-        expected1,
-        orderBookManager.getOrdersAtLevel(
-            sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
-    assertEquals(
-        "Ask book returns different prices in same list",
+            "ordersAtLevel ask does not create new list for different prices",
         expected2,
         orderBookManager.getOrdersAtLevel(
             sell3.getInstrument(), sell3.getSide(), sell3.getPrice()));
   }
 
   @Test
-  public void getOrdersAtLevelReturnsForPrices() {
+  public void getOrdersAtLevelReturnsForDifferentSides() {
 
     orderBookManager.addOrder(buy1);
     orderBookManager.addOrder(sell1);
@@ -213,11 +189,11 @@ public class GetOrdersAtLevelTest {
     expected2.add(sell1);
 
     assertEquals(
-        "Ask book returns different sides in same list",
+        "getOrdersAtLevel returns different sides in same list",
         expected1,
         orderBookManager.getOrdersAtLevel(buy1.getInstrument(), buy1.getSide(), buy1.getPrice()));
     assertEquals(
-        "Ask book returns different sides in same list",
+        "getOrdersAtLevel returns different sides in same list",
         expected2,
         orderBookManager.getOrdersAtLevel(
             sell1.getInstrument(), sell1.getSide(), sell1.getPrice()));
