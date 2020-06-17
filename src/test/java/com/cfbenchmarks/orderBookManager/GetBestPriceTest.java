@@ -75,7 +75,7 @@ public class GetBestPriceTest {
 
     Long expectedPrice = buy4.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(buy1.getInstrument(), buy1.getSide()).get();
-    assertEquals("Best bid price is not changed to higher value", expectedPrice, actualPrice);
+    assertEquals("Best bid price is not changed following new higher value order", expectedPrice, actualPrice);
   }
 
   @Test
@@ -86,7 +86,7 @@ public class GetBestPriceTest {
 
     Long expectedPrice = buy1.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(buy1.getInstrument(), buy1.getSide()).get();
-    assertEquals("Best bid price is changed to lower value", expectedPrice, actualPrice);
+    assertEquals("Best bid price is changed to lower value following new lower value order", expectedPrice, actualPrice);
   }
 
   @Test
@@ -97,7 +97,7 @@ public class GetBestPriceTest {
 
     Long expectedPrice = buy1.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(buy1.getInstrument(), buy1.getSide()).get();
-    assertEquals("Best bid price is changed to lower value", expectedPrice, actualPrice);
+    assertEquals("Best bid price is changed following equal highest value order added", expectedPrice, actualPrice);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class GetBestPriceTest {
 
     Long expectedPrice = sell3.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(sell3.getInstrument(), sell3.getSide()).get();
-    assertEquals("Best ask price is changed to higher value", expectedPrice, actualPrice);
+    assertEquals("Best ask price is changed to higher value following new higher value order", expectedPrice, actualPrice);
   }
 
   @Test
@@ -119,7 +119,7 @@ public class GetBestPriceTest {
 
     Long expectedPrice = sell4.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(sell3.getInstrument(), sell3.getSide()).get();
-    assertEquals("Best ask price is not changed to lower value", expectedPrice, actualPrice);
+    assertEquals("Best ask price is not changed to lower value following new lower value order", expectedPrice, actualPrice);
   }
 
   @Test
@@ -131,7 +131,7 @@ public class GetBestPriceTest {
     Long expectedPrice = sell3.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(sell3.getInstrument(), sell3.getSide()).get();
     assertEquals(
-        "Best ask price is changed after order of equal price added", expectedPrice, actualPrice);
+        "Best ask price is changed following equal lowest value order added", expectedPrice, actualPrice);
   }
 
   @Test
@@ -142,7 +142,7 @@ public class GetBestPriceTest {
     Long expectedPrice = buy2.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(buy1.getInstrument(), buy1.getSide()).get();
     assertEquals(
-        "Best bid price is not changed after highest is deleted", expectedPrice, actualPrice);
+        "Best bid price is not changed after highest value is deleted", expectedPrice, actualPrice);
   }
 
   @Test
@@ -164,7 +164,7 @@ public class GetBestPriceTest {
     Long expectedPrice = sell2.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(sell3.getInstrument(), sell3.getSide()).get();
     assertEquals(
-        "Best ask price is not changed after highest is deleted", expectedPrice, actualPrice);
+        "Best ask price is not changed after lowest value is deleted", expectedPrice, actualPrice);
   }
 
   @Test
@@ -175,7 +175,7 @@ public class GetBestPriceTest {
     Long expectedPrice = sell3.getPrice();
     Long actualPrice = orderBookManager.getBestPrice(sell2.getInstrument(), sell2.getSide()).get();
     assertEquals(
-        "Best ask price has changed after non-highest is deleted", expectedPrice, actualPrice);
+        "Best ask price has changed after non-lowest value order is deleted", expectedPrice, actualPrice);
   }
 
   @Test
@@ -187,7 +187,7 @@ public class GetBestPriceTest {
     Optional<Long> actualPrice =
         orderBookManager.getBestPrice(buyOther.getInstrument(), buyOther.getSide());
     assertEquals(
-        "Best bid price has changed to Optional.empty when only order is deleted",
+        "Best bid price has not changed to Optional.empty when only order is deleted",
         expectedPrice,
         actualPrice);
   }
@@ -195,11 +195,14 @@ public class GetBestPriceTest {
   @Test
   public void bestAskIsOptionalEmptyWhenOnlyOrderIsDeleted() {
 
-    orderBookManager.deleteOrder(sell2.getOrderId());
+    orderBookManager.deleteOrder(sellOther.getOrderId());
 
-    Long expectedPrice = sell3.getPrice();
-    Long actualPrice = orderBookManager.getBestPrice(sell2.getInstrument(), sell2.getSide()).get();
+    Optional<Long> expectedPrice = Optional.empty();
+    Optional<Long> actualPrice =
+            orderBookManager.getBestPrice(sellOther.getInstrument(), sellOther.getSide());
     assertEquals(
-        "Best ask price has changed after non-highest is deleted", expectedPrice, actualPrice);
+            "Best ask price has not changed to Optional.empty when only order is deleted",
+            expectedPrice,
+            actualPrice);
   }
 }

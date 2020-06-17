@@ -30,6 +30,42 @@ public class AddOrderTest {
   }
 
   @Test
+  public void bidOrderIsAddedToHeadInOrderLinkedList() {
+
+    Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
+
+    orderBookManager.addOrder(buy);
+
+    assertEquals(
+        "Bid does not exist as head in OrderLinkedList after being added as first entry",
+        buy,
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy.getInstrument() + buy.getSide().toString())
+            .get(buy.getPrice())
+            .getHead()
+            .getOrder());
+  }
+
+  @Test
+  public void bidOrderIsAddedToLastInOrderLinkedList() {
+
+    Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
+
+    orderBookManager.addOrder(buy);
+
+    assertEquals(
+        "Bid does not exist as last in OrderLinkedList after being added as first entry",
+        buy,
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(buy.getInstrument() + buy.getSide().toString())
+            .get(buy.getPrice())
+            .getLast()
+            .getOrder());
+  }
+
+  @Test
   public void bidOrderIsAddedToOrderBookHashMap() {
 
     Order buy = new Order("order1", "VOD.L", Side.BUY, 200, 10);
@@ -102,6 +138,42 @@ public class AddOrderTest {
         true);
   }
 
+  @Test
+  public void askOrderIsAddedToHeadInOrderLinkedList() {
+
+    Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
+
+    orderBookManager.addOrder(sell);
+
+    assertEquals(
+        "Ask does not exist as head in OrderLinkedList after being added as first entry",
+        sell,
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(sell.getInstrument() + sell.getSide().toString())
+            .get(sell.getPrice())
+            .getHead()
+            .getOrder());
+  }
+
+  @Test
+  public void askOrderIsAddedToLastInOrderLinkedList() {
+
+    Order sell = new Order("order1", "VOD.L", Side.SELL, 200, 10);
+
+    orderBookManager.addOrder(sell);
+
+    assertEquals(
+        "Ask does not exist as last in OrderLinkedList after being added as first entry",
+        sell,
+        orderBookManager
+            .getOrderBookHashMap()
+            .get(sell.getInstrument() + sell.getSide().toString())
+            .get(sell.getPrice())
+            .getLast()
+            .getOrder());
+  }
+
   @Test(expected = RuntimeException.class)
   public void cannotAddSameBidOrderMultipleTimes() {
 
@@ -136,7 +208,8 @@ public class AddOrderTest {
             .getOrder()
             .getOrderId();
 
-    assertEquals("OrderBookHashMap is not updated for multiple bid orders", expected2, buy2.getOrderId());
+    assertEquals(
+        "OrderBookHashMap is not updated for multiple bid orders", expected2, buy2.getOrderId());
   }
 
   @Test
@@ -158,8 +231,8 @@ public class AddOrderTest {
             .getOrder()
             .getOrderId();
 
-
-    assertEquals("OrderBookHashMap is not updated for multiple ask orders.", expected2, sell2.getOrderId());
+    assertEquals(
+        "OrderBookHashMap is not updated for multiple ask orders.", expected2, sell2.getOrderId());
   }
 
   @Test

@@ -46,42 +46,42 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void bidMustExistInBookToDelete() {
+  public void bidMustExistInOrderHashMapToDelete() {
 
     Order buy4 = new Order("order9", "VOD.L", Side.BUY, 200, 10);
 
     assertFalse(
-        "buy that does does not exist in orderHashMap can be deleted.",
+        "Delete returns true for bid that does not exist in orderHashMap",
         orderBookManager.deleteOrder(buy4.getOrderId()));
   }
 
   @Test
-  public void askMustExistInBookToDelete() {
+  public void askMustExistInOrderHashMapToDelete() {
 
     Order sell4 = new Order("order10", "VOD.L", Side.SELL, 200, 10);
 
     assertFalse(
-        "ask that does not exist in orderHashMap can be deleted",
+        "Delete returns true for ask that does not exist in orderHashMap",
         orderBookManager.deleteOrder(sell4.getOrderId()));
   }
 
   @Test
-  public void deleteFromHeadInBidRemovesFromOrderHashMap() {
+  public void deleteBidHeadRemovesFromOrderHashMap() {
 
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertFalse(
-        "Deleting a bid from the head does not remove reference in orderHashMap",
+        "Delete a bid from the head does not remove reference in orderHashMap",
         orderBookManager.getOrderHashMap().containsKey(buy1.getOrderId()));
   }
 
   @Test
-  public void deleteFromHeadInBidRemovesFromHead() {
+  public void deleteBidHeadRemovesFromHeadOrderLinkedList() {
 
     orderBookManager.deleteOrder(buy1.getOrderId());
 
     assertEquals(
-        "Deleting a bid from the head does not remove in the OrderLinkedList",
+        "Delete a bid from the head does not update reference in the OrderLinkedList",
         buy2,
         orderBookManager
             .getOrderBookHashMap()
@@ -92,12 +92,22 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void deleteFromHeadInAskRemovesFromHead() {
+  public void deleteAskHeadRemovesFromOrderHashMap() {
+
+    orderBookManager.deleteOrder(sell1.getOrderId());
+
+    assertFalse(
+            "Delete an ask from the head does not remove reference in orderHashMap",
+            orderBookManager.getOrderHashMap().containsKey(sell1.getOrderId()));
+  }
+
+  @Test
+  public void deleteAskHeadRemovesFromHeadOrderLinkedList() {
 
     orderBookManager.deleteOrder(sell1.getOrderId());
 
     assertEquals(
-        "Deleting an ask from the head does not remove in the OrderLinkedList",
+        "Delete an ask from the head does not remove in the OrderLinkedList",
         sell2,
         orderBookManager
             .getOrderBookHashMap()
@@ -108,22 +118,22 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void deleteFromBodyInBidRemovesFromOrderHashMap() {
+  public void deleteBidBodyRemovesFromOrderHashMap() {
 
     orderBookManager.deleteOrder(buy2.getOrderId());
 
     assertFalse(
-        "Deleting a bid from the body does not remove reference in orderHashMap",
+        "Delete a bid from the body does not remove reference in orderHashMap",
         orderBookManager.getOrderHashMap().containsKey(buy2.getOrderId()));
   }
 
   @Test
-  public void deleteFromBodyInBidRemovesFromBody() {
+  public void deleteBidBodyRemovesFromOrderLinkedList() {
 
     orderBookManager.deleteOrder(buy2.getOrderId());
 
     assertEquals(
-        "Deleting a bid from the body does not remove in the OrderLinkedList",
+        "Delete a bid from the body does not remove in the OrderLinkedList",
         buy3,
         orderBookManager
             .getOrderBookHashMap()
@@ -135,22 +145,22 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void deleteFromBodyInAskRemovesFromOrderHashMap() {
+  public void deleteAskBodyRemovesFromOrderHashMap() {
 
     orderBookManager.deleteOrder(sell2.getOrderId());
 
     assertFalse(
-        "Deleting an ask form the body does not remove reference in orderHashMap",
+            "Delete an ask from the body does not remove reference in orderHashMap",
         orderBookManager.getOrderHashMap().containsKey(sell2.getOrderId()));
   }
 
   @Test
-  public void deleteFromBodyInAskRemovesFromOrderBody() {
+  public void deleteAskBodyRemovesFromOrderLinkedList() {
 
     orderBookManager.deleteOrder(sell2.getOrderId());
 
     assertEquals(
-        "Deleting an ask from the body does not remove in the OrderLinkedList",
+            "Delete an ask from the body does not remove in the OrderLinkedList",
         sell3,
         orderBookManager
             .getOrderBookHashMap()
@@ -162,22 +172,22 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void deleteFromEndInBidRemovesFromOrderHashMap() {
+  public void deleteBidLastRemovesFromOrderHashMap() {
 
     orderBookManager.deleteOrder(buy3.getOrderId());
 
     assertFalse(
-        "Deleting a bid from the end does not remove reference in orderHashMap",
+            "Delete a bid from last does not remove reference in orderHashMap",
         orderBookManager.getOrderHashMap().containsKey(buy3.getOrderId()));
   }
 
   @Test
-  public void deleteFromEndInBidRemovesFromOrderLinkedList() {
+  public void deleteBidLastRemovesFromOrderLinkedList() {
 
     orderBookManager.deleteOrder(buy3.getOrderId());
 
     assertEquals(
-        "Deleting a bid from the end does not remove in the OrderLinkedList",
+            "Delete a bid from last does not remove in the OrderLinkedList",
         buy2,
         orderBookManager
             .getOrderBookHashMap()
@@ -188,22 +198,22 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void deleteFromEndInAskRemovesFromOrderHashMap() {
+  public void deleteAskLastRemovesFromOrderHashMap() {
 
     orderBookManager.deleteOrder(sell3.getOrderId());
 
     assertFalse(
-        "Deleting a bid from the end does not remove reference in orderHashMap",
+            "Delete an ask from last does not remove reference in orderHashMap",
         orderBookManager.getOrderHashMap().containsKey(sell3.getOrderId()));
   }
 
   @Test
-  public void deleteFromEndInAskRemovesFromOrderLinkedList() {
+  public void deleteAskLastRemovesFromOrderLinkedList() {
 
     orderBookManager.deleteOrder(sell3.getOrderId());
 
     assertEquals(
-        "Deleting an ask from the end does not remove in the OrderLinkedList",
+            "Delete an ask from last does not remove in the OrderLinkedList",
         sell2,
         orderBookManager
             .getOrderBookHashMap()
@@ -214,12 +224,12 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void removeFromBookForSingleBidWillRemoveTheLevelFromBook() {
+  public void deleteBidFromLevelWithOneOrderWillRemoveLevelFromOrderBook() {
 
     orderBookManager.deleteOrder(buyOther.getOrderId());
 
     assertEquals(
-        "Removing single bid from level does not remove the level from order book",
+        "Bid level exists without orders when its only order was deleted",
         null,
         orderBookManager
             .getOrderBookHashMap()
@@ -228,12 +238,12 @@ public class DeleteOrderTest {
   }
 
   @Test
-  public void removeFromBookForSingleAsk() {
+  public void deleteAskFromLevelWithOneOrderWillRemoveLevelFromOrderBook() {
 
     orderBookManager.deleteOrder(sellOther.getOrderId());
 
     assertEquals(
-        "Removing single ask from level does not remove the level from order book",
+            "Ask level exists without orders when its only order was deleted",
         orderBookManager
             .getOrderBookHashMap()
             .get(sellOther.getInstrument() + sellOther.getSide().toString())
